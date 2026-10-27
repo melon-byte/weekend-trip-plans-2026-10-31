@@ -230,6 +230,16 @@ const newRoutes = [
     title: "锦溪古镇 · 水乡慢逛＋计家墩理想村",
     blurb: "白天看古桥、河巷和园内景点，傍晚回计家墩村里散步、烧烤聊天。",
     review: "古镇适合慢走，村里的院子适合6个人不赶时间地待着。",
+    rating: {
+      name: "锦溪古镇 · 水乡慢逛＋计家墩理想村",
+      parts: [37, 20, 14, 6],
+      total: 77,
+      stars: 4,
+      confidence: "中偏低",
+      reason: "锦溪有古镇实景，计家墩能接住院子和晚饭；但路线偏慢逛，景点强度不算高。",
+      deductions: "锦溪公开评分约3.9，古镇内容更适合不赶时间的人；计家墩与民宿的4卧开放范围仍需房东确认。",
+      evidence: "美团景点评分与票价、携程问道民宿名称地址、高德计家墩地理锚点。"
+    },
     tags: ["水乡", "院子烧烤", "慢住"],
     fee: "锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。",
     travel: "陆家嘴驾车约 69.8 km · 91 min，以实时导航为准",
@@ -259,6 +269,16 @@ const newRoutes = [
     title: "周庄古镇 · 白天水巷＋晚上看灯",
     blurb: "把车停好后再进古镇，白天双桥、张厅沈厅慢慢逛，晚上只走一小圈看夜景。",
     review: "夜景是重点，住古镇里能省掉晚上来回折腾。",
+    rating: {
+      name: "周庄古镇 · 白天水巷＋晚上看灯",
+      parts: [41, 22, 11, 7],
+      total: 81,
+      stars: 4.5,
+      confidence: "中",
+      reason: "周庄白天水巷和夜游内容都成熟，住镇内能把夜景变成完整体验。",
+      deductions: "古镇商业化和节假日人流都明显；停车后还要转运行李，摇橹船等体验另收费。",
+      evidence: "美团景点评分与公开票价、携程截图民宿登记、高德周庄坐标；夜游按公开资料复核。"
+    },
     tags: ["水乡夜景", "摇橹船", "古镇住一晚"],
     fee: "周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。",
     travel: "陆家嘴驾车约 79.5 km · 106 min，以实时导航为准",
@@ -287,6 +307,16 @@ const newRoutes = [
     title: "太湖西山 · 雕花楼＋缥缈峰＋院子",
     blurb: "只选西山这一条，白天看雕花楼和湖景，傍晚回小白房做饭、聊天。",
     review: "景点和湖景才是主角；车程最长，适合整趟只为西山来。",
+    rating: {
+      name: "太湖西山 · 雕花楼＋缥缈峰＋院子",
+      parts: [39, 21, 9, 7],
+      total: 76,
+      stars: 4,
+      confidence: "中偏低",
+      reason: "雕花楼、缥缈峰和太湖湖景组合有辨识度，适合愿意为一处远郊目的地多开车的一天。",
+      deductions: "单程约145分钟；缥缈峰台阶多、景区交通另算，天气差时湖景和登山体验都会打折。",
+      evidence: "美团景点评分和票价、携程与美团民宿口径、高德缥缈峰坐标。"
+    },
     tags: ["太湖", "古村古建", "泳池院子"],
     fee: "缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。",
     travel: "陆家嘴驾车约 141.6 km · 145 min，尽量早出",
@@ -392,6 +422,7 @@ const oldRoutes = baseline.routes.map((route) => {
     title: route.title,
     blurb: baseline.routeBriefs[route.n].why,
     review: routeReviews[route.n],
+    rating: baseline.routeRatings[route.n],
     tags: baseline.listTags[route.n] || [],
     fee: meta.fee,
     travel: meta.travel,
@@ -427,7 +458,12 @@ const oldStays = baseline.villaCandidates.map((stay) => {
   };
 });
 
-const allRoutes = [...oldRoutes, ...newRoutes];
+const allRoutes = [...oldRoutes, ...newRoutes]
+  .map((route) => ({ ...route, score: route.rating.total }));
+const rankedRoutes = [...allRoutes]
+  .sort((left, right) => right.score - left.score)
+  .map((route, index) => ({ ...route, rank: index + 1 }));
+const rankedRouteById = new Map(rankedRoutes.map((route) => [route.id, route]));
 const allStays = [...oldStays, ...newStays];
 
 function escapeHtml(value) {
@@ -444,6 +480,23 @@ function renderTags(tags) {
   return tags.slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
 }
 
+function renderStars(rating) {
+  const width = Math.max(0, Math.min(5, Number(rating.stars) || 0)) / 5 * 100;
+  return `
+    <span class="stars" aria-label="${escapeHtml(rating.stars)}星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:${width}%" aria-hidden="true">★★★★★</span>
+    </span>`;
+}
+
+function cleanRatingNote(value) {
+  return String(value ?? "")
+    .split(/(?<=[。！？])/u)
+    .filter((sentence) => !/预算|人均|房费|房价|每晚|5000/.test(sentence))
+    .join("")
+    .trim();
+}
+
 function renderTimeline(rows) {
   return rows.map(([time, text]) => `
     <li>
@@ -452,46 +505,129 @@ function renderTimeline(rows) {
     </li>`).join("");
 }
 
-function renderRoute(route) {
+function routeRegionLabel(route) {
   const areaParts = route.area.split(" · ");
-  const regionLabel = areaParts.length > 1 ? areaParts.slice(0, -1).join(" · ") : route.area;
+  return areaParts.length > 1 ? areaParts.slice(0, -1).join(" · ") : route.area;
+}
+
+function renderRouteLauncher(route) {
+  const rankedRoute = rankedRouteById.get(route.id);
+  const regionLabel = routeRegionLabel(route);
+
+  return `
+    <article class="route-card" id="route-${escapeHtml(route.id)}">
+      <button class="route-launcher" type="button" data-route-id="${escapeHtml(route.id)}"
+        aria-haspopup="dialog" aria-controls="route-dialog-${escapeHtml(route.id)}">
+        <span class="route-photo">
+          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+          <span class="region-pill">${escapeHtml(regionLabel)}</span>
+          <span class="card-score">${escapeHtml(rankedRoute.score)}<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 ${escapeHtml(rankedRoute.rank)}</span>
+            <span>${escapeHtml(route.travel)}</span>
+          </span>
+          <span class="route-title">${escapeHtml(route.title)}</span>
+          <span class="review-line"><strong>一句话口碑</strong>${escapeHtml(route.review)}</span>
+          <span class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</span>
+          <span class="route-tags">${renderTags(route.tags)}</span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>`;
+}
+
+function renderRankRow(route) {
+  const regionLabel = routeRegionLabel(route);
+  return `
+    <li>
+      <button class="rank-row" type="button" data-route-id="${escapeHtml(route.id)}"
+        aria-haspopup="dialog" aria-controls="route-dialog-${escapeHtml(route.id)}">
+        <span class="row-rank">${String(route.rank).padStart(2, "0")}</span>
+        <img class="row-photo" src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">${escapeHtml(regionLabel)}</span>
+          <strong>${escapeHtml(route.title)}</strong>
+          <span class="row-review">${escapeHtml(route.review)}</span>
+          <span class="row-tags">${renderTags(route.tags)}</span>
+        </span>
+        <span class="row-score">
+          <span><b>${escapeHtml(route.score)}</b><small>分</small></span>
+          ${renderStars(route.rating)}
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>`;
+}
+
+function renderRouteDialog(route) {
+  const rankedRoute = rankedRouteById.get(route.id);
+  const rating = route.rating;
   const secondaryPhoto = route.photo2 ? `
     <figure class="detail-photo">
       <img src="${escapeHtml(route.photo2)}" alt="${escapeHtml(route.photo2Alt)}" loading="lazy">
       <figcaption>${escapeHtml(route.photo2Caption)}</figcaption>
     </figure>` : "";
-  const source = route.source ? `
+  const source = /^https?:\/\//.test(route.source) ? `
     <a class="source-link" href="${escapeHtml(route.source)}" target="_blank" rel="noreferrer">
       查看出行来源 <span aria-hidden="true">↗</span>
-    </a>` : "";
+    </a>` : `<p class="source-note"><strong>资料复核</strong>${escapeHtml(route.source)}</p>`;
   const stayLine = route.nearbyStay ? `
     <p class="evening-stop"><strong>晚上落脚</strong>${escapeHtml(route.nearbyStay)}</p>` : "";
+  const ratingNote = cleanRatingNote(rating.deductions);
+  const ratingEvidence = rating.evidence
+    ? `<p><strong>证据来源</strong>${escapeHtml(rating.evidence)}</p>`
+    : `<p><strong>评价把握</strong>${escapeHtml(rating.confidence || "中偏低")}</p>`;
 
   return `
-    <article class="route-card" id="route-${escapeHtml(route.id)}">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
-            <span class="region-pill">${escapeHtml(regionLabel)}</span>
+    <dialog class="route-dialog" id="route-dialog-${escapeHtml(route.id)}"
+      aria-labelledby="route-dialog-title-${escapeHtml(route.id)}">
+      <div class="dialog-bar">
+        <span>总榜第 ${escapeHtml(rankedRoute.rank)} · ${escapeHtml(routeRegionLabel(route))}</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">${escapeHtml(routeRegionLabel(route))}</p>
+            <h2 id="route-dialog-title-${escapeHtml(route.id)}">${escapeHtml(route.title)}</h2>
+            <p class="dialog-travel">${escapeHtml(route.travel)}</p>
           </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>${escapeHtml(route.travel)}</span>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>${escapeHtml(rating.total)}</strong><span>分</span>
             </div>
-            <h3>${escapeHtml(route.title)}</h3>
-            <p class="route-blurb">${escapeHtml(route.blurb)}</p>
-            <div class="route-tags">${renderTags(route.tags)}</div>
-            <p class="review-line"><strong>一句话口碑</strong>${escapeHtml(route.review)}</p>
-            <p class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
+            ${renderStars(rating)}
           </div>
-        </summary>
+          <div class="score-parts">
+            <span><b>${escapeHtml(rating.parts[0])}</b><small>白天体验 / 45</small></span>
+            <span><b>${escapeHtml(rating.parts[1])}</b><small>内容组合 / 25</small></span>
+            <span><b>${escapeHtml(rating.parts[2])}</b><small>省心程度 / 20</small></span>
+            <span><b>${escapeHtml(rating.parts[3])}</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">${escapeHtml(rating.reason)}</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>${escapeHtml(ratingNote || "公开信息仍有待现场复核的部分。")}</p>
+              ${ratingEvidence}
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>${escapeHtml(route.review)}</p>
+        <p class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</p>
+        <div class="activity-line">
+          ${route.activities.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+        </div>
         <div class="route-detail">
-          <div class="activity-line">
-            ${route.activities.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
-          </div>
           <div class="days-grid">
             <section>
               <h4>周六 · 10月31日</h4>
@@ -509,8 +645,8 @@ function renderRoute(route) {
             ${source}
           </div>
         </div>
-      </details>
-    </article>`;
+      </div>
+    </dialog>`;
 }
 
 function renderStay(stay) {
@@ -531,6 +667,144 @@ function renderStay(stay) {
     </article>`;
 }
 
+function renderRegionMap() {
+  return `
+    <section class="map-section" id="map" aria-labelledby="map-title">
+      <header class="map-heading">
+        <div>
+          <p class="section-eyebrow">先有个方向感</p>
+          <h2 id="map-title">这些地方大概在哪</h2>
+        </div>
+        <p>点区域名称可以跳到对应路线。这里只示意相对位置，不代表真实导航距离。</p>
+      </header>
+      <div class="map-frame">
+        <svg class="region-map desktop-region-map" viewBox="0 0 760 420" role="img"
+          aria-labelledby="map-svg-title map-svg-desc">
+          <title id="map-svg-title">周末路线区域相对位置图</title>
+          <desc id="map-svg-desc">陆家嘴为出发点，青浦在西侧，金山在西南，奉贤在南侧，浦东在东侧，苏州跨城路线在西北侧。</desc>
+          <rect class="map-background" width="760" height="420" rx="18"></rect>
+          <path class="map-river" d="M600 -20 C575 55 606 105 634 154 C665 210 659 287 703 440"></path>
+          <path class="map-water" d="M-15 365 C110 326 187 361 268 402 C349 443 439 395 524 405 C607 415 679 391 785 418"></path>
+          <g class="map-links" aria-hidden="true">
+            <path d="M536 212 C454 185 355 167 288 171"></path>
+            <path d="M536 212 C454 250 350 305 303 329"></path>
+            <path d="M536 212 C512 273 488 309 480 329"></path>
+            <path d="M536 212 C556 176 579 147 604 128"></path>
+            <path d="M536 212 C430 153 285 103 177 104"></path>
+          </g>
+          <a href="#region-suzhou" class="map-node map-node-suzhou">
+            <title>去苏州跨城路线</title>
+            <rect x="42" y="62" width="158" height="84" rx="14"></rect>
+            <text class="map-node-eyebrow" x="62" y="91">跨城 · 车程较长</text>
+            <text class="map-node-title" x="62" y="119">苏州跨城</text>
+            <text class="map-node-sub" x="62" y="138">锦溪 · 周庄 · 西山</text>
+          </a>
+          <a href="#region-qingpu" class="map-node map-node-qingpu">
+            <title>去青浦路线</title>
+            <rect x="231" y="131" width="130" height="78" rx="14"></rect>
+            <text class="map-node-eyebrow" x="249" y="158">水乡 · 湖岸</text>
+            <text class="map-node-title" x="249" y="185">青浦</text>
+            <text class="map-node-sub" x="249" y="202">朱家角 · 青西</text>
+          </a>
+          <a href="#region-pudong" class="map-node map-node-pudong">
+            <title>去浦东路线</title>
+            <rect x="560" y="82" width="142" height="83" rx="14"></rect>
+            <text class="map-node-eyebrow" x="579" y="110">更靠近出发点</text>
+            <text class="map-node-title" x="579" y="138">浦东</text>
+            <text class="map-node-sub" x="579" y="156">滴水湖 · 新场 · 川沙</text>
+          </a>
+          <a href="#region-jinshan" class="map-node map-node-jinshan">
+            <title>去金山路线</title>
+            <rect x="213" y="292" width="144" height="80" rx="14"></rect>
+            <text class="map-node-eyebrow" x="232" y="319">海边 · 古镇</text>
+            <text class="map-node-title" x="232" y="346">金山</text>
+            <text class="map-node-sub" x="232" y="363">金山嘴 · 枫泾</text>
+          </a>
+          <a href="#region-fengxian" class="map-node map-node-fengxian">
+            <title>去奉贤路线</title>
+            <rect x="409" y="294" width="145" height="80" rx="14"></rect>
+            <text class="map-node-eyebrow" x="428" y="321">湖景 · 手作</text>
+            <text class="map-node-title" x="428" y="348">奉贤</text>
+            <text class="map-node-sub" x="428" y="365">上海之鱼 · 青溪</text>
+          </a>
+          <g class="map-origin" aria-label="起点陆家嘴">
+            <circle cx="536" cy="212" r="24"></circle>
+            <circle cx="536" cy="212" r="7"></circle>
+            <text x="536" y="253">陆家嘴出发</text>
+          </g>
+        </svg>
+        <svg class="region-map mobile-region-map" viewBox="0 0 380 520" role="img"
+          aria-labelledby="mobile-map-title mobile-map-desc">
+          <title id="mobile-map-title">周末路线区域相对位置图</title>
+          <desc id="mobile-map-desc">陆家嘴为出发点，苏州跨城在西北，青浦在西侧，金山在西南，奉贤在南侧，浦东在东侧。</desc>
+          <rect class="map-background" width="380" height="520" rx="18"></rect>
+          <path class="map-river" d="M344 -20 C320 74 355 128 350 210 C345 300 368 404 390 540"></path>
+          <path class="map-water" d="M-20 480 C76 444 142 478 206 506 C270 534 329 492 405 512"></path>
+          <g class="map-links" aria-hidden="true">
+            <path d="M274 232 C214 193 135 122 87 91"></path>
+            <path d="M274 232 C211 217 141 196 90 190"></path>
+            <path d="M274 232 C225 279 166 323 98 337"></path>
+            <path d="M274 232 C276 292 280 332 280 360"></path>
+            <path d="M274 232 C289 183 292 137 286 107"></path>
+          </g>
+          <a href="#region-suzhou" class="map-node">
+            <rect x="12" y="20" width="146" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="29" y="45">跨城 · 车程较长</text>
+            <text class="map-node-title" x="29" y="70">苏州跨城</text>
+            <text class="map-node-sub" x="29" y="89">锦溪 · 周庄 · 西山</text>
+          </a>
+          <a href="#region-qingpu" class="map-node">
+            <rect x="22" y="152" width="124" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="39" y="177">水乡 · 湖岸</text>
+            <text class="map-node-title" x="39" y="202">青浦</text>
+            <text class="map-node-sub" x="39" y="221">朱家角 · 青西</text>
+          </a>
+          <a href="#region-pudong" class="map-node">
+            <rect x="218" y="60" width="150" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="235" y="85">离出发点更近</text>
+            <text class="map-node-title" x="235" y="110">浦东</text>
+            <text class="map-node-sub" x="235" y="129">滴水湖 · 新场</text>
+          </a>
+          <g class="map-origin" aria-label="起点陆家嘴">
+            <circle cx="274" cy="232" r="28"></circle>
+            <circle cx="274" cy="232" r="8"></circle>
+            <text x="274" y="276">陆家嘴出发</text>
+          </g>
+          <a href="#region-jinshan" class="map-node">
+            <rect x="14" y="300" width="142" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="31" y="325">海边 · 古镇</text>
+            <text class="map-node-title" x="31" y="350">金山</text>
+            <text class="map-node-sub" x="31" y="369">金山嘴 · 枫泾</text>
+          </a>
+          <a href="#region-fengxian" class="map-node">
+            <rect x="204" y="360" width="150" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="221" y="385">湖景 · 手作</text>
+            <text class="map-node-title" x="221" y="410">奉贤</text>
+            <text class="map-node-sub" x="221" y="429">上海之鱼 · 青溪</text>
+          </a>
+        </svg>
+      </div>
+      <div class="map-legend" aria-label="地图图例">
+        <span><i class="legend-dot"></i>实心圆是出发点</span>
+        <span><i class="legend-line"></i>虚线只表示大致方向</span>
+      </div>
+    </section>`;
+}
+
+const rankingBoard = `
+  <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
+    <header class="ranking-heading">
+      <div>
+        <p class="section-eyebrow">同一套标准比 18 条</p>
+        <h2 id="ranking-title">周末路线总榜</h2>
+      </div>
+      <p>白天体验 45 · 内容组合 25 · 省心程度 20 · 证据质量 10。住宿不参与加分。</p>
+    </header>
+    <ol class="rank-board">
+      ${rankedRoutes.map(renderRankRow).join("")}
+    </ol>
+  </section>`;
+
 const routeSections = groups.map((group) => {
   const routes = allRoutes.filter((route) => route.group === group.id);
   return `
@@ -543,7 +817,7 @@ const routeSections = groups.map((group) => {
         <p class="region-intro">${escapeHtml(group.intro)}</p>
       </header>
       <div class="route-grid">
-        ${routes.map(renderRoute).join("")}
+        ${routes.map(renderRouteLauncher).join("")}
       </div>
     </section>`;
 }).join("");
@@ -561,12 +835,14 @@ const staySections = groups.map((group) => {
     </section>`;
 }).join("");
 
-const regionLinks = groups.map((group, index) => `
-  <a href="#region-${group.id}" ${index === 0 ? "aria-current=\"true\"" : ""}>${escapeHtml(group.title)}</a>`).join("") + `
+const regionLinks = `<a href="#ranking" aria-current="true">总榜</a>` + groups.map((group) => `
+  <a href="#region-${group.id}">${escapeHtml(group.title)}</a>`).join("") + `
+  <a href="#map">位置图</a>
   <a href="#stays">住宿候选</a>`;
 
 const stayCount = allStays.length;
 const routeCount = allRoutes.length;
+const routeDialogs = rankedRoutes.map(renderRouteDialog).join("");
 
 const html = `<!doctype html>
 <html lang="zh-CN">
@@ -609,8 +885,8 @@ const html = `<!doctype html>
       background: var(--paper);
       color: var(--ink);
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
-      font-size: 19px;
-      line-height: 1.75;
+      font-size: 20px;
+      line-height: 1.72;
     }
 
     a { color: var(--green); text-underline-offset: 3px; }
@@ -760,6 +1036,383 @@ const html = `<!doctype html>
     .overview-choices strong { display: block; font-size: 20px; }
     .overview-choices span { display: block; margin-top: 1px; color: var(--muted); font-size: 16px; }
 
+    .section-eyebrow {
+      color: var(--rust);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .map-section,
+    .ranking-section {
+      padding: 44px max(14px, calc((100% - 1180px) / 2)) 56px;
+      border-top: 1px solid var(--line);
+    }
+
+    .map-section { background: rgba(255, 253, 248, .52); }
+
+    .map-heading,
+    .ranking-heading {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .map-heading h2,
+    .ranking-heading h2 {
+      margin-top: 3px;
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .map-heading > p,
+    .ranking-heading > p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #e8efe9;
+      box-shadow: var(--shadow);
+    }
+
+    .region-map {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .desktop-region-map { display: none; }
+
+    .map-background { fill: #edf2ec; }
+    .map-river { fill: none; stroke: #c5d9dc; stroke-width: 24; }
+    .map-water { fill: none; stroke: #d0e1e3; stroke-width: 38; }
+    .map-links path {
+      fill: none;
+      stroke: #7e9689;
+      stroke-width: 2.2;
+      stroke-dasharray: 7 8;
+    }
+
+    .map-node { color: var(--ink); text-decoration: none; }
+    .map-node rect {
+      fill: #fffdf8;
+      stroke: #a9bbb0;
+      stroke-width: 1.7;
+      transition: fill .2s ease, stroke .2s ease;
+    }
+    .map-node:hover rect,
+    .map-node:focus-visible rect { fill: #fff; stroke: var(--green); }
+    .map-node:focus { outline: none; }
+    .map-node-eyebrow { fill: var(--rust); font-size: 15px; font-weight: 800; }
+    .map-node-title { fill: var(--ink); font-size: 25px; font-weight: 900; }
+    .map-node-sub { fill: var(--muted); font-size: 15px; font-weight: 700; }
+    .map-origin circle:first-child { fill: var(--rust-soft); stroke: var(--rust); stroke-width: 2; }
+    .map-origin circle:nth-child(2) { fill: var(--rust); }
+    .map-origin text {
+      fill: var(--rust);
+      font-size: 17px;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      padding-top: 13px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .map-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rust); }
+    .legend-line { width: 24px; border-top: 2px dashed #7e9689; }
+
+    .rank-board {
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow);
+      list-style: none;
+    }
+
+    .rank-board li + li { border-top: 1px solid var(--line); }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 38px 68px minmax(0, 1fr) 18px;
+      grid-template-areas:
+        "rank photo main arrow"
+        "rank photo score arrow";
+      gap: 7px 10px;
+      width: 100%;
+      padding: 15px 11px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .rank-row:hover { background: #f8f6ef; }
+    .rank-row:focus-visible { outline: 3px solid #a9c8b6; outline-offset: -3px; }
+    .row-rank {
+      grid-area: rank;
+      color: #8b968f;
+      font-size: 18px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .row-photo {
+      grid-area: photo;
+      width: 68px;
+      height: 68px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #dbe1dc;
+    }
+    .row-main {
+      grid-area: main;
+      display: grid;
+      min-width: 0;
+      align-content: start;
+      gap: 4px;
+    }
+    .row-region { color: var(--rust); font-size: 14px; font-weight: 900; }
+    .row-main > strong { font-size: 20px; line-height: 1.38; }
+    .row-review {
+      display: -webkit-box;
+      overflow: hidden;
+      color: #46554d;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .row-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .row-tags span {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .row-score {
+      grid-area: score;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+    }
+    .row-score > span:first-child { white-space: nowrap; }
+    .row-score b { font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
+    .row-score small { margin-left: 2px; color: var(--muted); font-size: 13px; font-weight: 800; }
+    .row-arrow { grid-area: arrow; align-self: center; color: #75867c; font-size: 30px; line-height: 1; }
+
+    .stars {
+      position: relative;
+      display: inline-block;
+      flex: 0 0 auto;
+      color: #d8d2c5;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+    .stars-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      overflow: hidden;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .route-launcher {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .route-launcher:focus-visible { outline: 3px solid #89ad98; outline-offset: -3px; }
+    .route-card:hover .route-photo img { transform: scale(1.025); }
+
+    .card-score {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(164, 79, 50, .94);
+      color: white;
+      font-size: 21px;
+      font-weight: 900;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+    }
+    .card-score small { font-size: 12px; font-weight: 800; }
+    .route-title { display: block; margin-top: 10px; font-size: 29px; font-weight: 900; line-height: 1.25; }
+
+    body.dialog-open { overflow: hidden; }
+
+    .route-dialog {
+      width: min(940px, calc(100% - 24px));
+      max-width: none;
+      max-height: calc(100dvh - 24px);
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid #bdc7bf;
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: 0 24px 80px rgba(20, 30, 24, .32);
+    }
+
+    .route-dialog::backdrop { background: rgba(22, 30, 26, .68); backdrop-filter: blur(2px); }
+
+    .dialog-bar {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 8px 10px 8px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, .97);
+      backdrop-filter: blur(12px);
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .dialog-close {
+      min-width: 52px;
+      min-height: 44px;
+      padding: 7px 12px;
+      border: 1px solid #b9c4bc;
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+      color: var(--ink);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .dialog-close:focus-visible { outline: 3px solid #89ad98; outline-offset: 2px; }
+
+    .route-dialog-body {
+      max-height: calc(100dvh - 84px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .dialog-hero { position: relative; min-height: 270px; background: #cfd8d0; }
+    .dialog-hero > img { width: 100%; height: 280px; object-fit: cover; }
+    .dialog-hero-copy {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 72px 18px 18px;
+      background: linear-gradient(transparent, rgba(22, 31, 26, .92));
+      color: white;
+    }
+    .dialog-region { font-size: 15px; font-weight: 900; }
+    .dialog-hero h2 { margin-top: 5px; font-size: 31px; font-weight: 900; }
+    .dialog-travel { margin-top: 8px; color: #eef1ed; font-size: 16px; line-height: 1.55; }
+
+    .score-panel {
+      margin: 16px;
+      padding: 16px;
+      border: 1px solid #c7d5cb;
+      border-radius: var(--radius);
+      background: var(--green-soft);
+    }
+    .score-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .score-heading > div { display: flex; align-items: baseline; }
+    .score-heading > div strong { color: var(--green); font-size: 42px; font-weight: 900; line-height: 1; }
+    .score-heading > div span { margin-left: 3px; color: var(--muted); font-size: 16px; font-weight: 800; }
+    .score-heading .stars { font-size: 21px; }
+    .score-parts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .score-parts > span {
+      display: grid;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--surface-strong);
+    }
+    .score-parts b { color: var(--green); font-size: 22px; line-height: 1.2; }
+    .score-parts small { color: var(--muted); font-size: 13px; font-weight: 700; line-height: 1.4; }
+    .score-reason { margin-top: 13px; font-size: 17px; line-height: 1.65; }
+
+    .score-details {
+      margin-top: 12px;
+      border-top: 1px solid #bdd0c2;
+    }
+    .score-details summary {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      list-style: none;
+    }
+    .score-details summary::-webkit-details-marker { display: none; }
+    .score-details summary::after { content: "＋"; margin-left: 7px; }
+    .score-details[open] summary::after { content: "－"; }
+    .score-detail-copy {
+      padding: 11px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .72);
+    }
+    .score-detail-copy p { font-size: 16px; line-height: 1.65; }
+    .score-detail-copy p + p { margin-top: 8px; }
+    .score-detail-copy strong,
+    .source-note strong { display: block; color: var(--green); font-size: 13px; }
+    .score-method { margin-top: 10px; color: var(--muted); font-size: 14px; }
+
+    .route-dialog > .route-dialog-body > .review-line,
+    .route-dialog > .route-dialog-body > .fee-line,
+    .route-dialog > .route-dialog-body > .activity-line { margin-left: 16px; margin-right: 16px; }
+    .route-dialog > .route-dialog-body > .activity-line { padding-top: 0; }
+    .route-dialog .route-detail {
+      padding: 0 16px 24px;
+      border-top: 0;
+      background: transparent;
+    }
+
+    .source-note { margin-top: 10px; font-size: 15px; line-height: 1.6; }
+
     .region-section {
       padding: 46px max(14px, calc((100% - 1180px) / 2)) 58px;
       border-top: 1px solid var(--line);
@@ -827,6 +1480,7 @@ const html = `<!doctype html>
 
     .route-photo {
       position: relative;
+      display: block;
       aspect-ratio: 16 / 9;
       overflow: hidden;
       background: #d8ddd8;
@@ -856,6 +1510,7 @@ const html = `<!doctype html>
     }
 
     .route-summary {
+      display: block;
       padding: 20px 17px 18px;
     }
 
@@ -901,6 +1556,7 @@ const html = `<!doctype html>
 
     .review-line,
     .fee-line {
+      display: block;
       margin-top: 14px;
       padding-left: 13px;
       border-left: 4px solid var(--green);
@@ -1244,6 +1900,86 @@ const html = `<!doctype html>
       .stay-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
+    @media (min-width: 720px) {
+      body { font-size: 21px; }
+      .map-section,
+      .ranking-section { padding-top: 58px; padding-bottom: 70px; }
+      .map-heading,
+      .ranking-heading { grid-template-columns: 1fr 1fr; align-items: end; gap: 28px; }
+      .map-heading h2,
+      .ranking-heading h2 { font-size: 48px; }
+      .map-heading > p,
+      .ranking-heading > p { font-size: 19px; }
+      .section-eyebrow { font-size: 17px; }
+      .desktop-region-map { display: block; }
+      .mobile-region-map { display: none; }
+      .map-legend { font-size: 16px; }
+      .rank-row {
+        grid-template-columns: 48px 86px minmax(0, 1fr) 112px 20px;
+        grid-template-areas: "rank photo main score arrow";
+        align-items: center;
+        gap: 15px;
+        padding: 16px 18px;
+      }
+      .row-rank { font-size: 20px; }
+      .row-photo { width: 86px; height: 86px; }
+      .row-main { gap: 5px; }
+      .row-region { font-size: 15px; }
+      .row-main > strong { font-size: 22px; }
+      .row-review { font-size: 17px; -webkit-line-clamp: 1; }
+      .row-tags span { padding: 3px 8px; font-size: 14px; }
+      .row-score { display: grid; align-content: center; justify-items: end; gap: 3px; }
+      .row-score b { font-size: 28px; }
+      .row-arrow { font-size: 32px; }
+      .route-title { font-size: 32px; }
+      .review-line,
+      .fee-line { font-size: 19px; }
+      .dialog-bar { padding-left: 22px; }
+      .dialog-hero,
+      .dialog-hero > img { height: 350px; }
+      .dialog-hero-copy { padding: 96px 24px 24px; }
+      .dialog-region { font-size: 16px; }
+      .dialog-hero h2 { font-size: 37px; }
+      .dialog-travel { font-size: 17px; }
+      .score-panel { margin: 22px; padding: 20px; }
+      .score-parts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .score-reason { font-size: 18px; }
+      .score-detail-copy p { font-size: 17px; }
+      .route-dialog > .route-dialog-body > .review-line,
+      .route-dialog > .route-dialog-body > .fee-line,
+      .route-dialog > .route-dialog-body > .activity-line { margin-left: 22px; margin-right: 22px; }
+      .route-dialog .route-detail { padding: 0 22px 28px; }
+      .stay-rating { font-size: 16px; }
+      .stay-review,
+      .stay-confirm { font-size: 19px; }
+      .stay-fit { font-size: 17px; }
+      .page-note p { font-size: 17px; }
+    }
+
+    @media (max-width: 719px) {
+      .intro { padding-top: 34px; }
+      .intro h1 { font-size: 40px; }
+      .intro-lead { font-size: 20px; }
+      .map-heading h2,
+      .ranking-heading h2,
+      .region-heading h2 { font-size: 36px; }
+      .map-heading > p,
+      .ranking-heading > p,
+      .region-intro { font-size: 18px; }
+      .map-frame { margin-right: -1px; }
+      .rank-row { min-height: 108px; }
+      .route-title { font-size: 28px; }
+      .dialog-hero { min-height: 290px; }
+      .dialog-hero > img { height: 300px; }
+      .dialog-hero h2 { font-size: 29px; }
+      .score-parts > span { min-height: 66px; }
+      .stay-heading h4 { font-size: 24px; }
+      .stay-rating { font-size: 16px; }
+      .stay-review,
+      .stay-confirm { font-size: 18px; }
+      .stay-fit { font-size: 16px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition: none !important; }
@@ -1273,17 +2009,9 @@ const html = `<!doctype html>
       </p>
     </section>
 
-    <section class="overview" aria-labelledby="overview-title">
-      <h2 id="overview-title">今天想怎么玩？</h2>
-      <p>不用从头翻到尾，先选一个方向。</p>
-      <div class="overview-choices">
-        <a href="#region-qingpu"><strong>想看水乡和湖</strong><span>朱家角 · 淀山湖 · 青西</span></a>
-        <a href="#region-jinshan"><strong>想吃海鲜拍花</strong><span>金山嘴 · 枫泾 · 花开海上</span></a>
-        <a href="#region-fengxian"><strong>想轻松不暴走</strong><span>上海之鱼 · 青溪 · 手作</span></a>
-        <a href="#region-pudong"><strong>想离上海更近</strong><span>滴水湖 · 新场 · 川沙</span></a>
-        <a href="#region-suzhou"><strong>愿意为玩法开远点</strong><span>锦溪 · 周庄 · 太湖西山</span></a>
-      </div>
-    </section>
+    ${renderRegionMap()}
+
+    ${rankingBoard}
 
     ${routeSections}
 
@@ -1301,12 +2029,66 @@ const html = `<!doctype html>
     </section>
   </main>
 
+  ${routeDialogs}
+
   <footer class="page-note">
     <div class="page-note-inner">
       <p>资料复核：携程问道、美团旅行 CLI、高德 MCP。具体票价、开放时间、船班和收费项目会变，出发前再查一次官方渠道。</p>
       <p>觅家·一夜花香来自携程截图登记，线上三源暂时没有精确同名结果；预订前请在携程 App 复核在售状态和房东口径。</p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const closeDialog = (dialog) => {
+        if (dialog?.open) dialog.close();
+      };
+
+      document.addEventListener("click", (event) => {
+        const opener = event.target.closest("[data-route-id]");
+        if (opener) {
+          const dialog = document.getElementById("route-dialog-" + opener.dataset.routeId);
+          if (dialog && !dialog.open) {
+            document.body.classList.add("dialog-open");
+            dialog.showModal();
+          }
+          return;
+        }
+
+        const closeButton = event.target.closest("[data-close-dialog]");
+        if (closeButton) {
+          closeDialog(closeButton.closest("dialog"));
+          return;
+        }
+
+        const dialog = event.target.closest("dialog.route-dialog");
+        if (dialog && event.target === dialog) closeDialog(dialog);
+      });
+
+      document.querySelectorAll("dialog.route-dialog").forEach((dialog) => {
+        dialog.addEventListener("close", () => {
+          if (!document.querySelector("dialog.route-dialog[open]")) {
+            document.body.classList.remove("dialog-open");
+          }
+        });
+        dialog.addEventListener("click", (event) => {
+          const rect = dialog.getBoundingClientRect();
+          const outside =
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom;
+          if (outside) closeDialog(dialog);
+        });
+        dialog.addEventListener("toggle", (event) => {
+          if (event.newState === "open") {
+            document.body.classList.add("dialog-open");
+          } else if (!document.querySelector("dialog.route-dialog[open]")) {
+            document.body.classList.remove("dialog-open");
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
 `;

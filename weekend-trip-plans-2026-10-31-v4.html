@@ -39,8 +39,8 @@
       background: var(--paper);
       color: var(--ink);
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
-      font-size: 19px;
-      line-height: 1.75;
+      font-size: 20px;
+      line-height: 1.72;
     }
 
     a { color: var(--green); text-underline-offset: 3px; }
@@ -190,6 +190,383 @@
     .overview-choices strong { display: block; font-size: 20px; }
     .overview-choices span { display: block; margin-top: 1px; color: var(--muted); font-size: 16px; }
 
+    .section-eyebrow {
+      color: var(--rust);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .map-section,
+    .ranking-section {
+      padding: 44px max(14px, calc((100% - 1180px) / 2)) 56px;
+      border-top: 1px solid var(--line);
+    }
+
+    .map-section { background: rgba(255, 253, 248, .52); }
+
+    .map-heading,
+    .ranking-heading {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .map-heading h2,
+    .ranking-heading h2 {
+      margin-top: 3px;
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .map-heading > p,
+    .ranking-heading > p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #e8efe9;
+      box-shadow: var(--shadow);
+    }
+
+    .region-map {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .desktop-region-map { display: none; }
+
+    .map-background { fill: #edf2ec; }
+    .map-river { fill: none; stroke: #c5d9dc; stroke-width: 24; }
+    .map-water { fill: none; stroke: #d0e1e3; stroke-width: 38; }
+    .map-links path {
+      fill: none;
+      stroke: #7e9689;
+      stroke-width: 2.2;
+      stroke-dasharray: 7 8;
+    }
+
+    .map-node { color: var(--ink); text-decoration: none; }
+    .map-node rect {
+      fill: #fffdf8;
+      stroke: #a9bbb0;
+      stroke-width: 1.7;
+      transition: fill .2s ease, stroke .2s ease;
+    }
+    .map-node:hover rect,
+    .map-node:focus-visible rect { fill: #fff; stroke: var(--green); }
+    .map-node:focus { outline: none; }
+    .map-node-eyebrow { fill: var(--rust); font-size: 15px; font-weight: 800; }
+    .map-node-title { fill: var(--ink); font-size: 25px; font-weight: 900; }
+    .map-node-sub { fill: var(--muted); font-size: 15px; font-weight: 700; }
+    .map-origin circle:first-child { fill: var(--rust-soft); stroke: var(--rust); stroke-width: 2; }
+    .map-origin circle:nth-child(2) { fill: var(--rust); }
+    .map-origin text {
+      fill: var(--rust);
+      font-size: 17px;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      padding-top: 13px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .map-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rust); }
+    .legend-line { width: 24px; border-top: 2px dashed #7e9689; }
+
+    .rank-board {
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow);
+      list-style: none;
+    }
+
+    .rank-board li + li { border-top: 1px solid var(--line); }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 38px 68px minmax(0, 1fr) 18px;
+      grid-template-areas:
+        "rank photo main arrow"
+        "rank photo score arrow";
+      gap: 7px 10px;
+      width: 100%;
+      padding: 15px 11px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .rank-row:hover { background: #f8f6ef; }
+    .rank-row:focus-visible { outline: 3px solid #a9c8b6; outline-offset: -3px; }
+    .row-rank {
+      grid-area: rank;
+      color: #8b968f;
+      font-size: 18px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .row-photo {
+      grid-area: photo;
+      width: 68px;
+      height: 68px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #dbe1dc;
+    }
+    .row-main {
+      grid-area: main;
+      display: grid;
+      min-width: 0;
+      align-content: start;
+      gap: 4px;
+    }
+    .row-region { color: var(--rust); font-size: 14px; font-weight: 900; }
+    .row-main > strong { font-size: 20px; line-height: 1.38; }
+    .row-review {
+      display: -webkit-box;
+      overflow: hidden;
+      color: #46554d;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .row-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .row-tags span {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .row-score {
+      grid-area: score;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+    }
+    .row-score > span:first-child { white-space: nowrap; }
+    .row-score b { font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
+    .row-score small { margin-left: 2px; color: var(--muted); font-size: 13px; font-weight: 800; }
+    .row-arrow { grid-area: arrow; align-self: center; color: #75867c; font-size: 30px; line-height: 1; }
+
+    .stars {
+      position: relative;
+      display: inline-block;
+      flex: 0 0 auto;
+      color: #d8d2c5;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+    .stars-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      overflow: hidden;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .route-launcher {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .route-launcher:focus-visible { outline: 3px solid #89ad98; outline-offset: -3px; }
+    .route-card:hover .route-photo img { transform: scale(1.025); }
+
+    .card-score {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(164, 79, 50, .94);
+      color: white;
+      font-size: 21px;
+      font-weight: 900;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+    }
+    .card-score small { font-size: 12px; font-weight: 800; }
+    .route-title { display: block; margin-top: 10px; font-size: 29px; font-weight: 900; line-height: 1.25; }
+
+    body.dialog-open { overflow: hidden; }
+
+    .route-dialog {
+      width: min(940px, calc(100% - 24px));
+      max-width: none;
+      max-height: calc(100dvh - 24px);
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid #bdc7bf;
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: 0 24px 80px rgba(20, 30, 24, .32);
+    }
+
+    .route-dialog::backdrop { background: rgba(22, 30, 26, .68); backdrop-filter: blur(2px); }
+
+    .dialog-bar {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 8px 10px 8px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, .97);
+      backdrop-filter: blur(12px);
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .dialog-close {
+      min-width: 52px;
+      min-height: 44px;
+      padding: 7px 12px;
+      border: 1px solid #b9c4bc;
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+      color: var(--ink);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .dialog-close:focus-visible { outline: 3px solid #89ad98; outline-offset: 2px; }
+
+    .route-dialog-body {
+      max-height: calc(100dvh - 84px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .dialog-hero { position: relative; min-height: 270px; background: #cfd8d0; }
+    .dialog-hero > img { width: 100%; height: 280px; object-fit: cover; }
+    .dialog-hero-copy {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 72px 18px 18px;
+      background: linear-gradient(transparent, rgba(22, 31, 26, .92));
+      color: white;
+    }
+    .dialog-region { font-size: 15px; font-weight: 900; }
+    .dialog-hero h2 { margin-top: 5px; font-size: 31px; font-weight: 900; }
+    .dialog-travel { margin-top: 8px; color: #eef1ed; font-size: 16px; line-height: 1.55; }
+
+    .score-panel {
+      margin: 16px;
+      padding: 16px;
+      border: 1px solid #c7d5cb;
+      border-radius: var(--radius);
+      background: var(--green-soft);
+    }
+    .score-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .score-heading > div { display: flex; align-items: baseline; }
+    .score-heading > div strong { color: var(--green); font-size: 42px; font-weight: 900; line-height: 1; }
+    .score-heading > div span { margin-left: 3px; color: var(--muted); font-size: 16px; font-weight: 800; }
+    .score-heading .stars { font-size: 21px; }
+    .score-parts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .score-parts > span {
+      display: grid;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--surface-strong);
+    }
+    .score-parts b { color: var(--green); font-size: 22px; line-height: 1.2; }
+    .score-parts small { color: var(--muted); font-size: 13px; font-weight: 700; line-height: 1.4; }
+    .score-reason { margin-top: 13px; font-size: 17px; line-height: 1.65; }
+
+    .score-details {
+      margin-top: 12px;
+      border-top: 1px solid #bdd0c2;
+    }
+    .score-details summary {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      list-style: none;
+    }
+    .score-details summary::-webkit-details-marker { display: none; }
+    .score-details summary::after { content: "＋"; margin-left: 7px; }
+    .score-details[open] summary::after { content: "－"; }
+    .score-detail-copy {
+      padding: 11px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .72);
+    }
+    .score-detail-copy p { font-size: 16px; line-height: 1.65; }
+    .score-detail-copy p + p { margin-top: 8px; }
+    .score-detail-copy strong,
+    .source-note strong { display: block; color: var(--green); font-size: 13px; }
+    .score-method { margin-top: 10px; color: var(--muted); font-size: 14px; }
+
+    .route-dialog > .route-dialog-body > .review-line,
+    .route-dialog > .route-dialog-body > .fee-line,
+    .route-dialog > .route-dialog-body > .activity-line { margin-left: 16px; margin-right: 16px; }
+    .route-dialog > .route-dialog-body > .activity-line { padding-top: 0; }
+    .route-dialog .route-detail {
+      padding: 0 16px 24px;
+      border-top: 0;
+      background: transparent;
+    }
+
+    .source-note { margin-top: 10px; font-size: 15px; line-height: 1.6; }
+
     .region-section {
       padding: 46px max(14px, calc((100% - 1180px) / 2)) 58px;
       border-top: 1px solid var(--line);
@@ -257,6 +634,7 @@
 
     .route-photo {
       position: relative;
+      display: block;
       aspect-ratio: 16 / 9;
       overflow: hidden;
       background: #d8ddd8;
@@ -286,6 +664,7 @@
     }
 
     .route-summary {
+      display: block;
       padding: 20px 17px 18px;
     }
 
@@ -331,6 +710,7 @@
 
     .review-line,
     .fee-line {
+      display: block;
       margin-top: 14px;
       padding-left: 13px;
       border-left: 4px solid var(--green);
@@ -674,6 +1054,86 @@
       .stay-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
+    @media (min-width: 720px) {
+      body { font-size: 21px; }
+      .map-section,
+      .ranking-section { padding-top: 58px; padding-bottom: 70px; }
+      .map-heading,
+      .ranking-heading { grid-template-columns: 1fr 1fr; align-items: end; gap: 28px; }
+      .map-heading h2,
+      .ranking-heading h2 { font-size: 48px; }
+      .map-heading > p,
+      .ranking-heading > p { font-size: 19px; }
+      .section-eyebrow { font-size: 17px; }
+      .desktop-region-map { display: block; }
+      .mobile-region-map { display: none; }
+      .map-legend { font-size: 16px; }
+      .rank-row {
+        grid-template-columns: 48px 86px minmax(0, 1fr) 112px 20px;
+        grid-template-areas: "rank photo main score arrow";
+        align-items: center;
+        gap: 15px;
+        padding: 16px 18px;
+      }
+      .row-rank { font-size: 20px; }
+      .row-photo { width: 86px; height: 86px; }
+      .row-main { gap: 5px; }
+      .row-region { font-size: 15px; }
+      .row-main > strong { font-size: 22px; }
+      .row-review { font-size: 17px; -webkit-line-clamp: 1; }
+      .row-tags span { padding: 3px 8px; font-size: 14px; }
+      .row-score { display: grid; align-content: center; justify-items: end; gap: 3px; }
+      .row-score b { font-size: 28px; }
+      .row-arrow { font-size: 32px; }
+      .route-title { font-size: 32px; }
+      .review-line,
+      .fee-line { font-size: 19px; }
+      .dialog-bar { padding-left: 22px; }
+      .dialog-hero,
+      .dialog-hero > img { height: 350px; }
+      .dialog-hero-copy { padding: 96px 24px 24px; }
+      .dialog-region { font-size: 16px; }
+      .dialog-hero h2 { font-size: 37px; }
+      .dialog-travel { font-size: 17px; }
+      .score-panel { margin: 22px; padding: 20px; }
+      .score-parts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .score-reason { font-size: 18px; }
+      .score-detail-copy p { font-size: 17px; }
+      .route-dialog > .route-dialog-body > .review-line,
+      .route-dialog > .route-dialog-body > .fee-line,
+      .route-dialog > .route-dialog-body > .activity-line { margin-left: 22px; margin-right: 22px; }
+      .route-dialog .route-detail { padding: 0 22px 28px; }
+      .stay-rating { font-size: 16px; }
+      .stay-review,
+      .stay-confirm { font-size: 19px; }
+      .stay-fit { font-size: 17px; }
+      .page-note p { font-size: 17px; }
+    }
+
+    @media (max-width: 719px) {
+      .intro { padding-top: 34px; }
+      .intro h1 { font-size: 40px; }
+      .intro-lead { font-size: 20px; }
+      .map-heading h2,
+      .ranking-heading h2,
+      .region-heading h2 { font-size: 36px; }
+      .map-heading > p,
+      .ranking-heading > p,
+      .region-intro { font-size: 18px; }
+      .map-frame { margin-right: -1px; }
+      .rank-row { min-height: 108px; }
+      .route-title { font-size: 28px; }
+      .dialog-hero { min-height: 290px; }
+      .dialog-hero > img { height: 300px; }
+      .dialog-hero h2 { font-size: 29px; }
+      .score-parts > span { min-height: 66px; }
+      .stay-heading h4 { font-size: 24px; }
+      .stay-rating { font-size: 16px; }
+      .stay-review,
+      .stay-confirm { font-size: 18px; }
+      .stay-fit { font-size: 16px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition: none !important; }
@@ -689,12 +1149,13 @@
         <span>6位成人 · 4间房 · 陆家嘴出发</span>
       </div>
       <nav class="region-nav" aria-label="路线地区">
-
-  <a href="#region-qingpu" aria-current="true">青浦</a>
-  <a href="#region-jinshan" >金山</a>
-  <a href="#region-fengxian" >奉贤</a>
-  <a href="#region-pudong" >浦东</a>
-  <a href="#region-suzhou" >苏州跨城</a>
+        <a href="#ranking" aria-current="true">总榜</a>
+  <a href="#region-qingpu">青浦</a>
+  <a href="#region-jinshan">金山</a>
+  <a href="#region-fengxian">奉贤</a>
+  <a href="#region-pudong">浦东</a>
+  <a href="#region-suzhou">苏州跨城</a>
+  <a href="#map">位置图</a>
   <a href="#stays">住宿候选</a>
       </nav>
     </div>
@@ -709,17 +1170,537 @@
       </p>
     </section>
 
-    <section class="overview" aria-labelledby="overview-title">
-      <h2 id="overview-title">今天想怎么玩？</h2>
-      <p>不用从头翻到尾，先选一个方向。</p>
-      <div class="overview-choices">
-        <a href="#region-qingpu"><strong>想看水乡和湖</strong><span>朱家角 · 淀山湖 · 青西</span></a>
-        <a href="#region-jinshan"><strong>想吃海鲜拍花</strong><span>金山嘴 · 枫泾 · 花开海上</span></a>
-        <a href="#region-fengxian"><strong>想轻松不暴走</strong><span>上海之鱼 · 青溪 · 手作</span></a>
-        <a href="#region-pudong"><strong>想离上海更近</strong><span>滴水湖 · 新场 · 川沙</span></a>
-        <a href="#region-suzhou"><strong>愿意为玩法开远点</strong><span>锦溪 · 周庄 · 太湖西山</span></a>
+
+    <section class="map-section" id="map" aria-labelledby="map-title">
+      <header class="map-heading">
+        <div>
+          <p class="section-eyebrow">先有个方向感</p>
+          <h2 id="map-title">这些地方大概在哪</h2>
+        </div>
+        <p>点区域名称可以跳到对应路线。这里只示意相对位置，不代表真实导航距离。</p>
+      </header>
+      <div class="map-frame">
+        <svg class="region-map desktop-region-map" viewBox="0 0 760 420" role="img"
+          aria-labelledby="map-svg-title map-svg-desc">
+          <title id="map-svg-title">周末路线区域相对位置图</title>
+          <desc id="map-svg-desc">陆家嘴为出发点，青浦在西侧，金山在西南，奉贤在南侧，浦东在东侧，苏州跨城路线在西北侧。</desc>
+          <rect class="map-background" width="760" height="420" rx="18"></rect>
+          <path class="map-river" d="M600 -20 C575 55 606 105 634 154 C665 210 659 287 703 440"></path>
+          <path class="map-water" d="M-15 365 C110 326 187 361 268 402 C349 443 439 395 524 405 C607 415 679 391 785 418"></path>
+          <g class="map-links" aria-hidden="true">
+            <path d="M536 212 C454 185 355 167 288 171"></path>
+            <path d="M536 212 C454 250 350 305 303 329"></path>
+            <path d="M536 212 C512 273 488 309 480 329"></path>
+            <path d="M536 212 C556 176 579 147 604 128"></path>
+            <path d="M536 212 C430 153 285 103 177 104"></path>
+          </g>
+          <a href="#region-suzhou" class="map-node map-node-suzhou">
+            <title>去苏州跨城路线</title>
+            <rect x="42" y="62" width="158" height="84" rx="14"></rect>
+            <text class="map-node-eyebrow" x="62" y="91">跨城 · 车程较长</text>
+            <text class="map-node-title" x="62" y="119">苏州跨城</text>
+            <text class="map-node-sub" x="62" y="138">锦溪 · 周庄 · 西山</text>
+          </a>
+          <a href="#region-qingpu" class="map-node map-node-qingpu">
+            <title>去青浦路线</title>
+            <rect x="231" y="131" width="130" height="78" rx="14"></rect>
+            <text class="map-node-eyebrow" x="249" y="158">水乡 · 湖岸</text>
+            <text class="map-node-title" x="249" y="185">青浦</text>
+            <text class="map-node-sub" x="249" y="202">朱家角 · 青西</text>
+          </a>
+          <a href="#region-pudong" class="map-node map-node-pudong">
+            <title>去浦东路线</title>
+            <rect x="560" y="82" width="142" height="83" rx="14"></rect>
+            <text class="map-node-eyebrow" x="579" y="110">更靠近出发点</text>
+            <text class="map-node-title" x="579" y="138">浦东</text>
+            <text class="map-node-sub" x="579" y="156">滴水湖 · 新场 · 川沙</text>
+          </a>
+          <a href="#region-jinshan" class="map-node map-node-jinshan">
+            <title>去金山路线</title>
+            <rect x="213" y="292" width="144" height="80" rx="14"></rect>
+            <text class="map-node-eyebrow" x="232" y="319">海边 · 古镇</text>
+            <text class="map-node-title" x="232" y="346">金山</text>
+            <text class="map-node-sub" x="232" y="363">金山嘴 · 枫泾</text>
+          </a>
+          <a href="#region-fengxian" class="map-node map-node-fengxian">
+            <title>去奉贤路线</title>
+            <rect x="409" y="294" width="145" height="80" rx="14"></rect>
+            <text class="map-node-eyebrow" x="428" y="321">湖景 · 手作</text>
+            <text class="map-node-title" x="428" y="348">奉贤</text>
+            <text class="map-node-sub" x="428" y="365">上海之鱼 · 青溪</text>
+          </a>
+          <g class="map-origin" aria-label="起点陆家嘴">
+            <circle cx="536" cy="212" r="24"></circle>
+            <circle cx="536" cy="212" r="7"></circle>
+            <text x="536" y="253">陆家嘴出发</text>
+          </g>
+        </svg>
+        <svg class="region-map mobile-region-map" viewBox="0 0 380 520" role="img"
+          aria-labelledby="mobile-map-title mobile-map-desc">
+          <title id="mobile-map-title">周末路线区域相对位置图</title>
+          <desc id="mobile-map-desc">陆家嘴为出发点，苏州跨城在西北，青浦在西侧，金山在西南，奉贤在南侧，浦东在东侧。</desc>
+          <rect class="map-background" width="380" height="520" rx="18"></rect>
+          <path class="map-river" d="M344 -20 C320 74 355 128 350 210 C345 300 368 404 390 540"></path>
+          <path class="map-water" d="M-20 480 C76 444 142 478 206 506 C270 534 329 492 405 512"></path>
+          <g class="map-links" aria-hidden="true">
+            <path d="M274 232 C214 193 135 122 87 91"></path>
+            <path d="M274 232 C211 217 141 196 90 190"></path>
+            <path d="M274 232 C225 279 166 323 98 337"></path>
+            <path d="M274 232 C276 292 280 332 280 360"></path>
+            <path d="M274 232 C289 183 292 137 286 107"></path>
+          </g>
+          <a href="#region-suzhou" class="map-node">
+            <rect x="12" y="20" width="146" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="29" y="45">跨城 · 车程较长</text>
+            <text class="map-node-title" x="29" y="70">苏州跨城</text>
+            <text class="map-node-sub" x="29" y="89">锦溪 · 周庄 · 西山</text>
+          </a>
+          <a href="#region-qingpu" class="map-node">
+            <rect x="22" y="152" width="124" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="39" y="177">水乡 · 湖岸</text>
+            <text class="map-node-title" x="39" y="202">青浦</text>
+            <text class="map-node-sub" x="39" y="221">朱家角 · 青西</text>
+          </a>
+          <a href="#region-pudong" class="map-node">
+            <rect x="218" y="60" width="150" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="235" y="85">离出发点更近</text>
+            <text class="map-node-title" x="235" y="110">浦东</text>
+            <text class="map-node-sub" x="235" y="129">滴水湖 · 新场</text>
+          </a>
+          <g class="map-origin" aria-label="起点陆家嘴">
+            <circle cx="274" cy="232" r="28"></circle>
+            <circle cx="274" cy="232" r="8"></circle>
+            <text x="274" y="276">陆家嘴出发</text>
+          </g>
+          <a href="#region-jinshan" class="map-node">
+            <rect x="14" y="300" width="142" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="31" y="325">海边 · 古镇</text>
+            <text class="map-node-title" x="31" y="350">金山</text>
+            <text class="map-node-sub" x="31" y="369">金山嘴 · 枫泾</text>
+          </a>
+          <a href="#region-fengxian" class="map-node">
+            <rect x="204" y="360" width="150" height="76" rx="14"></rect>
+            <text class="map-node-eyebrow" x="221" y="385">湖景 · 手作</text>
+            <text class="map-node-title" x="221" y="410">奉贤</text>
+            <text class="map-node-sub" x="221" y="429">上海之鱼 · 青溪</text>
+          </a>
+        </svg>
+      </div>
+      <div class="map-legend" aria-label="地图图例">
+        <span><i class="legend-dot"></i>实心圆是出发点</span>
+        <span><i class="legend-line"></i>虚线只表示大致方向</span>
       </div>
     </section>
+
+
+  <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
+    <header class="ranking-heading">
+      <div>
+        <p class="section-eyebrow">同一套标准比 18 条</p>
+        <h2 id="ranking-title">周末路线总榜</h2>
+      </div>
+      <p>白天体验 45 · 内容组合 25 · 省心程度 20 · 证据质量 10。住宿不参与加分。</p>
+    </header>
+    <ol class="rank-board">
+
+    <li>
+      <button class="rank-row" type="button" data-route-id="14"
+        aria-haspopup="dialog" aria-controls="route-dialog-14">
+        <span class="row-rank">01</span>
+        <img class="row-photo" src="assets/routes/route-14.jpg" alt="新场古镇 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">浦东</span>
+          <strong>新场古镇 · 逛吃＋茶馆</strong>
+          <span class="row-review">冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>85</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="08"
+        aria-haspopup="dialog" aria-controls="route-dialog-08">
+        <span class="row-rank">02</span>
+        <img class="row-photo" src="assets/routes/route-08.jpg" alt="乐水滴水湖水上运动基地 · 景点照片 5" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">浦东</span>
+          <strong>滴水湖 · 船体验＋航海博物馆</strong>
+          <span class="row-review">湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</span>
+          <span class="row-tags"><span>水上运动</span><span>雨天有替代</span><span>成人项目先核</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>83</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="03"
+        aria-haspopup="dialog" aria-controls="route-dialog-03">
+        <span class="row-rank">03</span>
+        <img class="row-photo" src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">青浦</span>
+          <strong>朱家角 · 游船＋园林＋老街</strong>
+          <span class="row-review">经典水乡、夜景最值；游船和园林挑两项就够。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>82</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="05"
+        aria-haspopup="dialog" aria-controls="route-dialog-05">
+        <span class="row-rank">04</span>
+        <img class="row-photo" src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">金山</span>
+          <strong>枫泾 · 古镇寻味＋漫画展馆</strong>
+          <span class="row-review">人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>81</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="s02"
+        aria-haspopup="dialog" aria-controls="route-dialog-s02">
+        <span class="row-rank">05</span>
+        <img class="row-photo" src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼与院子" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">昆山</span>
+          <strong>周庄古镇 · 白天水巷＋晚上看灯</strong>
+          <span class="row-review">夜景是重点，住古镇里能省掉晚上来回折腾。</span>
+          <span class="row-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>81</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="09"
+        aria-haspopup="dialog" aria-controls="route-dialog-09">
+        <span class="row-rank">06</span>
+        <img class="row-photo" src="assets/routes/route-09.jpg" alt="上海之鱼 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">奉贤</span>
+          <strong>上海之鱼 · 湖景＋奉贤博物馆</strong>
+          <span class="row-review">湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</span>
+          <span class="row-tags"><span>拍照赏景</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>80</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="11"
+        aria-haspopup="dialog" aria-controls="route-dialog-11">
+        <span class="row-rank">07</span>
+        <img class="row-photo" src="assets/routes/route-11.jpg" alt="上海青西郊野公园 · 景点照片 2" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">青浦</span>
+          <strong>青西 · 水上森林＋莲湖村</strong>
+          <span class="row-review">水上森林最出片，上午直奔短线；16点后停止进入。</span>
+          <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>80</b><small>分</small></span>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="15"
+        aria-haspopup="dialog" aria-controls="route-dialog-15">
+        <span class="row-rank">08</span>
+        <img class="row-photo" src="assets/routes/route-15.jpg" alt="花开海上生态园 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">金山</span>
+          <strong>花开海上 · 地肤花海＋朱泾</strong>
+          <span class="row-review">地肤和花海很开阔，10 月底属转色期；晴天更值。</span>
+          <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>79</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="04"
+        aria-haspopup="dialog" aria-controls="route-dialog-04">
+        <span class="row-rank">09</span>
+        <img class="row-photo" src="assets/routes/route-04.jpg" alt="金山嘴渔村 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">金山</span>
+          <strong>金山嘴 · 渔村海鲜＋海边散步</strong>
+          <span class="row-review">老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>晴天更好</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>78</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="12"
+        aria-haspopup="dialog" aria-controls="route-dialog-12">
+        <span class="row-rank">10</span>
+        <img class="row-photo" src="assets/routes/route-12.jpg" alt="花开半夏 · 奉贤介绍实景 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">奉贤</span>
+          <strong>花开半夏 · 成人手作＋乡村体验</strong>
+          <span class="row-review">手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
+          <span class="row-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>77</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="s01"
+        aria-haspopup="dialog" aria-controls="route-dialog-s01">
+        <span class="row-rank">11</span>
+        <img class="row-photo" src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院石板路与草坪" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">昆山</span>
+          <strong>锦溪古镇 · 水乡慢逛＋计家墩理想村</strong>
+          <span class="row-review">古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
+          <span class="row-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>77</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="02"
+        aria-haspopup="dialog" aria-controls="route-dialog-02">
+        <span class="row-rank">12</span>
+        <img class="row-photo" src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">青浦</span>
+          <strong>淀山湖 · 帆船候选＋金泽古镇</strong>
+          <span class="row-review">湖面开阔、古镇安静；没约上船就别专程追码头。</span>
+          <span class="row-tags"><span>水上运动</span><span>晴天更好</span><span>成人项目先核</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>76</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="s03"
+        aria-haspopup="dialog" aria-controls="route-dialog-s03">
+        <span class="row-rank">13</span>
+        <img class="row-photo" src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑正面，门楣招牌可见" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">苏州</span>
+          <strong>太湖西山 · 雕花楼＋缥缈峰＋院子</strong>
+          <span class="row-review">景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
+          <span class="row-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>76</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="13"
+        aria-haspopup="dialog" aria-controls="route-dialog-13">
+        <span class="row-rank">14</span>
+        <img class="row-photo" src="assets/routes/route-13.jpg" alt="青溪老街 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">奉贤</span>
+          <strong>青溪 · 老街逛吃＋水乡夜景</strong>
+          <span class="row-review">老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>75</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="17"
+        aria-haspopup="dialog" aria-controls="route-dialog-17">
+        <span class="row-rank">15</span>
+        <img class="row-photo" src="assets/routes/route-17.jpg" alt="川沙古镇 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">浦东</span>
+          <strong>川沙 · 老街人文＋比斯特</strong>
+          <span class="row-review">老街免费、比斯特适合第二天吃饭逛；顺路感很强。</span>
+          <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>75</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="06"
+        aria-haspopup="dialog" aria-controls="route-dialog-06">
+        <span class="row-rank">16</span>
+        <img class="row-photo" src="assets/routes/route-06.jpg" alt="枫叶岛 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">金山</span>
+          <strong>廊下 · 枫叶岛＋山塘乡野</strong>
+          <span class="row-review">10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</span>
+          <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>71</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="16"
+        aria-haspopup="dialog" aria-controls="route-dialog-16">
+        <span class="row-rank">17</span>
+        <img class="row-photo" src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">青浦</span>
+          <strong>东方绿舟 · 航母模型＋湖滨步道</strong>
+          <span class="row-review">航母和兵器馆是真亮点；园区大，另收费项目先问。</span>
+          <span class="row-tags"><span>水上运动</span><span>晴天更好</span><span>白天轻松玩</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>69</b><small>分</small></span>
+
+    <span class="stars" aria-label="3.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:70%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    <li>
+      <button class="rank-row" type="button" data-route-id="01"
+        aria-haspopup="dialog" aria-controls="route-dialog-01">
+        <span class="row-rank">18</span>
+        <img class="row-photo" src="assets/routes/route-01.jpg" alt="上海太阳岛度假酒店 · 花园" loading="lazy">
+        <span class="row-main">
+          <span class="row-region">青浦</span>
+          <strong>太阳岛 · 林地＋一项成人娱乐</strong>
+          <span class="row-review">项目多、环境好，但不少另收费且关得早；先电话确认再排。</span>
+          <span class="row-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
+        </span>
+        <span class="row-score">
+          <span><b>68</b><small>分</small></span>
+
+    <span class="stars" aria-label="3.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:70%" aria-hidden="true">★★★★★</span>
+    </span>
+        </span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+    </li>
+    </ol>
+  </section>
 
 
     <section class="region-section" id="region-qingpu" aria-labelledby="region-title-qingpu">
@@ -733,497 +1714,124 @@
       <div class="route-grid">
 
     <article class="route-card" id="route-01">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-01.jpg" alt="上海太阳岛度假酒店 · 花园" loading="lazy">
-            <span class="region-pill">青浦</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 59.8 km · 约 86 分钟</span>
-            </div>
-            <h3>太阳岛 · 林地＋一项成人娱乐</h3>
-            <p class="route-blurb">林地散步，选一项获确认的保龄球/垂钓；温泉不默认开。</p>
-            <div class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>项目多、环境好，但不少另收费且关得早；先电话确认再排。</p>
-            <p class="fee-line"><strong>费用提醒</strong>温泉 10 月 31 日大概率未开，先电话确认；保龄球、垂钓等另收费。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>岛内林地/河边短走</span><span>一项已确认成人娱乐或茶</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往青浦 · 太阳岛</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>岛内林地/河边短走</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>一项已确认成人娱乐或茶</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>温泉仅确认开池和票价后才去，否则短走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-01-2.jpg" alt="上海太阳岛度假酒店 · 休闲娱乐设施" loading="lazy">
-      <figcaption>上海太阳岛度假酒店 · 休闲娱乐设施</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>太阳岛 · 俱乐部别墅三房一厅</p>
-          <div class="detail-footer">
-            <p>上海太阳岛度假酒店 · 花园｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://www.shsunisland.cn/" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="01"
+        aria-haspopup="dialog" aria-controls="route-dialog-01">
+        <span class="route-photo">
+          <img src="assets/routes/route-01.jpg" alt="上海太阳岛度假酒店 · 花园" loading="lazy">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">68<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 18</span>
+            <span>陆家嘴驾车 59.8 km · 约 86 分钟</span>
+          </span>
+          <span class="route-title">太阳岛 · 林地＋一项成人娱乐</span>
+          <span class="review-line"><strong>一句话口碑</strong>项目多、环境好，但不少另收费且关得早；先电话确认再排。</span>
+          <span class="fee-line"><strong>费用提醒</strong>温泉 10 月 31 日大概率未开，先电话确认；保龄球、垂钓等另收费。</span>
+          <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-02">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy">
-            <span class="region-pill">青浦</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>淀山湖 57.4 km · 约 85 分钟；金泽 64.8 km · 约 80 分钟</span>
-            </div>
-            <h3>淀山湖 · 帆船候选＋金泽古镇</h3>
-            <p class="route-blurb">上午船体验，下午金泽古桥喝茶；没船就不专程追码头。</p>
-            <div class="route-tags"><span>水上运动</span><span>晴天更好</span><span>成人项目先核</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>湖面开阔、古镇安静；没约上船就别专程追码头。</p>
-            <p class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>上午已预约的船体验</span><span>金泽古桥慢走/茶馆</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往青浦 · 淀山湖</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>上午已预约的船体验</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>金泽古桥慢走/茶馆</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>水岸短走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-02-2.jpg" alt="上海美帆游艇俱乐部 · 游客图" loading="lazy">
-      <figcaption>上海美帆游艇俱乐部 · 游客图</figcaption>
-    </figure>
-
-          <div class="detail-footer">
-            <p>上海美帆游艇俱乐部 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/112366264.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="02"
+        aria-haspopup="dialog" aria-controls="route-dialog-02">
+        <span class="route-photo">
+          <img src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">76<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 12</span>
+            <span>淀山湖 57.4 km · 约 85 分钟；金泽 64.8 km · 约 80 分钟</span>
+          </span>
+          <span class="route-title">淀山湖 · 帆船候选＋金泽古镇</span>
+          <span class="review-line"><strong>一句话口碑</strong>湖面开阔、古镇安静；没约上船就别专程追码头。</span>
+          <span class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</span>
+          <span class="route-tags"><span>水上运动</span><span>晴天更好</span><span>成人项目先核</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-03">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy">
-            <span class="region-pill">青浦</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 51.0 km · 约 73 分钟</span>
-            </div>
-            <h3>朱家角 · 游船＋园林＋老街</h3>
-            <p class="route-blurb">老街逛吃、课植园和短游船，挑两项就够。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</p>
-            <p class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>沿河老街＋小吃午饭</span><span>课植园或游船二选一</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往青浦 · 朱家角</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>沿河老街＋小吃午饭</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>课植园或游船二选一</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30以后</time>
-      <span>老街短走，20点后安静休息</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>早上老街慢走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-03-2.jpg" alt="朱家角古镇景区 · 景点照片 2" loading="lazy">
-      <figcaption>朱家角古镇景区 · 景点照片 2</figcaption>
-    </figure>
-
-          <div class="detail-footer">
-            <p>朱家角古镇景区 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/14903.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="03"
+        aria-haspopup="dialog" aria-controls="route-dialog-03">
+        <span class="route-photo">
+          <img src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">82<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 3</span>
+            <span>陆家嘴驾车 51.0 km · 约 73 分钟</span>
+          </span>
+          <span class="route-title">朱家角 · 游船＋园林＋老街</span>
+          <span class="review-line"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</span>
+          <span class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-11">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-11.jpg" alt="上海青西郊野公园 · 景点照片 2" loading="lazy">
-            <span class="region-pill">青浦</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 60.0 km · 约 83 分钟</span>
-            </div>
-            <h3>青西 · 水上森林＋莲湖村</h3>
-            <p class="route-blurb">走一段水上森林，莲湖村吃农家菜，别绕完整大圈。</p>
-            <div class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>水上森林最出片，上午直奔短线；16点后停止进入。</p>
-            <p class="fee-line"><strong>费用提醒</strong>公园免费；电瓶车 20 元/人；水上森林 16:00 停止进入，游船收费先问。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>保育区水上森林短线</span><span>莲湖村农家菜/茶</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往青浦 · 青西</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>保育区水上森林短线</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>莲湖村农家菜/茶</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>村内短走或休息</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-11-2.jpg" alt="上海青西郊野公园 · 游客图" loading="lazy">
-      <figcaption>上海青西郊野公园 · 游客图</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>上海浮生民宿</p>
-          <div class="detail-footer">
-            <p>上海青西郊野公园 · 景点照片 2｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2039390.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="11"
+        aria-haspopup="dialog" aria-controls="route-dialog-11">
+        <span class="route-photo">
+          <img src="assets/routes/route-11.jpg" alt="上海青西郊野公园 · 景点照片 2" loading="lazy">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">80<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 7</span>
+            <span>陆家嘴驾车 60.0 km · 约 83 分钟</span>
+          </span>
+          <span class="route-title">青西 · 水上森林＋莲湖村</span>
+          <span class="review-line"><strong>一句话口碑</strong>水上森林最出片，上午直奔短线；16点后停止进入。</span>
+          <span class="fee-line"><strong>费用提醒</strong>公园免费；电瓶车 20 元/人；水上森林 16:00 停止进入，游船收费先问。</span>
+          <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-16">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy">
-            <span class="region-pill">青浦</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 52.7 km · 约 77 分钟</span>
-            </div>
-            <h3>东方绿舟 · 航母模型＋湖滨步道</h3>
-            <p class="route-blurb">看航母模型、走趣桥，自行车只在价格合适时租。</p>
-            <div class="route-tags"><span>水上运动</span><span>晴天更好</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区大，另收费项目先问。</p>
-            <p class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>航母/国防区候选</span><span>湖滨步道或趣桥短线</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往青浦 · 东方绿舟</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>航母/国防区候选</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>湖滨步道或趣桥短线</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>住处附近早餐/短走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-16-2.jpg" alt="东方绿舟景区 · 景点照片 2" loading="lazy">
-      <figcaption>东方绿舟景区 · 景点照片 2</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>朱家角皇家郁金香花园酒店</p>
-          <div class="detail-footer">
-            <p>东方绿舟景区 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/21756.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="16"
+        aria-haspopup="dialog" aria-controls="route-dialog-16">
+        <span class="route-photo">
+          <img src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">69<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 17</span>
+            <span>陆家嘴驾车 52.7 km · 约 77 分钟</span>
+          </span>
+          <span class="route-title">东方绿舟 · 航母模型＋湖滨步道</span>
+          <span class="review-line"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区大，另收费项目先问。</span>
+          <span class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</span>
+          <span class="route-tags"><span>水上运动</span><span>晴天更好</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
       </div>
     </section>
@@ -1238,398 +1846,100 @@
       <div class="route-grid">
 
     <article class="route-card" id="route-04">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-04.jpg" alt="金山嘴渔村 · 景点照片 1" loading="lazy">
-            <span class="region-pill">金山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 82.9 km · 约 94 分钟</span>
-            </div>
-            <h3>金山嘴 · 渔村海鲜＋海边散步</h3>
-            <p class="route-blurb">吃海鲜、逛渔村老街，海边只走一小段，不排下水。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>晴天更好</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</p>
-            <p class="fee-line"><strong>费用提醒</strong>老街免费；展馆联票约 40 元、单馆 10 元；海边步道免费，停车现场确认。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>渔村老街＋午饭</span><span>城市沙滩滨海步道一段</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往金山 · 金山嘴</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>渔村老街＋午饭</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>城市沙滩滨海步道一段</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>渔村清晨/海边咖啡</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-04-2.jpg" alt="金山嘴渔村 · 游客图" loading="lazy">
-      <figcaption>金山嘴渔村 · 游客图</figcaption>
-    </figure>
-
-          <div class="detail-footer">
-            <p>金山嘴渔村 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/143744.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="04"
+        aria-haspopup="dialog" aria-controls="route-dialog-04">
+        <span class="route-photo">
+          <img src="assets/routes/route-04.jpg" alt="金山嘴渔村 · 景点照片 1" loading="lazy">
+          <span class="region-pill">金山</span>
+          <span class="card-score">78<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 9</span>
+            <span>陆家嘴驾车 82.9 km · 约 94 分钟</span>
+          </span>
+          <span class="route-title">金山嘴 · 渔村海鲜＋海边散步</span>
+          <span class="review-line"><strong>一句话口碑</strong>老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</span>
+          <span class="fee-line"><strong>费用提醒</strong>老街免费；展馆联票约 40 元、单馆 10 元；海边步道免费，停车现场确认。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>晴天更好</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-05">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy">
-            <span class="region-pill">金山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 73.8 km · 约 93 分钟</span>
-            </div>
-            <h3>枫泾 · 古镇寻味＋漫画展馆</h3>
-            <p class="route-blurb">古桥、丁蹄粽子、丁聪相关展馆，餐后坐茶馆。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</p>
-            <p class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>古镇桥边/长廊慢逛</span><span>一处公开展馆或茶馆</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往金山 · 枫泾</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>古镇桥边/长廊慢逛</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>一处公开展馆或茶馆</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>早上小吃店或咖啡</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-05-2.jpg" alt="枫泾古镇 · 景点照片 2" loading="lazy">
-      <figcaption>枫泾古镇 · 景点照片 2</figcaption>
-    </figure>
-
-          <div class="detail-footer">
-            <p>枫泾古镇 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/49029.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="05"
+        aria-haspopup="dialog" aria-controls="route-dialog-05">
+        <span class="route-photo">
+          <img src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy">
+          <span class="region-pill">金山</span>
+          <span class="card-score">81<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 4</span>
+            <span>陆家嘴驾车 73.8 km · 约 93 分钟</span>
+          </span>
+          <span class="route-title">枫泾 · 古镇寻味＋漫画展馆</span>
+          <span class="review-line"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
+          <span class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-06">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-06.jpg" alt="枫叶岛 · 景点照片 1" loading="lazy">
-            <span class="region-pill">金山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 89.0 km · 约 101 分钟</span>
-            </div>
-            <h3>廊下 · 枫叶岛＋山塘乡野</h3>
-            <p class="route-blurb">赏枫短线、农家菜、山塘老街，白天不只坐客厅。</p>
-            <div class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</p>
-            <p class="fee-line"><strong>费用提醒</strong>枫叶岛免费，停车免费但车位少；划船收费先问；廊华路部分施工。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>枫叶岛看当周叶色短逛</span><span>山塘上海侧老街/茶</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往金山 · 廊下</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>枫叶岛看当周叶色短逛</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>山塘上海侧老街/茶</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>乡村短走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-06-2.jpg" alt="枫叶岛 · 景点照片 2" loading="lazy">
-      <figcaption>枫叶岛 · 景点照片 2</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>上海涵七民宿</p>
-          <div class="detail-footer">
-            <p>枫叶岛 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/1510071.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="06"
+        aria-haspopup="dialog" aria-controls="route-dialog-06">
+        <span class="route-photo">
+          <img src="assets/routes/route-06.jpg" alt="枫叶岛 · 景点照片 1" loading="lazy">
+          <span class="region-pill">金山</span>
+          <span class="card-score">71<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 16</span>
+            <span>陆家嘴驾车 89.0 km · 约 101 分钟</span>
+          </span>
+          <span class="route-title">廊下 · 枫叶岛＋山塘乡野</span>
+          <span class="review-line"><strong>一句话口碑</strong>10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</span>
+          <span class="fee-line"><strong>费用提醒</strong>枫叶岛免费，停车免费但车位少；划船收费先问；廊华路部分施工。</span>
+          <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-15">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-15.jpg" alt="花开海上生态园 · 景点照片 1" loading="lazy">
-            <span class="region-pill">金山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 73.9 km · 约 101 分钟</span>
-            </div>
-            <h3>花开海上 · 地肤花海＋朱泾</h3>
-            <p class="route-blurb">秋日花海拍照＋多人车候选，玩完就近吃饭。</p>
-            <div class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>地肤和花海很开阔，10 月底属转色期；晴天更值。</p>
-            <p class="fee-line"><strong>费用提醒</strong>门票 30 元、实名入园；停车免费；观光车和多人车收费先问。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>地肤/花田短步行</span><span>园内另一段花园或多人车（收费先问）</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往金山 · 朱泾</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>地肤/花田短步行</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>园内另一段花园或多人车（收费先问）</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>朱泾镇早餐/咖啡</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-15-2.jpg" alt="花开海上生态园 · 景点照片 3" loading="lazy">
-      <figcaption>花开海上生态园 · 景点照片 3</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>归源田居</p>
-          <div class="detail-footer">
-            <p>花开海上生态园 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2045955.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="15"
+        aria-haspopup="dialog" aria-controls="route-dialog-15">
+        <span class="route-photo">
+          <img src="assets/routes/route-15.jpg" alt="花开海上生态园 · 景点照片 1" loading="lazy">
+          <span class="region-pill">金山</span>
+          <span class="card-score">79<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 8</span>
+            <span>陆家嘴驾车 73.9 km · 约 101 分钟</span>
+          </span>
+          <span class="route-title">花开海上 · 地肤花海＋朱泾</span>
+          <span class="review-line"><strong>一句话口碑</strong>地肤和花海很开阔，10 月底属转色期；晴天更值。</span>
+          <span class="fee-line"><strong>费用提醒</strong>门票 30 元、实名入园；停车免费；观光车和多人车收费先问。</span>
+          <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
       </div>
     </section>
@@ -1644,300 +1954,76 @@
       <div class="route-grid">
 
     <article class="route-card" id="route-09">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-09.jpg" alt="上海之鱼 · 景点照片 1" loading="lazy">
-            <span class="region-pill">奉贤</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 40.6 km · 约 70 分钟</span>
-            </div>
-            <h3>上海之鱼 · 湖景＋奉贤博物馆</h3>
-            <p class="route-blurb">湖岸、艺术建筑、博物馆，天气差就多留馆里。</p>
-            <div class="route-tags"><span>拍照赏景</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</p>
-            <p class="fee-line"><strong>费用提醒</strong>上海之鱼免费；科幻馆 128 元起可选；奉贤博物馆免费，乾隆特展 11/18 撤展。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>上海之鱼选一段湖岸</span><span>奉贤博物馆1.5–2小时</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往奉贤 · 金海湖</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>上海之鱼选一段湖岸</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>奉贤博物馆1.5–2小时</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>湖边短走/咖啡</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-09-2.jpg" alt="上海之鱼 · 景点照片 2" loading="lazy">
-      <figcaption>上海之鱼 · 景点照片 2</figcaption>
-    </figure>
-
-          <div class="detail-footer">
-            <p>上海之鱼 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/69534791.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="09"
+        aria-haspopup="dialog" aria-controls="route-dialog-09">
+        <span class="route-photo">
+          <img src="assets/routes/route-09.jpg" alt="上海之鱼 · 景点照片 1" loading="lazy">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">80<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 6</span>
+            <span>陆家嘴驾车 40.6 km · 约 70 分钟</span>
+          </span>
+          <span class="route-title">上海之鱼 · 湖景＋奉贤博物馆</span>
+          <span class="review-line"><strong>一句话口碑</strong>湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</span>
+          <span class="fee-line"><strong>费用提醒</strong>上海之鱼免费；科幻馆 128 元起可选；奉贤博物馆免费，乾隆特展 11/18 撤展。</span>
+          <span class="route-tags"><span>拍照赏景</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-12">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-12.jpg" alt="花开半夏 · 奉贤介绍实景 1" loading="lazy">
-            <span class="region-pill">奉贤</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 35.1 km · 约 57 分钟</span>
-            </div>
-            <h3>花开半夏 · 成人手作＋乡村体验</h3>
-            <p class="route-blurb">披萨/面包、陶艺/扎染等任选一项，再喝茶玩桌游。</p>
-            <div class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</p>
-            <p class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>已预约的成人烘焙或陶艺/扎染</span><span>庭院茶/农耕候选（成人场次先问）</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往奉贤 · 金汇</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>已预约的成人烘焙或陶艺/扎染</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>庭院茶/农耕候选（成人场次先问）</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>园区短走/一个已确认小体验</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-12-2.jpg" alt="花开半夏 · 奉贤介绍实景 2" loading="lazy">
-      <figcaption>花开半夏 · 奉贤介绍实景 2</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>花开半夏·田园美墅度假村</p>
-          <div class="detail-footer">
-            <p>花开半夏 · 奉贤介绍实景 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="12"
+        aria-haspopup="dialog" aria-controls="route-dialog-12">
+        <span class="route-photo">
+          <img src="assets/routes/route-12.jpg" alt="花开半夏 · 奉贤介绍实景 1" loading="lazy">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">77<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 10</span>
+            <span>陆家嘴驾车 35.1 km · 约 57 分钟</span>
+          </span>
+          <span class="route-title">花开半夏 · 成人手作＋乡村体验</span>
+          <span class="review-line"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
+          <span class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</span>
+          <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-13">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-13.jpg" alt="青溪老街 · 景点照片 1" loading="lazy">
-            <span class="region-pill">奉贤</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 38.9 km · 约 61 分钟</span>
-            </div>
-            <h3>青溪 · 老街逛吃＋水乡夜景</h3>
-            <p class="route-blurb">汤圆等地方小吃、古桥、茶，晚上只短走看灯。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</p>
-            <p class="fee-line"><strong>费用提醒</strong>老街免费；摇橹船价格现场问；望海楼登楼或品茗需提前预约。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>老街小吃/古桥慢走</span><span>望海楼外观/茶馆二选一</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往奉贤 · 青溪</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>老街小吃/古桥慢走</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>望海楼外观/茶馆二选一</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>清晨老街与早餐</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-13-2.jpg" alt="青溪老街 · 游客图" loading="lazy">
-      <figcaption>青溪老街 · 游客图</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>花筑·到家民宿</p>
-          <div class="detail-footer">
-            <p>青溪老街 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/112366304.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="13"
+        aria-haspopup="dialog" aria-controls="route-dialog-13">
+        <span class="route-photo">
+          <img src="assets/routes/route-13.jpg" alt="青溪老街 · 景点照片 1" loading="lazy">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">75<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 14</span>
+            <span>陆家嘴驾车 38.9 km · 约 61 分钟</span>
+          </span>
+          <span class="route-title">青溪 · 老街逛吃＋水乡夜景</span>
+          <span class="review-line"><strong>一句话口碑</strong>老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</span>
+          <span class="fee-line"><strong>费用提醒</strong>老街免费；摇橹船价格现场问；望海楼登楼或品茗需提前预约。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
       </div>
     </section>
@@ -1952,301 +2038,76 @@
       <div class="route-grid">
 
     <article class="route-card" id="route-08">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-08.jpg" alt="乐水滴水湖水上运动基地 · 景点照片 5" loading="lazy">
-            <span class="region-pill">浦东</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车约 69–71 km · 80–85 分钟</span>
-            </div>
-            <h3>滴水湖 · 船体验＋航海博物馆</h3>
-            <p class="route-blurb">一个水上体验配一个室内馆；船班不开就改湖边＋博物馆。</p>
-            <div class="route-tags"><span>水上运动</span><span>雨天有替代</span><span>成人项目先核</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</p>
-            <p class="fee-line"><strong>费用提醒</strong>滴水湖免费；游船成人 100 元；航海馆 30 元、AR 另加 99 元；水上项目预约后问价。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>已预约船体验／没船则湖岸短走</span><span>航海博物馆（提前实名预约）</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往浦东 · 临港</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>已预约船体验／没船则湖岸短走</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:15</time>
-      <span>航海博物馆（实名预约）</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>湖边咖啡或散步</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-08-2.jpg" alt="乐水滴水湖水上运动基地 · 游客图" loading="lazy">
-      <figcaption>乐水滴水湖水上运动基地 · 游客图</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>拾光 / 三顾茅庐 / 书院人家</p>
-          <div class="detail-footer">
-            <p>乐水滴水湖水上运动基地 · 景点照片 5｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2095375.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="08"
+        aria-haspopup="dialog" aria-controls="route-dialog-08">
+        <span class="route-photo">
+          <img src="assets/routes/route-08.jpg" alt="乐水滴水湖水上运动基地 · 景点照片 5" loading="lazy">
+          <span class="region-pill">浦东</span>
+          <span class="card-score">83<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 2</span>
+            <span>陆家嘴驾车约 69–71 km · 80–85 分钟</span>
+          </span>
+          <span class="route-title">滴水湖 · 船体验＋航海博物馆</span>
+          <span class="review-line"><strong>一句话口碑</strong>湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</span>
+          <span class="fee-line"><strong>费用提醒</strong>滴水湖免费；游船成人 100 元；航海馆 30 元、AR 另加 99 元；水上项目预约后问价。</span>
+          <span class="route-tags"><span>水上运动</span><span>雨天有替代</span><span>成人项目先核</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-14">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-14.jpg" alt="新场古镇 · 景点照片 1" loading="lazy">
-            <span class="region-pill">浦东</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车 34.8 km · 约 55 分钟</span>
-            </div>
-            <h3>新场古镇 · 逛吃＋茶馆</h3>
-            <p class="route-blurb">油墩子、鸡汤豆花、临河茶馆，白天真正有东西逛。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</p>
-            <p class="fee-line"><strong>费用提醒</strong>古镇免费；内部小馆单独购票；摇橹船先问价；剧本餐秀 138 元/人可选。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>老街散步、油墩子等小吃</span><span>临河茶馆/公开展馆二选一</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往浦东 · 新场</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>老街散步、油墩子等小吃</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>临河茶馆/公开展馆二选一</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–11:00</time>
-      <span>安静巷弄短走、早餐小吃</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>回住处办理退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-14-2.jpg" alt="新场古镇 · 景点照片 2" loading="lazy">
-      <figcaption>新场古镇 · 景点照片 2</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>上海浓舍民宿</p>
-          <div class="detail-footer">
-            <p>新场古镇 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/107862.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="14"
+        aria-haspopup="dialog" aria-controls="route-dialog-14">
+        <span class="route-photo">
+          <img src="assets/routes/route-14.jpg" alt="新场古镇 · 景点照片 1" loading="lazy">
+          <span class="region-pill">浦东</span>
+          <span class="card-score">85<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 1</span>
+            <span>陆家嘴驾车 34.8 km · 约 55 分钟</span>
+          </span>
+          <span class="route-title">新场古镇 · 逛吃＋茶馆</span>
+          <span class="review-line"><strong>一句话口碑</strong>冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</span>
+          <span class="fee-line"><strong>费用提醒</strong>古镇免费；内部小馆单独购票；摇橹船先问价；剧本餐秀 138 元/人可选。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-17">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/routes/route-17.jpg" alt="川沙古镇 · 景点照片 1" loading="lazy">
-            <span class="region-pill">浦东</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>川沙 28.6 km · 约 50 分钟；比斯特 30.3 km · 约 48 分钟</span>
-            </div>
-            <h3>川沙 · 老街人文＋比斯特</h3>
-            <p class="route-blurb">老街和古城墙短逛，第二天去比斯特走走吃饭。</p>
-            <div class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>老街免费、比斯特适合第二天吃饭逛；顺路感很强。</p>
-            <p class="fee-line"><strong>费用提醒</strong>老街免费；轮渡 15 元/人；比斯特消费满 50 元可兑 5 小时免费停车。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>川沙老街/古城墙一段</span><span>一处开放的人文点或茶馆</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:00</time>
-      <span>出发，前往浦东 · 川沙</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>川沙老街/古城墙一段</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭：当地小吃/本帮或农家菜</span>
-    </li>
-    <li>
-      <time>13:00–15:30</time>
-      <span>一处开放的人文点或茶馆</span>
-    </li>
-    <li>
-      <time>16:00–17:30</time>
-      <span>入住、短休息</span>
-    </li>
-    <li>
-      <time>18:00–19:30</time>
-      <span>晚饭</span>
-    </li>
-    <li>
-      <time>19:30–21:30</time>
-      <span>已获准空间聊天/桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>09:30–10:00</time>
-      <span>提前退房并前往比斯特</span>
-    </li>
-    <li>
-      <time>10:00–12:00</time>
-      <span>比斯特街区/餐饮短逛</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭</span>
-    </li>
-    <li>
-      <time>13:30左右出发</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-    <figure class="detail-photo">
-      <img src="assets/routes/route-17-2.jpg" alt="川沙古镇 · 景点照片 2" loading="lazy">
-      <figcaption>川沙古镇 · 景点照片 2</figcaption>
-    </figure>
-
-    <p class="evening-stop"><strong>晚上落脚</strong>上海闲舍独栋别墅</p>
-          <div class="detail-footer">
-            <p>川沙古镇 · 景点照片 1｜来源：携程公开景点相册</p>
-
-    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/5713996.html" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="17"
+        aria-haspopup="dialog" aria-controls="route-dialog-17">
+        <span class="route-photo">
+          <img src="assets/routes/route-17.jpg" alt="川沙古镇 · 景点照片 1" loading="lazy">
+          <span class="region-pill">浦东</span>
+          <span class="card-score">75<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 15</span>
+            <span>川沙 28.6 km · 约 50 分钟；比斯特 30.3 km · 约 48 分钟</span>
+          </span>
+          <span class="route-title">川沙 · 老街人文＋比斯特</span>
+          <span class="review-line"><strong>一句话口碑</strong>老街免费、比斯特适合第二天吃饭逛；顺路感很强。</span>
+          <span class="fee-line"><strong>费用提醒</strong>老街免费；轮渡 15 元/人；比斯特消费满 50 元可兑 5 小时免费停车。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
       </div>
     </section>
@@ -2261,250 +2122,76 @@
       <div class="route-grid">
 
     <article class="route-card" id="route-s01">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院石板路与草坪" loading="lazy">
-            <span class="region-pill">昆山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车约 69.8 km · 91 min，以实时导航为准</span>
-            </div>
-            <h3>锦溪古镇 · 水乡慢逛＋计家墩理想村</h3>
-            <p class="route-blurb">白天看古桥、河巷和园内景点，傍晚回计家墩村里散步、烧烤聊天。</p>
-            <div class="route-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</p>
-            <p class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>锦溪古镇古桥与河巷</span><span>计家墩理想村散步</span><span>院内烧烤聊天</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:50</time>
-      <span>陆家嘴出发，按实时导航去锦溪</span>
-    </li>
-    <li>
-      <time>11:00–12:00</time>
-      <span>锦溪古镇小吃与午饭</span>
-    </li>
-    <li>
-      <time>12:00–15:30</time>
-      <span>古桥河巷＋园内套票景点或游船，二选一</span>
-    </li>
-    <li>
-      <time>16:30</time>
-      <span>到橙屿民宿办入住，先确认4卧开放范围</span>
-    </li>
-    <li>
-      <time>18:00以后</time>
-      <span>计家墩晚饭、院子烧烤或桌游</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>民宿早餐</span>
-    </li>
-    <li>
-      <time>09:30–10:45</time>
-      <span>计家墩河边和小店短走</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭后返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-
-          <div class="detail-footer">
-            <p>橙屿民宿院子｜这条路线晚上就在这里落脚</p>
-
-    <a class="source-link" href="Ctrip Wendao 名称+地址命中；美团仅村庄级近似；高德用计家墩理想村锚点" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="s01"
+        aria-haspopup="dialog" aria-controls="route-dialog-s01">
+        <span class="route-photo">
+          <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院石板路与草坪" loading="lazy">
+          <span class="region-pill">昆山</span>
+          <span class="card-score">77<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 11</span>
+            <span>陆家嘴驾车约 69.8 km · 91 min，以实时导航为准</span>
+          </span>
+          <span class="route-title">锦溪古镇 · 水乡慢逛＋计家墩理想村</span>
+          <span class="review-line"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
+          <span class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</span>
+          <span class="route-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-s02">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼与院子" loading="lazy">
-            <span class="region-pill">昆山</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车约 79.5 km · 106 min，以实时导航为准</span>
-            </div>
-            <h3>周庄古镇 · 白天水巷＋晚上看灯</h3>
-            <p class="route-blurb">把车停好后再进古镇，白天双桥、张厅沈厅慢慢逛，晚上只走一小圈看夜景。</p>
-            <div class="route-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</p>
-            <p class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>双桥与张厅沈厅</span><span>水巷摇橹船</span><span>古镇夜游</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–10:20</time>
-      <span>陆家嘴出发，尽量早到停车</span>
-    </li>
-    <li>
-      <time>10:30–16:00</time>
-      <span>古镇白天慢逛＋午饭，双桥和张厅沈厅分开走</span>
-    </li>
-    <li>
-      <time>16:30</time>
-      <span>到觅家办理入住，先确认4卧开放范围</span>
-    </li>
-    <li>
-      <time>17:30–20:30</time>
-      <span>晚饭、古镇夜游；摇橹船只坐一小段</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>07:30–08:30</time>
-      <span>清晨人少先走一圈，周边吃早餐</span>
-    </li>
-    <li>
-      <time>09:00–10:30</time>
-      <span>古镇短逛或回院子休息</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭后返沪</span>
-    </li></ol>
-            </section>
-          </div>
-
-
-          <div class="detail-footer">
-            <p>觅家·一夜花香｜携程截图登记，线上三源待房东复核</p>
-
-    <a class="source-link" href="携程问道/美团/高德均未同名命中；以用户携程截图登记，近名 Leafer 已排除" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="s02"
+        aria-haspopup="dialog" aria-controls="route-dialog-s02">
+        <span class="route-photo">
+          <img src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼与院子" loading="lazy">
+          <span class="region-pill">昆山</span>
+          <span class="card-score">81<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 5</span>
+            <span>陆家嘴驾车约 79.5 km · 106 min，以实时导航为准</span>
+          </span>
+          <span class="route-title">周庄古镇 · 白天水巷＋晚上看灯</span>
+          <span class="review-line"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</span>
+          <span class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</span>
+          <span class="route-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
     <article class="route-card" id="route-s03">
-      <details>
-        <summary>
-          <div class="route-photo">
-            <img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑正面，门楣招牌可见" loading="lazy">
-            <span class="region-pill">苏州</span>
-          </div>
-          <div class="route-summary">
-            <div class="route-kicker">
-              <span>周六去 · 周日回</span>
-              <span>陆家嘴驾车约 141.6 km · 145 min，尽量早出</span>
-            </div>
-            <h3>太湖西山 · 雕花楼＋缥缈峰＋院子</h3>
-            <p class="route-blurb">只选西山这一条，白天看雕花楼和湖景，傍晚回小白房做饭、聊天。</p>
-            <div class="route-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></div>
-            <p class="review-line"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</p>
-            <p class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</p>
-            <span class="open-label">查看两天怎么玩 <span class="chevron" aria-hidden="true">⌄</span></span>
-          </div>
-        </summary>
-        <div class="route-detail">
-          <div class="activity-line">
-            <span>西山雕花楼</span><span>缥缈峰与湖景</span><span>院子晚饭与泳池</span>
-          </div>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>07:30–09:55</time>
-      <span>陆家嘴出发，按导航走太湖大桥</span>
-    </li>
-    <li>
-      <time>10:00–11:30</time>
-      <span>西山雕花楼</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>金庭镇午饭</span>
-    </li>
-    <li>
-      <time>13:30–16:30</time>
-      <span>缥缈峰和湖景短线，量力而行</span>
-    </li>
-    <li>
-      <time>17:00</time>
-      <span>到小白房入住，确认4房和泳池开放</span>
-    </li>
-    <li>
-      <time>18:00以后</time>
-      <span>院子晚饭、麻将或聊天</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:30</time>
-      <span>民宿周边吃早餐</span>
-    </li>
-    <li>
-      <time>09:30–10:45</time>
-      <span>明月湾或湖边短走，二选一</span>
-    </li>
-    <li>
-      <time>11:00–11:30</time>
-      <span>退房</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>午饭后返沪，预留堵车时间</span>
-    </li></ol>
-            </section>
-          </div>
-
-
-          <div class="detail-footer">
-            <p>太湖西山小白房｜4房整栋，晚上落脚</p>
-
-    <a class="source-link" href="美团主体精确命中；携程问道为 probable 且床型口径不同；高德用西山雕花楼锚点" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a>
-          </div>
-        </div>
-      </details>
+      <button class="route-launcher" type="button" data-route-id="s03"
+        aria-haspopup="dialog" aria-controls="route-dialog-s03">
+        <span class="route-photo">
+          <img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑正面，门楣招牌可见" loading="lazy">
+          <span class="region-pill">苏州</span>
+          <span class="card-score">76<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 13</span>
+            <span>陆家嘴驾车约 141.6 km · 145 min，尽量早出</span>
+          </span>
+          <span class="route-title">太湖西山 · 雕花楼＋缥缈峰＋院子</span>
+          <span class="review-line"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
+          <span class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</span>
+          <span class="route-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
     </article>
       </div>
     </section>
@@ -2754,11 +2441,2214 @@
     </section>
   </main>
 
+
+    <dialog class="route-dialog" id="route-dialog-14"
+      aria-labelledby="route-dialog-title-14">
+      <div class="dialog-bar">
+        <span>总榜第 1 · 浦东</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-14.jpg" alt="新场古镇 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">浦东</p>
+            <h2 id="route-dialog-title-14">新场古镇 · 逛吃＋茶馆</h2>
+            <p class="dialog-travel">陆家嘴驾车 34.8 km · 约 55 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>85</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>43</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>13</b><small>省心程度 / 20</small></span>
+            <span><b>8</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">白天小吃、茶馆与老街组合清楚，成人体验比纯住民宿完整。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>10月游客提醒避开节假日；小红书2025-12-24提到停车场较满、周末排队。 镇子不算大；具体小店未订位，别把长队美食当固定餐点。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</p>
+        <p class="fee-line"><strong>费用提醒</strong>古镇免费；内部小馆单独购票；摇橹船先问价；剧本餐秀 138 元/人可选。</p>
+        <div class="activity-line">
+          <span>老街散步、油墩子等小吃</span><span>临河茶馆/公开展馆二选一</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往浦东 · 新场</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>老街散步、油墩子等小吃</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>临河茶馆/公开展馆二选一</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>安静巷弄短走、早餐小吃</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-14-2.jpg" alt="新场古镇 · 景点照片 2" loading="lazy">
+      <figcaption>新场古镇 · 景点照片 2</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>上海浓舍民宿</p>
+          <div class="detail-footer">
+            <p>新场古镇 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/107862.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-08"
+      aria-labelledby="route-dialog-title-08">
+      <div class="dialog-bar">
+        <span>总榜第 2 · 浦东</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-08.jpg" alt="乐水滴水湖水上运动基地 · 景点照片 5" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">浦东</p>
+            <h2 id="route-dialog-title-08">滴水湖 · 船体验＋航海博物馆</h2>
+            <p class="dialog-travel">陆家嘴驾车约 69–71 km · 80–85 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>83</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>41</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>7</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">室外与室内都有内容，天气变化时能调整；不是凭拾光民宿分排第二。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>水上基地只有8条总点评，公开样本老，不能证明10/31船班正常。 船只6人容量、天气退改和总票价未取；不能塞两个水上项目。</p>
+              <p><strong>评价把握</strong>低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</p>
+        <p class="fee-line"><strong>费用提醒</strong>滴水湖免费；游船成人 100 元；航海馆 30 元、AR 另加 99 元；水上项目预约后问价。</p>
+        <div class="activity-line">
+          <span>已预约船体验／没船则湖岸短走</span><span>航海博物馆（提前实名预约）</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往浦东 · 临港</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>已预约船体验／没船则湖岸短走</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:15</time>
+      <span>航海博物馆（实名预约）</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>湖边咖啡或散步</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-08-2.jpg" alt="乐水滴水湖水上运动基地 · 游客图" loading="lazy">
+      <figcaption>乐水滴水湖水上运动基地 · 游客图</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>拾光 / 三顾茅庐 / 书院人家</p>
+          <div class="detail-footer">
+            <p>乐水滴水湖水上运动基地 · 景点照片 5｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2095375.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-03"
+      aria-labelledby="route-dialog-title-03">
+      <div class="dialog-bar">
+        <span>总榜第 3 · 青浦</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">青浦</p>
+            <h2 id="route-dialog-title-03">朱家角 · 游船＋园林＋老街</h2>
+            <p class="dialog-travel">陆家嘴驾车 51.0 km · 约 73 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>82</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>40</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>7</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">能逛、能吃、有船和园林，适合两天一夜慢节奏。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>游客提商业化和人多；雨天石板路湿滑。 船班和园林要当天确认；住宿16点入住、20点安静只是配套限制，不决定景点评分。</p>
+              <p><strong>评价把握</strong>中偏低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</p>
+        <p class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</p>
+        <div class="activity-line">
+          <span>沿河老街＋小吃午饭</span><span>课植园或游船二选一</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往青浦 · 朱家角</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>沿河老街＋小吃午饭</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>课植园或游船二选一</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30以后</time>
+      <span>老街短走，20点后安静休息</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>早上老街慢走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-03-2.jpg" alt="朱家角古镇景区 · 景点照片 2" loading="lazy">
+      <figcaption>朱家角古镇景区 · 景点照片 2</figcaption>
+    </figure>
+
+          <div class="detail-footer">
+            <p>朱家角古镇景区 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/14903.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-05"
+      aria-labelledby="route-dialog-title-05">
+      <div class="dialog-bar">
+        <span>总榜第 4 · 金山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">金山</p>
+            <h2 id="route-dialog-title-05">枫泾 · 古镇寻味＋漫画展馆</h2>
+            <p class="dialog-travel">陆家嘴驾车 73.8 km · 约 93 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>81</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>39</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>7</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">推荐理由来自古镇内容，酒店只是附近备选。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>有3分游客认为古镇相似、短逛即可；旧假日样本反映停车困难。 展馆实际开馆需确认，别先买整套票再发现部分关闭。</p>
+              <p><strong>评价把握</strong>中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</p>
+        <p class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</p>
+        <div class="activity-line">
+          <span>古镇桥边/长廊慢逛</span><span>一处公开展馆或茶馆</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往金山 · 枫泾</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>古镇桥边/长廊慢逛</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>一处公开展馆或茶馆</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>早上小吃店或咖啡</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-05-2.jpg" alt="枫泾古镇 · 景点照片 2" loading="lazy">
+      <figcaption>枫泾古镇 · 景点照片 2</figcaption>
+    </figure>
+
+          <div class="detail-footer">
+            <p>枫泾古镇 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/49029.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-s02"
+      aria-labelledby="route-dialog-title-s02">
+      <div class="dialog-bar">
+        <span>总榜第 5 · 昆山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼与院子" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">昆山</p>
+            <h2 id="route-dialog-title-s02">周庄古镇 · 白天水巷＋晚上看灯</h2>
+            <p class="dialog-travel">陆家嘴驾车约 79.5 km · 106 min，以实时导航为准</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>81</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>41</b><small>白天体验 / 45</small></span>
+            <span><b>22</b><small>内容组合 / 25</small></span>
+            <span><b>11</b><small>省心程度 / 20</small></span>
+            <span><b>7</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">周庄白天水巷和夜游内容都成熟，住镇内能把夜景变成完整体验。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>古镇商业化和节假日人流都明显；停车后还要转运行李，摇橹船等体验另收费。</p>
+              <p><strong>证据来源</strong>美团景点评分与公开票价、携程截图民宿登记、高德周庄坐标；夜游按公开资料复核。</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</p>
+        <p class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</p>
+        <div class="activity-line">
+          <span>双桥与张厅沈厅</span><span>水巷摇橹船</span><span>古镇夜游</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:20</time>
+      <span>陆家嘴出发，尽量早到停车</span>
+    </li>
+    <li>
+      <time>10:30–16:00</time>
+      <span>古镇白天慢逛＋午饭，双桥和张厅沈厅分开走</span>
+    </li>
+    <li>
+      <time>16:30</time>
+      <span>到觅家办理入住，先确认4卧开放范围</span>
+    </li>
+    <li>
+      <time>17:30–20:30</time>
+      <span>晚饭、古镇夜游；摇橹船只坐一小段</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>07:30–08:30</time>
+      <span>清晨人少先走一圈，周边吃早餐</span>
+    </li>
+    <li>
+      <time>09:00–10:30</time>
+      <span>古镇短逛或回院子休息</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭后返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+
+          <div class="detail-footer">
+            <p>觅家·一夜花香｜携程截图登记，线上三源待房东复核</p>
+            <p class="source-note"><strong>资料复核</strong>携程问道/美团/高德均未同名命中；以用户携程截图登记，近名 Leafer 已排除</p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-09"
+      aria-labelledby="route-dialog-title-09">
+      <div class="dialog-bar">
+        <span>总榜第 6 · 奉贤</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-09.jpg" alt="上海之鱼 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">奉贤</p>
+            <h2 id="route-dialog-title-09">上海之鱼 · 湖景＋奉贤博物馆</h2>
+            <p class="dialog-travel">陆家嘴驾车 40.6 km · 约 70 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>80</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>37</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>16</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">湖边和室内馆互补，JW酒店不再作为排名依据。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>区域面积大，绕全圈会累；不少设施偏亲子。 博物馆旧点评提到的乾隆/唐代等特展不可当作这周仍有。</p>
+              <p><strong>评价把握</strong>中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</p>
+        <p class="fee-line"><strong>费用提醒</strong>上海之鱼免费；科幻馆 128 元起可选；奉贤博物馆免费，乾隆特展 11/18 撤展。</p>
+        <div class="activity-line">
+          <span>上海之鱼选一段湖岸</span><span>奉贤博物馆1.5–2小时</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往奉贤 · 金海湖</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>上海之鱼选一段湖岸</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>奉贤博物馆1.5–2小时</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>湖边短走/咖啡</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-09-2.jpg" alt="上海之鱼 · 景点照片 2" loading="lazy">
+      <figcaption>上海之鱼 · 景点照片 2</figcaption>
+    </figure>
+
+          <div class="detail-footer">
+            <p>上海之鱼 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/69534791.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-11"
+      aria-labelledby="route-dialog-title-11">
+      <div class="dialog-bar">
+        <span>总榜第 7 · 青浦</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-11.jpg" alt="上海青西郊野公园 · 景点照片 2" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">青浦</p>
+            <h2 id="route-dialog-title-11">青西 · 水上森林＋莲湖村</h2>
+            <p class="dialog-travel">陆家嘴驾车 60.0 km · 约 83 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>80</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>39</b><small>白天体验 / 45</small></span>
+            <span><b>19</b><small>内容组合 / 25</small></span>
+            <span><b>16</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">有具体森林景观而不是只看浮生客厅；雨天会明显减分。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>游客提远停车场、步行距离和旺时人多；秋色照片不少来自11/12月。 10月底不保证全红；保育区禁无人机，不能照搬游客的航拍建议。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>水上森林最出片，上午直奔短线；16点后停止进入。</p>
+        <p class="fee-line"><strong>费用提醒</strong>公园免费；电瓶车 20 元/人；水上森林 16:00 停止进入，游船收费先问。</p>
+        <div class="activity-line">
+          <span>保育区水上森林短线</span><span>莲湖村农家菜/茶</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往青浦 · 青西</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>保育区水上森林短线</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>莲湖村农家菜/茶</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>村内短走或休息</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-11-2.jpg" alt="上海青西郊野公园 · 游客图" loading="lazy">
+      <figcaption>上海青西郊野公园 · 游客图</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>上海浮生民宿</p>
+          <div class="detail-footer">
+            <p>上海青西郊野公园 · 景点照片 2｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2039390.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-15"
+      aria-labelledby="route-dialog-title-15">
+      <div class="dialog-bar">
+        <span>总榜第 8 · 金山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-15.jpg" alt="花开海上生态园 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">金山</p>
+            <h2 id="route-dialog-title-15">花开海上 · 地肤花海＋朱泾</h2>
+            <p class="dialog-travel">陆家嘴驾车 73.9 km · 约 101 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>79</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>40</b><small>白天体验 / 45</small></span>
+            <span><b>19</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">把原来纯住大团的选项换成明确赏花游玩，基础民宿只作配套。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>餐饮和娱乐较少，雨天或无花期会单调。 花况需要看当周实拍，图片不保证10/31满园相同。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>地肤和花海很开阔，10 月底属转色期；晴天更值。</p>
+        <p class="fee-line"><strong>费用提醒</strong>门票 30 元、实名入园；停车免费；观光车和多人车收费先问。</p>
+        <div class="activity-line">
+          <span>地肤/花田短步行</span><span>园内另一段花园或多人车（收费先问）</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往金山 · 朱泾</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>地肤/花田短步行</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>园内另一段花园或多人车（收费先问）</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>朱泾镇早餐/咖啡</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-15-2.jpg" alt="花开海上生态园 · 景点照片 3" loading="lazy">
+      <figcaption>花开海上生态园 · 景点照片 3</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>归源田居</p>
+          <div class="detail-footer">
+            <p>花开海上生态园 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/2045955.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-04"
+      aria-labelledby="route-dialog-title-04">
+      <div class="dialog-bar">
+        <span>总榜第 9 · 金山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-04.jpg" alt="金山嘴渔村 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">金山</p>
+            <h2 id="route-dialog-title-04">金山嘴 · 渔村海鲜＋海边散步</h2>
+            <p class="dialog-travel">陆家嘴驾车 82.9 km · 约 94 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>78</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>37</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>15</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">重点是渔村和餐饮、海岸，不再用渔见山居高分做排名依据。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>村子小，人文内容有限；当前是非泳期，不用蓝海宣传图期待实际海色。 旧样本与历史图不能保证10/31天气、店铺和停车，餐厅6人桌先订。</p>
+              <p><strong>评价把握</strong>低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</p>
+        <p class="fee-line"><strong>费用提醒</strong>老街免费；展馆联票约 40 元、单馆 10 元；海边步道免费，停车现场确认。</p>
+        <div class="activity-line">
+          <span>渔村老街＋午饭</span><span>城市沙滩滨海步道一段</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往金山 · 金山嘴</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>渔村老街＋午饭</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>城市沙滩滨海步道一段</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>渔村清晨/海边咖啡</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-04-2.jpg" alt="金山嘴渔村 · 游客图" loading="lazy">
+      <figcaption>金山嘴渔村 · 游客图</figcaption>
+    </figure>
+
+          <div class="detail-footer">
+            <p>金山嘴渔村 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/143744.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-12"
+      aria-labelledby="route-dialog-title-12">
+      <div class="dialog-bar">
+        <span>总榜第 10 · 奉贤</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-12.jpg" alt="花开半夏 · 奉贤介绍实景 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">奉贤</p>
+            <h2 id="route-dialog-title-12">花开半夏 · 成人手作＋乡村体验</h2>
+            <p class="dialog-travel">陆家嘴驾车 35.1 km · 约 57 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>77</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>35</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>16</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">手作内容有公开依据，不过需拿成人场次后才执行，不追捧亲子项目。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>多数客评来自亲子出游；成人是否可报名、场次、费用未确认。 一条4.2分住客提地暖太热/无电视；三间独栋房不等于三卧独占整栋。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</p>
+        <p class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</p>
+        <div class="activity-line">
+          <span>已预约的成人烘焙或陶艺/扎染</span><span>庭院茶/农耕候选（成人场次先问）</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往奉贤 · 金汇</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>已预约的成人烘焙或陶艺/扎染</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>庭院茶/农耕候选（成人场次先问）</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>园区短走/一个已确认小体验</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-12-2.jpg" alt="花开半夏 · 奉贤介绍实景 2" loading="lazy">
+      <figcaption>花开半夏 · 奉贤介绍实景 2</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>花开半夏·田园美墅度假村</p>
+          <div class="detail-footer">
+            <p>花开半夏 · 奉贤介绍实景 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-s01"
+      aria-labelledby="route-dialog-title-s01">
+      <div class="dialog-bar">
+        <span>总榜第 11 · 昆山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院石板路与草坪" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">昆山</p>
+            <h2 id="route-dialog-title-s01">锦溪古镇 · 水乡慢逛＋计家墩理想村</h2>
+            <p class="dialog-travel">陆家嘴驾车约 69.8 km · 91 min，以实时导航为准</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>77</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>37</b><small>白天体验 / 45</small></span>
+            <span><b>20</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">锦溪有古镇实景，计家墩能接住院子和晚饭；但路线偏慢逛，景点强度不算高。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>锦溪公开评分约3.9，古镇内容更适合不赶时间的人；计家墩与民宿的4卧开放范围仍需房东确认。</p>
+              <p><strong>证据来源</strong>美团景点评分与票价、携程问道民宿名称地址、高德计家墩地理锚点。</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</p>
+        <p class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</p>
+        <div class="activity-line">
+          <span>锦溪古镇古桥与河巷</span><span>计家墩理想村散步</span><span>院内烧烤聊天</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:50</time>
+      <span>陆家嘴出发，按实时导航去锦溪</span>
+    </li>
+    <li>
+      <time>11:00–12:00</time>
+      <span>锦溪古镇小吃与午饭</span>
+    </li>
+    <li>
+      <time>12:00–15:30</time>
+      <span>古桥河巷＋园内套票景点或游船，二选一</span>
+    </li>
+    <li>
+      <time>16:30</time>
+      <span>到橙屿民宿办入住，先确认4卧开放范围</span>
+    </li>
+    <li>
+      <time>18:00以后</time>
+      <span>计家墩晚饭、院子烧烤或桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>民宿早餐</span>
+    </li>
+    <li>
+      <time>09:30–10:45</time>
+      <span>计家墩河边和小店短走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭后返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+
+          <div class="detail-footer">
+            <p>橙屿民宿院子｜这条路线晚上就在这里落脚</p>
+            <p class="source-note"><strong>资料复核</strong>Ctrip Wendao 名称+地址命中；美团仅村庄级近似；高德用计家墩理想村锚点</p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-02"
+      aria-labelledby="route-dialog-title-02">
+      <div class="dialog-bar">
+        <span>总榜第 12 · 青浦</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">青浦</p>
+            <h2 id="route-dialog-title-02">淀山湖 · 帆船候选＋金泽古镇</h2>
+            <p class="dialog-travel">淀山湖 57.4 km · 约 85 分钟；金泽 64.8 km · 约 80 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>76</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>39</b><small>白天体验 / 45</small></span>
+            <span><b>18</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">按湖上体验排，而不是按皇家郁金香评分。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>俱乐部样本只有2条公开且很老；6人船型、真实码头和退改未确认。 10/31约17点日落，下午晚班不默认可开；码头和朱家角住宿另有转场。</p>
+              <p><strong>评价把握</strong>低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>湖面开阔、古镇安静；没约上船就别专程追码头。</p>
+        <p class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</p>
+        <div class="activity-line">
+          <span>上午已预约的船体验</span><span>金泽古桥慢走/茶馆</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往青浦 · 淀山湖</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>上午已预约的船体验</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>金泽古桥慢走/茶馆</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>水岸短走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-02-2.jpg" alt="上海美帆游艇俱乐部 · 游客图" loading="lazy">
+      <figcaption>上海美帆游艇俱乐部 · 游客图</figcaption>
+    </figure>
+
+          <div class="detail-footer">
+            <p>上海美帆游艇俱乐部 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/112366264.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-s03"
+      aria-labelledby="route-dialog-title-s03">
+      <div class="dialog-bar">
+        <span>总榜第 13 · 苏州</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑正面，门楣招牌可见" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">苏州</p>
+            <h2 id="route-dialog-title-s03">太湖西山 · 雕花楼＋缥缈峰＋院子</h2>
+            <p class="dialog-travel">陆家嘴驾车约 141.6 km · 145 min，尽量早出</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>76</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>39</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>9</b><small>省心程度 / 20</small></span>
+            <span><b>7</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">雕花楼、缥缈峰和太湖湖景组合有辨识度，适合愿意为一处远郊目的地多开车的一天。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>单程约145分钟；缥缈峰台阶多、景区交通另算，天气差时湖景和登山体验都会打折。</p>
+              <p><strong>证据来源</strong>美团景点评分和票价、携程与美团民宿口径、高德缥缈峰坐标。</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</p>
+        <p class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</p>
+        <div class="activity-line">
+          <span>西山雕花楼</span><span>缥缈峰与湖景</span><span>院子晚饭与泳池</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>07:30–09:55</time>
+      <span>陆家嘴出发，按导航走太湖大桥</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>西山雕花楼</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>金庭镇午饭</span>
+    </li>
+    <li>
+      <time>13:30–16:30</time>
+      <span>缥缈峰和湖景短线，量力而行</span>
+    </li>
+    <li>
+      <time>17:00</time>
+      <span>到小白房入住，确认4房和泳池开放</span>
+    </li>
+    <li>
+      <time>18:00以后</time>
+      <span>院子晚饭、麻将或聊天</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>民宿周边吃早餐</span>
+    </li>
+    <li>
+      <time>09:30–10:45</time>
+      <span>明月湾或湖边短走，二选一</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭后返沪，预留堵车时间</span>
+    </li></ol>
+            </section>
+          </div>
+
+
+          <div class="detail-footer">
+            <p>太湖西山小白房｜4房整栋，晚上落脚</p>
+            <p class="source-note"><strong>资料复核</strong>美团主体精确命中；携程问道为 probable 且床型口径不同；高德用西山雕花楼锚点</p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-13"
+      aria-labelledby="route-dialog-title-13">
+      <div class="dialog-bar">
+        <span>总榜第 14 · 奉贤</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-13.jpg" alt="青溪老街 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">奉贤</p>
+            <h2 id="route-dialog-title-13">青溪 · 老街逛吃＋水乡夜景</h2>
+            <p class="dialog-travel">陆家嘴驾车 38.9 km · 约 61 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>75</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>35</b><small>白天体验 / 45</small></span>
+            <span><b>19</b><small>内容组合 / 25</small></span>
+            <span><b>16</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">逛吃和夜景有实际内容，比按到家民宿分排更合理。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>公开样本包含补发的旧体验，商铺/船班今况不能从旧文推断。 本身不大，不要安排一天走不完；到家民宿清洁/排水投诉另须核。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</p>
+        <p class="fee-line"><strong>费用提醒</strong>老街免费；摇橹船价格现场问；望海楼登楼或品茗需提前预约。</p>
+        <div class="activity-line">
+          <span>老街小吃/古桥慢走</span><span>望海楼外观/茶馆二选一</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往奉贤 · 青溪</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>老街小吃/古桥慢走</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>望海楼外观/茶馆二选一</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>清晨老街与早餐</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-13-2.jpg" alt="青溪老街 · 游客图" loading="lazy">
+      <figcaption>青溪老街 · 游客图</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>花筑·到家民宿</p>
+          <div class="detail-footer">
+            <p>青溪老街 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/112366304.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-17"
+      aria-labelledby="route-dialog-title-17">
+      <div class="dialog-bar">
+        <span>总榜第 15 · 浦东</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-17.jpg" alt="川沙古镇 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">浦东</p>
+            <h2 id="route-dialog-title-17">川沙 · 老街人文＋比斯特</h2>
+            <p class="dialog-travel">川沙 28.6 km · 约 50 分钟；比斯特 30.3 km · 约 48 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>75</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>38</b><small>白天体验 / 45</small></span>
+            <span><b>18</b><small>内容组合 / 25</small></span>
+            <span><b>14</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">院子只是晚上休息的地方；白天路线清楚但不如水上/森林有特色。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>人文点位有各自营业时段，不能都当全天开放。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>老街免费、比斯特适合第二天吃饭逛；顺路感很强。</p>
+        <p class="fee-line"><strong>费用提醒</strong>老街免费；轮渡 15 元/人；比斯特消费满 50 元可兑 5 小时免费停车。</p>
+        <div class="activity-line">
+          <span>川沙老街/古城墙一段</span><span>一处开放的人文点或茶馆</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往浦东 · 川沙</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>川沙老街/古城墙一段</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>一处开放的人文点或茶馆</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–10:00</time>
+      <span>提前退房并前往比斯特</span>
+    </li>
+    <li>
+      <time>10:00–12:00</time>
+      <span>比斯特街区/餐饮短逛</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-17-2.jpg" alt="川沙古镇 · 景点照片 2" loading="lazy">
+      <figcaption>川沙古镇 · 景点照片 2</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>上海闲舍独栋别墅</p>
+          <div class="detail-footer">
+            <p>川沙古镇 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/5713996.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-06"
+      aria-labelledby="route-dialog-title-06">
+      <div class="dialog-bar">
+        <span>总榜第 16 · 金山</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-06.jpg" alt="枫叶岛 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">金山</p>
+            <h2 id="route-dialog-title-06">廊下 · 枫叶岛＋山塘乡野</h2>
+            <p class="dialog-travel">陆家嘴驾车 89.0 km · 约 101 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>71</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>33</b><small>白天体验 / 45</small></span>
+            <span><b>18</b><small>内容组合 / 25</small></span>
+            <span><b>15</b><small>省心程度 / 20</small></span>
+            <span><b>5</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">内容比高星酒店简单，评分保守，住宿有客厅只是补充。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>不少好评在11月中/12月；10月31日未必有好枫色。 普通林地本身内容有限，泥地/雨后体验差；山塘跨省桥只作上海侧短逛。</p>
+              <p><strong>评价把握</strong>低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</p>
+        <p class="fee-line"><strong>费用提醒</strong>枫叶岛免费，停车免费但车位少；划船收费先问；廊华路部分施工。</p>
+        <div class="activity-line">
+          <span>枫叶岛看当周叶色短逛</span><span>山塘上海侧老街/茶</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往金山 · 廊下</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>枫叶岛看当周叶色短逛</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>山塘上海侧老街/茶</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>乡村短走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-06-2.jpg" alt="枫叶岛 · 景点照片 2" loading="lazy">
+      <figcaption>枫叶岛 · 景点照片 2</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>上海涵七民宿</p>
+          <div class="detail-footer">
+            <p>枫叶岛 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/1510071.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-16"
+      aria-labelledby="route-dialog-title-16">
+      <div class="dialog-bar">
+        <span>总榜第 17 · 青浦</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">青浦</p>
+            <h2 id="route-dialog-title-16">东方绿舟 · 航母模型＋湖滨步道</h2>
+            <p class="dialog-travel">陆家嘴驾车 52.7 km · 约 77 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>69</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="3.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:70%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>34</b><small>白天体验 / 45</small></span>
+            <span><b>17</b><small>内容组合 / 25</small></span>
+            <span><b>12</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">真实游玩内容比酒店园林更多，但维护投诉和付费项目使它只排后段。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>10月默认样本里有人说趣味低、设施缺维护；另有脚踏车上坡累/租费高评价。 部分项目偏儿童研学；不适合把全天都用来追项目，只逛2小时左右。</p>
+              <p><strong>评价把握</strong>低至中</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区大，另收费项目先问。</p>
+        <p class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</p>
+        <div class="activity-line">
+          <span>航母/国防区候选</span><span>湖滨步道或趣桥短线</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往青浦 · 东方绿舟</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>航母/国防区候选</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>湖滨步道或趣桥短线</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>住处附近早餐/短走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-16-2.jpg" alt="东方绿舟景区 · 景点照片 2" loading="lazy">
+      <figcaption>东方绿舟景区 · 景点照片 2</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>朱家角皇家郁金香花园酒店</p>
+          <div class="detail-footer">
+            <p>东方绿舟景区 · 景点照片 1｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://gs.ctrip.com/html5/you/sight/shanghai2/21756.html" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <dialog class="route-dialog" id="route-dialog-01"
+      aria-labelledby="route-dialog-title-01">
+      <div class="dialog-bar">
+        <span>总榜第 18 · 青浦</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <img src="assets/routes/route-01.jpg" alt="上海太阳岛度假酒店 · 花园" loading="lazy">
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">青浦</p>
+            <h2 id="route-dialog-title-01">太阳岛 · 林地＋一项成人娱乐</h2>
+            <p class="dialog-travel">陆家嘴驾车 59.8 km · 约 86 分钟</p>
+          </div>
+        </div>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>68</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="3.5星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:70%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>30</b><small>白天体验 / 45</small></span>
+            <span><b>19</b><small>内容组合 / 25</small></span>
+            <span><b>15</b><small>省心程度 / 20</small></span>
+            <span><b>4</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">移除住宿优势加分，只有确认成人项目才考虑。</p>
+          <details class="score-details">
+            <summary>看扣分点和证据</summary>
+            <div class="score-detail-copy">
+              <p><strong>扣分点</strong>亲子项目是大头，近期有时段、服务和维修投诉。 三卧别墅匹配不代表白天好玩；成人娱乐可用性和费用未问清，暂排后段。</p>
+              <p><strong>评价把握</strong>低</p>
+            </div>
+          </details>
+          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+        </section>
+        <p class="review-line dialog-review"><strong>一句话口碑</strong>项目多、环境好，但不少另收费且关得早；先电话确认再排。</p>
+        <p class="fee-line"><strong>费用提醒</strong>温泉 10 月 31 日大概率未开，先电话确认；保龄球、垂钓等另收费。</p>
+        <div class="activity-line">
+          <span>岛内林地/河边短走</span><span>一项已确认成人娱乐或茶</span>
+        </div>
+        <div class="route-detail">
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–10:00</time>
+      <span>出发，前往青浦 · 太阳岛</span>
+    </li>
+    <li>
+      <time>10:00–11:30</time>
+      <span>岛内林地/河边短走</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭：当地小吃/本帮或农家菜</span>
+    </li>
+    <li>
+      <time>13:00–15:30</time>
+      <span>一项已确认成人娱乐或茶</span>
+    </li>
+    <li>
+      <time>16:00–17:30</time>
+      <span>入住、短休息</span>
+    </li>
+    <li>
+      <time>18:00–19:30</time>
+      <span>晚饭</span>
+    </li>
+    <li>
+      <time>19:30–21:30</time>
+      <span>已获准空间聊天/桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>温泉仅确认开池和票价后才去，否则短走</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>回住处办理退房</span>
+    </li>
+    <li>
+      <time>12:00–13:00</time>
+      <span>午饭</span>
+    </li>
+    <li>
+      <time>13:30左右出发</time>
+      <span>返沪</span>
+    </li></ol>
+            </section>
+          </div>
+
+    <figure class="detail-photo">
+      <img src="assets/routes/route-01-2.jpg" alt="上海太阳岛度假酒店 · 休闲娱乐设施" loading="lazy">
+      <figcaption>上海太阳岛度假酒店 · 休闲娱乐设施</figcaption>
+    </figure>
+
+    <p class="evening-stop"><strong>晚上落脚</strong>太阳岛 · 俱乐部别墅三房一厅</p>
+          <div class="detail-footer">
+            <p>上海太阳岛度假酒店 · 花园｜来源：携程公开景点相册</p>
+
+    <a class="source-link" href="https://www.shsunisland.cn/" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
   <footer class="page-note">
     <div class="page-note-inner">
       <p>资料复核：携程问道、美团旅行 CLI、高德 MCP。具体票价、开放时间、船班和收费项目会变，出发前再查一次官方渠道。</p>
       <p>觅家·一夜花香来自携程截图登记，线上三源暂时没有精确同名结果；预订前请在携程 App 复核在售状态和房东口径。</p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const closeDialog = (dialog) => {
+        if (dialog?.open) dialog.close();
+      };
+
+      document.addEventListener("click", (event) => {
+        const opener = event.target.closest("[data-route-id]");
+        if (opener) {
+          const dialog = document.getElementById("route-dialog-" + opener.dataset.routeId);
+          if (dialog && !dialog.open) {
+            document.body.classList.add("dialog-open");
+            dialog.showModal();
+          }
+          return;
+        }
+
+        const closeButton = event.target.closest("[data-close-dialog]");
+        if (closeButton) {
+          closeDialog(closeButton.closest("dialog"));
+          return;
+        }
+
+        const dialog = event.target.closest("dialog.route-dialog");
+        if (dialog && event.target === dialog) closeDialog(dialog);
+      });
+
+      document.querySelectorAll("dialog.route-dialog").forEach((dialog) => {
+        dialog.addEventListener("close", () => {
+          if (!document.querySelector("dialog.route-dialog[open]")) {
+            document.body.classList.remove("dialog-open");
+          }
+        });
+        dialog.addEventListener("click", (event) => {
+          const rect = dialog.getBoundingClientRect();
+          const outside =
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom;
+          if (outside) closeDialog(dialog);
+        });
+        dialog.addEventListener("toggle", (event) => {
+          if (event.newState === "open") {
+            document.body.classList.add("dialog-open");
+          } else if (!document.querySelector("dialog.route-dialog[open]")) {
+            document.body.classList.remove("dialog-open");
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

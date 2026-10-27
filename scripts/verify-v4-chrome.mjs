@@ -6,7 +6,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
-const htmlPath = path.join(root, "weekend-trip-plans-2026-10-31-v4.html");
+const requestedHtml = process.argv[2] || "weekend-trip-plans-2026-10-31-v4.html";
+const htmlPath = path.isAbsolute(requestedHtml) ? requestedHtml : path.join(root, requestedHtml);
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const debugPort = 9200 + Math.floor(Math.random() * 300);
 const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), "codex-chrome-v4-"));
@@ -129,6 +130,10 @@ async function capture(send, outputName) {
   fs.writeFileSync(path.join(root, outputName), Buffer.from(screenshot.data, "base64"));
 }
 
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
 async function inspectAt(send, width, height, mobile, prefix) {
   console.error(`Inspecting ${prefix}...`);
   await send("Emulation.setDeviceMetricsOverride", {
@@ -150,13 +155,16 @@ async function inspectAt(send, width, height, mobile, prefix) {
       const element = document.querySelector(selector);
       return element ? parseFloat(getComputedStyle(element).fontSize) : null;
     };
-    const routeDetails = [...document.querySelectorAll(".route-card details")];
     const routeCards = [...document.querySelectorAll(".route-card")];
+    const rankRows = [...document.querySelectorAll(".rank-row")];
+    const routeDialogs = [...document.querySelectorAll("dialog.route-dialog")];
     const stayCards = [...document.querySelectorAll(".stay-card")];
     const staySection = document.querySelector("#stays");
     const docWidth = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth);
     const overflowElements = [...document.querySelectorAll("main *")]
       .filter((element) => !element.closest(".region-nav"))
+      .filter((element) => !element.closest("dialog:not([open])"))
+      .filter((element) => !element.closest("svg"))
       .filter((element) => {
         const rect = element.getBoundingClientRect();
         return rect.width > 1 && (rect.left < -1 || rect.right > innerWidth + 1);
@@ -171,40 +179,153 @@ async function inspectAt(send, width, height, mobile, prefix) {
     const brokenImages = [...document.images]
       .filter((image) => !image.complete || image.naturalWidth === 0)
       .map((image) => image.getAttribute("src"));
+    const searchableText = [
+      ...routeCards,
+      ...rankRows,
+      ...routeDialogs,
+      ...stayCards,
+      document.querySelector(".page-note")
+    ].map((element) => element?.textContent || "").join(" ");
+    const budgetMatches = [...new Set(
+      searchableText.match(/预算|人均|总价|房费|房价|每晚|5000|room budget|per person/gi) || []
+    )];
     return {
       viewport: [innerWidth, innerHeight],
       documentWidth: docWidth,
       horizontalOverflow: docWidth > innerWidth + 1,
       overflowElements,
       bodyFont: textFont("body"),
-      routeTitleFont: textFont(".route-summary h3"),
+      routeTitleFont: textFont(".route-title"),
+      rankTitleFont: textFont(".row-main > strong"),
+      reviewFont: textFont(".route-card .review-line"),
       stayTitleFont: textFont(".stay-section-heading h2"),
+      rankRows: rankRows.length,
       routeCards: routeCards.length,
+      routeDialogs: routeDialogs.length,
       stayCards: stayCards.length,
-      routeDetails: routeDetails.length,
+      routeReviewCards: document.querySelectorAll(".route-card .review-line").length,
+      routeFeeCards: document.querySelectorAll(".route-card .fee-line").length,
+      dialogReviewBlocks: document.querySelectorAll(".route-dialog .dialog-review").length,
+      rankScores: rankRows.map((row) => Number(row.querySelector(".row-score b").textContent)),
       staySectionPresent: Boolean(staySection),
       staySectionVisible: staySection ? getComputedStyle(staySection).display !== "none" : false,
       stayCardVisible: stayCards[0] ? stayCards[0].getBoundingClientRect().height > 0 : false,
       staySectionInDetails: Boolean(document.querySelector(".stay-section details")),
+      mobileMapVisible: Boolean(document.querySelector(".mobile-region-map") &&
+        getComputedStyle(document.querySelector(".mobile-region-map")).display !== "none"),
+      desktopMapVisible: Boolean(document.querySelector(".desktop-region-map") &&
+        getComputedStyle(document.querySelector(".desktop-region-map")).display !== "none"),
+      dialogSupported: typeof HTMLDialogElement !== "undefined",
+      budgetMatches,
       images: document.images.length,
       brokenImages
     };
   })()`);
 
-  const routeToggle = await evaluate(send, `(async () => {
-    const details = document.querySelector(".route-card details");
-    const summary = details.querySelector("summary");
-    summary.click();
+  assert(initial.rankRows === 18, `${prefix}: expected 18 ranking rows, got ${initial.rankRows}`);
+  assert(initial.routeCards === 18, `${prefix}: expected 18 route cards, got ${initial.routeCards}`);
+  assert(initial.routeDialogs === 18, `${prefix}: expected 18 dialogs, got ${initial.routeDialogs}`);
+  assert(initial.stayCards === 14, `${prefix}: expected 14 stay cards, got ${initial.stayCards}`);
+  assert(initial.routeReviewCards === 18, `${prefix}: every route card needs a one-line review`);
+  assert(initial.routeFeeCards === 18, `${prefix}: every route card needs a fee warning`);
+  assert(initial.dialogReviewBlocks === 18, `${prefix}: every dialog needs a one-line review`);
+  assert(initial.staySectionVisible && initial.stayCardVisible, `${prefix}: stays must remain visible`);
+  assert(!initial.staySectionInDetails, `${prefix}: accommodation must not be folded into details`);
+  assert(initial.dialogSupported, `${prefix}: native dialog support is required`);
+  assert(!initial.horizontalOverflow, `${prefix}: horizontal page overflow detected`);
+  assert(
+    initial.overflowElements.length === 0,
+    `${prefix}: child elements exceed the viewport: ${JSON.stringify(initial.overflowElements)}`
+  );
+  assert(initial.brokenImages.length === 0, `${prefix}: broken images: ${initial.brokenImages.join(", ")}`);
+  assert(initial.budgetMatches.length === 0, `${prefix}: budget terms remain: ${initial.budgetMatches.join(", ")}`);
+  assert(initial.mobileMapVisible === mobile, `${prefix}: wrong map variant is visible`);
+  assert(initial.desktopMapVisible === !mobile, `${prefix}: wrong map variant is visible`);
+  assert(initial.bodyFont >= 20, `${prefix}: body text is too small`);
+  assert(initial.routeTitleFont >= 28, `${prefix}: route titles are too small`);
+  assert(initial.rankTitleFont >= 20, `${prefix}: ranking titles are too small`);
+  assert(initial.reviewFont >= 18, `${prefix}: review text is too small`);
+  assert(
+    initial.rankScores.join(",") === "85,83,82,81,81,80,80,79,78,77,77,76,76,75,75,71,69,68",
+    `${prefix}: unexpected ranking order: ${initial.rankScores.join(",")}`
+  );
+
+  const openedFromRank = await evaluate(send, `(async () => {
+    const row = document.querySelector(".rank-row");
+    row.click();
     await new Promise((resolve) => setTimeout(resolve, 150));
-    const opened = details.open;
-    details.open = false;
-    return opened;
+    const dialog = document.getElementById(row.getAttribute("aria-controls"));
+    const state = {
+      open: dialog.open,
+      title: dialog.querySelector("h2").textContent.trim(),
+      hasScoreParts: dialog.querySelectorAll(".score-parts > span").length === 4,
+      hasReview: Boolean(dialog.querySelector(".dialog-review")),
+      hasFee: Boolean(dialog.querySelector(".fee-line"))
+    };
+    dialog.querySelector("[data-close-dialog]").click();
+    state.closedByButton = !dialog.open;
+    return state;
   })()`);
+  assert(openedFromRank.open, `${prefix}: ranking row did not open its dialog`);
+  assert(openedFromRank.hasScoreParts, `${prefix}: dialog score breakdown is incomplete`);
+  assert(openedFromRank.hasReview, `${prefix}: dialog is missing its one-line review`);
+  assert(openedFromRank.hasFee, `${prefix}: dialog is missing its fee warning`);
+  assert(openedFromRank.closedByButton, `${prefix}: close button did not close the dialog`);
+
+  const openedFromCard = await evaluate(send, `(async () => {
+    const cardButton = document.querySelector(".route-launcher");
+    cardButton.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const dialog = document.getElementById(cardButton.getAttribute("aria-controls"));
+    return {
+      open: dialog.open,
+      activeInside: dialog.contains(document.activeElement),
+      bodyLocked: document.body.classList.contains("dialog-open")
+    };
+  })()`);
+  assert(openedFromCard.open, `${prefix}: route card did not open its dialog`);
+  assert(openedFromCard.activeInside, `${prefix}: dialog did not receive focus`);
+  assert(openedFromCard.bodyLocked, `${prefix}: page scroll lock was not applied`);
+
+  await send("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
+  await send("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
+  await sleep(120);
+  const closedByEscape = await evaluate(send, `(() => {
+    const openDialog = document.querySelector("dialog.route-dialog[open]");
+    return {
+      closed: !openDialog,
+      bodyUnlocked: !document.body.classList.contains("dialog-open")
+    };
+  })()`);
+  assert(closedByEscape.closed, `${prefix}: Escape did not close the dialog`);
+  assert(closedByEscape.bodyUnlocked, `${prefix}: page scroll lock was not released`);
 
   await evaluate(send, "scrollTo(0, 0)");
   console.error(`Capturing ${prefix} screenshots...`);
   await sleep(150);
   await capture(send, `${prefix}-top.png`);
+
+  await evaluate(send, `(() => {
+    const section = document.querySelector("#map");
+    scrollTo(0, Math.max(0, section.offsetTop - 132));
+  })()`);
+  await sleep(200);
+  await capture(send, `${prefix}-map.png`);
+
+  await evaluate(send, `(() => {
+    const section = document.querySelector("#ranking");
+    scrollTo(0, Math.max(0, section.offsetTop - 132));
+  })()`);
+  await sleep(200);
+  await capture(send, `${prefix}-ranking.png`);
+
+  await evaluate(send, `(() => {
+    const button = document.querySelector(".rank-row");
+    button.click();
+  })()`);
+  await sleep(180);
+  await capture(send, `${prefix}-route-dialog.png`);
+  await evaluate(send, `document.querySelector("dialog.route-dialog[open]")?.close()`);
 
   await evaluate(send, `(() => {
     const section = document.querySelector("#stays");
@@ -213,7 +334,15 @@ async function inspectAt(send, width, height, mobile, prefix) {
   await sleep(200);
   await capture(send, `${prefix}-stays.png`);
 
-  return { ...initial, routeToggle };
+  return {
+    ...initial,
+    dialogRankTitle: openedFromRank.title,
+    dialogOpenedFromRank: openedFromRank.open,
+    dialogOpenedFromCard: openedFromCard.open,
+    dialogActiveInside: openedFromCard.activeInside,
+    dialogClosedByButton: openedFromRank.closedByButton,
+    dialogClosedByEscape: closedByEscape.closed
+  };
 }
 
 try {
