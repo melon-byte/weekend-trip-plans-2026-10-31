@@ -3,288 +3,907 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="6人上海郊区两天一夜：直接选路线和住宿。">
-  <title>周末去哪儿 · 6人放松计划</title>
+  <meta name="description" content="6人、4间房、苏州水乡周末方案。三处住宿和两天行程一次看明白。">
+  <meta name="theme-color" content="#f3f0e8">
+  <title>苏州水乡 · 4间房周末方案</title>
   <style>
-    :root{--ink:#233d35;--sub:#768078;--green:#32684c;--wash:#eaf1e7;--paper:#f5f5f0;--line:#e2e7dc;--gold:#b78437;--red:#9d504b;--radius:16px;}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;line-height:1.6}button,input,select{font:inherit}button{cursor:pointer}a{color:var(--green);text-underline-offset:3px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #9aba7a;outline-offset:4px}button:disabled{cursor:default}p{margin:0}h1,h2,h3,h4{margin:0;line-height:1.4}img{max-width:100%}button img{display:block}[hidden]{display:none!important}
-    .wrap{max-width:1080px;margin:auto;padding:0 24px}.masthead{padding:35px 0 22px}.masthead h1{font-size:30px;letter-spacing:-.04em}.masthead .intro{color:var(--sub);font-size:14px;margin-top:9px}.trip-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.trip-meta span{font-size:12px;padding:5px 11px;background:#eaf0e6;border-radius:999px;color:#54705c}
-    .tabbar{position:sticky;top:0;z-index:10;background:rgba(245,245,240,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.tabs{display:flex;gap:24px}.tab{background:none;border:0;padding:15px 7px 13px;font-size:15px;font-weight:700;color:#828d82;border-bottom:3px solid transparent}.tab[aria-selected="true"]{color:var(--green);border-bottom-color:var(--green)}.tab-count{font-size:10px;font-weight:400;color:#8a9485;margin-left:6px}main{padding:24px 0 55px}.heading{display:flex;gap:18px;align-items:baseline;justify-content:space-between;margin-bottom:14px}.heading h2{font-size:20px}.heading p{color:var(--sub);font-size:12px}.section-note{font-size:12px;color:var(--sub);line-height:1.8;margin:14px 0}.pill{display:inline-block;background:#eaf1e7;border-radius:6px;padding:3px 7px;font-size:11px;color:#477357}.pill.caution{background:#f7eedc;color:#8d6b35}.pill.reject{background:#f5e6e2;color:var(--red)}
-    .top-picks{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.pick{width:100%;text-align:left;border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:0;overflow:hidden;transition:border-color .2s,box-shadow .2s}.pick.selected{border:2px solid #4b8461;box-shadow:0 4px 20px #2c513c0c}.pick img{width:100%;height:146px;object-fit:cover}.pick-body{padding:13px 15px 15px}.pick-top{display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:6px}.pick-top .rank{font-size:11px;color:var(--green);font-weight:700}.pick h3{font-size:17px;margin-bottom:6px}.pick p{font-size:12px;color:#7b8577;line-height:1.7}.stars{display:inline-block;position:relative;font-size:14px;color:#d9ddcf;white-space:nowrap;letter-spacing:1px;line-height:1}.stars>span{position:absolute;top:0;left:0;color:var(--gold);white-space:nowrap;overflow:hidden}.score{font-size:12px;color:var(--gold);font-weight:700;margin-left:5px}.pick-status{font-size:11px;color:#6e8169;margin-top:9px}.pick.selected .pick-status{color:var(--green)}
-    details.fold{margin:17px 0;border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 15px}summary{cursor:pointer;color:#54715c;font-size:13px}details.fold>summary{font-weight:700}details.fold[open]>summary{margin-bottom:12px}.route-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}.route-option{display:flex;gap:10px;align-items:center;justify-content:space-between;text-align:left;padding:9px 11px;border:1px solid #e6ebdf;border-radius:9px;background:#f9faf6;color:#546a56;font-size:12px}.route-option.selected{background:#e8f2e3;border-color:#b7ceb0}.route-option.reject{color:#9a6960}.rank-info{font-size:11px;color:#9ba38f;margin-left:7px}.route-option .right{white-space:nowrap;font-size:11px;color:#947746}.method{font-size:11px;color:#909787;line-height:1.8;margin-top:12px}
-    .route-detail{background:#fff;border:1px solid var(--line);border-radius:18px;padding:23px;scroll-margin-top:90px}.detail-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:12px}.detail-top h2{font-size:23px}.detail-top .score{font-size:17px}.detail-score{white-space:nowrap;text-align:right}.detail-sub{font-size:13px;color:#6e7d6d;max-width:720px;margin-top:5px}.decision-note{padding:10px 13px;background:#edf4e9;border-radius:10px;color:#5b7959;font-size:12px;line-height:1.8;margin:15px 0}.decision-note.reject{background:#f6e9e6;color:#965e54}.compact-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 20px}.compact-gallery figure{margin:0;overflow:hidden}.photo-button{padding:0;border:0;background:#e8eddf;border-radius:10px;overflow:hidden;width:100%;cursor:zoom-in}.compact-gallery img{width:100%;height:160px;object-fit:cover}.compact-gallery figcaption{font-size:10px;color:#909686;line-height:1.6;margin-top:4px}.photo-button img{transition:transform .25s}.photo-button:hover img{transform:scale(1.03)}.timeline-switch{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.timeline-switch span{font-size:12px;color:#788674;margin-right:5px}.choice{border:1px solid #dce5d4;background:#fff;color:#73846b;border-radius:999px;padding:6px 12px;font-size:12px}.choice[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--green)}.days{display:grid;grid-template-columns:1fr 1fr;gap:16px}.day{background:#f7f9f2;border-radius:12px;padding:15px 17px}.day h3{font-size:14px;color:#527454;margin-bottom:9px}.time-row{display:grid;grid-template-columns:106px 1fr;gap:9px;padding:8px 0;border-top:1px solid #e7ecdE;font-size:12px;line-height:1.65}.time-row:first-of-type{border:0}.time-row time{font-size:11px;color:#96a18b}.time-row p{color:#566b54}.lunch-start-note{font-size:12px;color:#8b7146;background:#f9f2e2;border-radius:9px;padding:9px 12px;margin-top:12px;line-height:1.8}.route-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.action{border:1px solid #d8e3d3;border-radius:8px;padding:7px 11px;background:#fff;color:var(--green);font-size:12px;text-decoration:none}.action.main{background:var(--green);color:#fff;border-color:var(--green)}.route-fold{margin-top:16px;border-top:1px solid #e7ece0;padding-top:13px}.route-fold>summary{font-size:12px;font-weight:500}.review-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}.review-columns h4{font-size:13px;margin-bottom:7px}.review-columns p{font-size:12px;line-height:1.8;color:#788470;margin-bottom:7px}.review-columns .minus{color:#8b7458}.review-meta{font-size:10px;color:#9a9f92!important}.sources{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.sources a{font-size:11px;color:#71906b}.audit-points{display:grid;gap:8px;margin-top:10px}.audit-points p{font-size:12px;color:#808975;line-height:1.8}.audit-points b{color:#677658}.evidence-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}.evidence-gallery figure{margin:0}.evidence-gallery img{height:125px;width:100%;object-fit:cover}.evidence-gallery figcaption{font-size:10px;color:#9a9f93;line-height:1.6;margin-top:4px}.scoring-note{font-size:11px;color:#929b85;line-height:1.8;margin-top:11px}
-    .stay-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.stay{padding:18px;background:#fff;border-radius:16px;border:1px solid var(--line)}.stay h3{font-size:18px;margin:8px 0}.stay>p{font-size:12px;color:#78816f;line-height:1.8}.stay-summary{margin-top:12px}.stay-summary b{color:#5d7958}.stay .compact-gallery{grid-template-columns:1fr 1fr;margin:14px 0}.stay .compact-gallery img{height:165px}.stay .fold{background:#fafbf7;margin-bottom:0}.stay .fold p{font-size:12px;line-height:1.8;color:#7d8676;margin:7px 0}.stay .action{display:inline-block;margin:0 7px 0 0}.stay .compact-gallery figcaption{font-size:10px}.stay-note{padding:12px 15px;background:#eaf1e6;border-radius:11px;font-size:12px;color:#61755c;margin-bottom:18px;line-height:1.8}
-    
-    footer{font-size:10px;color:#a1a894;line-height:1.8;border-top:1px solid #e1e7d9;padding:17px 0 24px}dialog{padding:15px;border:0;border-radius:16px;background:#183d2f;color:#e7eedf;max-width:min(1080px,94vw)}dialog::backdrop{background:#000b}dialog img{display:block;max-width:100%;max-height:75vh;margin:auto;object-fit:contain}dialog button{position:absolute;right:16px;top:16px;border:0;background:#ffffffe0;border-radius:50%;font-size:20px;padding:6px 11px;color:#305440}dialog p{font-size:12px;line-height:1.7;margin-top:12px}dialog a{font-size:11px;color:#c6dfb9}noscript{padding:20px}
-    @media(max-width:820px){.top-picks{gap:10px}.pick img{height:125px}.pick-body{padding:12px}.pick h3{font-size:15px}.heading{align-items:flex-start}.heading p{max-width:260px}.stay-grid{gap:12px}.compact-gallery img{height:130px}.time-row{grid-template-columns:85px 1fr}.evidence-gallery{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:600px){.wrap{padding:0 16px}.masthead{padding:25px 0 18px}.masthead h1{font-size:26px}.masthead .intro{font-size:12px}.trip-meta{gap:6px;margin-top:12px}.trip-meta span{font-size:10px;padding:4px 8px}.tabs{gap:18px}.tab{padding:13px 5px;font-size:14px}.tab-count{display:none}main{padding-top:18px}.heading h2{font-size:18px}.heading p{display:none}.top-picks{grid-template-columns:1fr}.pick{display:grid;grid-template-columns:105px 1fr;min-height:112px}.pick img{height:100%;min-height:112px;max-height:138px}.pick-body{padding:11px 13px}.pick-top{margin:0 0 5px}.pick h3{font-size:16px;margin-bottom:3px}.pick p{font-size:11px}.pick-status{font-size:10px;margin-top:5px}.stars{font-size:12px}.score{font-size:11px}.route-options{grid-template-columns:1fr}.route-detail{padding:17px}.detail-top h2{font-size:20px}.detail-score .score{font-size:14px}.detail-sub{font-size:12px}.compact-gallery{gap:7px;margin:14px 0}.compact-gallery img{height:105px}.compact-gallery figcaption{font-size:9px}.days{grid-template-columns:1fr;gap:10px}.day{padding:12px 14px}.time-row{grid-template-columns:94px 1fr;font-size:12px}.review-columns{grid-template-columns:1fr;gap:10px}.evidence-gallery{grid-template-columns:1fr 1fr}.evidence-gallery img{height:115px}.stay-grid{grid-template-columns:1fr}.stay .compact-gallery img{height:140px}.stay h3{font-size:17px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-    @media print{.tabbar{display:none}.top-picks{display:none}.route-detail,.stay{box-shadow:none;break-inside:avoid}.route-actions{display:none}footer{margin-top:20px}}
-    .row-review{display:block;font-size:14px;color:#2f6c45;line-height:1.7;margin-top:7px}.detail-review{font-size:14px;color:#2f6c45;line-height:1.7;margin-top:8px}.review-label{display:inline-block;font-size:12px;font-weight:700;line-height:1.4;color:#fff;background:#4c7b55;border-radius:5px;padding:2px 7px;margin-right:6px;vertical-align:2px}
-  
-    .board-tools{display:flex;justify-content:space-between;gap:15px;align-items:center;font-size:12px;color:#84907c;margin:0 0 14px}.board-tools label{display:flex;gap:8px;align-items:center}.board-tools select{font:inherit;padding:7px 13px;border:1px solid #d5e1cb;border-radius:8px;background:white;color:#526d49}.rank-board{display:grid;gap:11px}.rank-row{display:grid;grid-template-columns:35px 155px minmax(0,1fr) 82px 15px;gap:17px;align-items:center;width:100%;text-align:left;background:white;border:1px solid #e1e7d9;border-radius:14px;padding:14px 17px;transition:border-color .15s,box-shadow .15s}.rank-row:hover{border-color:#a5c193;box-shadow:0 6px 20px #213a2609}.row-rank{font-size:20px;font-weight:800;color:#a7b29c}.rank-row:first-child .row-rank{color:#3e7751}.row-photo{width:155px;height:118px;object-fit:cover;border-radius:9px}.row-main{display:block;min-width:0}.row-main>strong{display:block;font-size:18px;color:#2b4c38;line-height:1.4}.row-highlight{display:block;font-size:13px;line-height:1.7;color:#7c8974;margin-top:7px}.row-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.row-tags span{font-size:10px;color:#6a825e;background:#f0f5e9;border-radius:5px;padding:3px 7px}.row-score{text-align:right;color:#4d7b3f}.row-score b{font-size:25px}.row-score small{font-size:10px;margin-left:3px}.row-score>span{display:block;margin-top:2px}.row-score em{font-size:10px;font-style:normal;color:#a28450;display:block;margin-top:5px}.row-score .stars{font-size:12px}.row-arrow{font-size:25px;color:#a4b595}
-    .route-modal{padding:0;max-width:min(880px,94vw);width:880px;max-height:90vh;background:#fff;color:var(--ink);overflow:auto;border-radius:17px;overscroll-behavior:contain}.route-modal .modal-bar{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f6f8f1;border-bottom:1px solid #e1e9d7;color:#749165;font-size:12px}.route-modal #closeRoute{position:static;border:1px solid #dbe4d0;background:#fff;border-radius:7px;padding:6px 12px;font-size:12px;color:#617955}.route-modal .route-detail{border:0;border-radius:0;padding:21px}.route-modal .route-actions button{position:static;border-radius:8px;padding:7px 11px;font-size:12px}.route-modal .choice{position:static;border-radius:999px;font-size:12px;padding:6px 12px}.route-modal .photo-button{position:static;padding:0;border-radius:10px;background:#e8eddf}.route-modal .detail-top{margin-top:0}.route-modal .detail-top h2{font-size:23px}.route-modal .route-fold{border-color:#e4eada}.route-modal .fold p{color:#748569}.route-modal .photo-button img{max-height:none}.route-modal p{margin-top:0}.route-modal .section-note{font-size:12px;margin:13px 0}.route-modal .time-row p{font-size:12px;color:#586f4e;margin:0}.route-modal a{color:#4b7950}
-    @media(max-width:650px){.rank-row{grid-template-columns:21px 92px minmax(0,1fr) 46px;gap:9px;padding:11px}.row-photo{width:92px;height:105px}.row-rank{font-size:15px}.row-main>strong{font-size:15px}.row-highlight{font-size:11px;margin-top:5px}.row-tags{gap:4px;margin-top:7px}.row-tags span{font-size:9px;padding:2px 4px}.row-score b{font-size:19px}.row-score .stars{font-size:8px;letter-spacing:0}.row-score em{font-size:9px}.row-arrow{display:none}.route-modal{width:96vw;max-width:96vw;max-height:94vh}.route-modal .route-detail{padding:16px}.route-modal .modal-bar{padding:10px 15px}.route-modal .detail-top h2{font-size:19px}.route-modal .detail-score .stars{font-size:12px}.route-modal .detail-top{gap:12px}.route-modal .detail-sub{font-size:12px}.rank-board{gap:9px}.heading h2{font-size:18px}}
-    @media print{.rank-row{break-inside:avoid}.route-modal:not([open]){display:none}}
-
-
-    .play-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}.filter-chip{padding:7px 11px;border:1px solid #dbe5d3;border-radius:999px;background:#fff;color:#70866b;font-size:12px}.filter-chip.active,.filter-chip[aria-pressed="true"]{background:#32684c;color:white;border-color:#32684c}.board-tools{flex-wrap:wrap}.board-tools label{gap:5px}.row-open{display:grid;grid-template-columns:35px 155px minmax(0,1fr) 77px;gap:16px;align-items:center;width:100%;padding:0;border:0;background:none;text-align:left}.rank-row{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:11px}.rank-row .favorite{border:1px solid #e1e9d9;padding:0;background:#f9fbf5;border-radius:50%;width:34px;height:34px;color:#98a18a;font-size:19px;line-height:1}.rank-row .favorite[aria-pressed="true"]{color:#b98129;border-color:#e5cc97;background:#fff6e5}.list-empty{text-align:center;padding:30px;font-size:13px;color:#8b9584;background:#fff;border-radius:13px}.row-photo{object-fit:cover}.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.review-card{padding:14px;border:1px solid #e0e8d9;border-radius:12px;background:#f5f9ee}.review-card.bad{background:#fcf4e9;border-color:#eddfc7}.review-card.judgment{background:#eaf4ee;border-color:#caddc9}.review-card h4{font-size:14px;color:#537344;margin:0 0 8px}.review-card.bad h4{color:#9b7752}.review-card.judgment h4{color:#39734b}.review-card ul{margin:0;padding-left:16px;color:#758368;font-size:12px;line-height:1.8}.review-card li{margin:0 0 5px}.review-card p{font-size:12px;color:#687e66;line-height:1.8}.review-heading{font-size:17px;margin:22px 0 8px}.review-sample{font-size:10px!important;color:#9ba48d!important;line-height:1.8;margin:9px 0!important}.evidence-list{display:grid;gap:8px;margin:12px 0 18px}.evidence-item{padding:11px 13px;border-left:3px solid #b5ca9d;background:#f8faf2;border-radius:0 8px 8px 0}.evidence-item p{font-size:12px;color:#718466;line-height:1.8}.evidence-item small{display:block;color:#95a487;font-size:10px;margin-top:5px}.evidence-item a{font-size:10px}.activity-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.activity-card{padding:14px;background:#f5f8ef;border-radius:11px;border:1px solid #e0e8d6}.activity-card b{display:block;font-size:14px;color:#467449}.activity-card span{display:block;color:#98a18b;font-size:11px;margin-bottom:4px}.activity-card p{font-size:12px;color:#7c8d70;margin-top:7px!important;line-height:1.7}.modal-nav{display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:55px;z-index:1;margin:0 -21px 12px;padding:8px 21px;background:#ffffffef;backdrop-filter:blur(8px);border-bottom:1px solid #edf1e6}.route-modal .modal-nav button{position:static;padding:5px 9px;font-size:11px;border:1px solid #dfe8d8;border-radius:7px;background:#f7faf2;color:#5f7d54}.modal-section{scroll-margin-top:110px}.stay-inline{background:#f8faf4;border:1px solid #e2e9da;border-radius:11px;padding:16px;margin-top:12px}.stay-inline h4{font-size:15px;margin:0 0 7px}.stay-inline p{font-size:12px;color:#7d8d72;line-height:1.8;margin:5px 0}.stay-inline .compact-gallery{margin-bottom:0}.stay-inline .compact-gallery img{height:130px}.stay-review-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:10px 0}.stay-review-grid div{padding:11px;background:#fff;border-radius:9px;font-size:12px;line-height:1.8;color:#839279}.stay-review-grid b{display:block;color:#547149}.stay .stay-review-grid{grid-template-columns:1fr}.note-box{padding:10px 12px;margin:12px 0;border-radius:9px;background:#fff6e7;color:#9a7f55;font-size:12px;line-height:1.8}.play-score-note{font-size:11px;color:#90a282;line-height:1.8;margin-top:10px}.review-all{border-top:1px solid #e2e9d8;padding-top:12px;margin-top:14px}.modal-section h3{font-size:16px}.modal-section .day h3{font-size:14px}.jump-favorite{position:static!important;border:1px solid #d8e4d0!important;border-radius:8px!important;padding:7px 10px!important;font-size:12px!important;background:#f5f9f0!important;color:#628354!important}.photo-nav{display:flex;align-items:center;gap:8px;justify-content:center;margin:8px 0}.photo-nav button{position:static!important;padding:6px 12px!important;border:1px solid #dce8d5!important;font-size:12px!important;border-radius:7px!important;background:white!important;color:#57814b!important}.photo-nav span{font-size:11px;color:#8ba07c}.gallery-track{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gallery-track figure{margin:0}.gallery-track img{height:150px;width:100%;object-fit:cover}.gallery-track figcaption{font-size:10px;color:#91a085;line-height:1.7;margin-top:5px}.photo-button:focus-visible{outline:2px solid #80a670}.row-main>strong{font-size:18px}.route-modal .review-card p{font-size:12px}.route-modal .review-sample{font-size:10px}.modal-bar{gap:10px}.rank-row h3{display:block}
-    @media(max-width:650px){.rank-row{grid-template-columns:minmax(0,1fr) 25px;gap:8px;padding:11px}.row-open{grid-template-columns:20px 86px minmax(0,1fr) 42px;gap:8px}.row-photo{width:86px;height:112px}.row-main>strong{font-size:14px}.row-highlight{font-size:11px}.rank-row .favorite{width:25px;height:25px;font-size:16px}.row-score .stars{font-size:8px}.row-rank{font-size:14px}.review-grid{grid-template-columns:1fr}.review-card{padding:12px}.review-card h4{font-size:13px}.review-heading{font-size:16px}.evidence-item p{font-size:11px}.modal-nav{margin:0 -16px 12px;padding:7px 16px;top:52px}.activity-cards{gap:8px}.activity-card{padding:11px}.activity-card b{font-size:12px}.activity-card p{font-size:11px}.stay-review-grid{grid-template-columns:1fr}.gallery-track img{height:105px}.gallery-track figcaption{font-size:9px}.board-tools label{font-size:11px}.play-filters{gap:5px}.filter-chip{font-size:11px;padding:6px 9px}.modal-section{scroll-margin-top:105px}}
-
- .route-modal button.action{position:static;border-radius:8px;font-size:12px;padding:7px 11px;}
-
-    @media(max-width:430px){
-      html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
-      body{font-size:16px;line-height:1.72;overflow-x:hidden}
-      .wrap{width:100%;max-width:100%;padding-left:18px;padding-right:18px}
-      .masthead{padding:34px 0 24px}
-      .masthead h1{font-size:32px;letter-spacing:0;line-height:1.28}
-      .masthead .intro{font-size:16px;line-height:1.72;margin-top:10px}
-      .trip-meta{gap:8px;margin-top:15px}
-      .trip-meta span{font-size:13px;padding:6px 10px}
-      .tabbar{background:#fff}
-      .tabs{gap:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-      .tabs::-webkit-scrollbar{display:none}
-      .tab{font-size:16px;padding:17px 2px 14px;white-space:nowrap}
-      main{padding-top:20px;padding-bottom:70px}
-      .heading{display:block;margin-bottom:16px}
-      .heading h2{font-size:23px;line-height:1.35}
-      .heading p{display:block;max-width:none;font-size:14px;margin-top:7px}
-      .section-note{font-size:14px;line-height:1.78}
-      .pill{font-size:13px;padding:5px 8px}
-      .play-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}
-      .filter-chip{width:100%;font-size:14px;padding:10px 12px;text-align:center}
-      #onlyFavorites{grid-column:1 / -1}
-      .board-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:end;margin-bottom:16px}
-      .board-tools label{display:block;width:100%;font-size:14px}
-      .board-tools select{display:block;width:100%;font-size:14px;padding:10px 12px;border-radius:9px}
-      #boardCount{grid-column:1 / -1;text-align:right;font-size:14px}
-      .rank-board{gap:14px}
-      .rank-row{position:relative;display:block;padding:14px 14px 16px;border-radius:14px}
-      .row-open{position:relative;display:grid;grid-template-columns:1fr;grid-template-areas:"photo" "score" "main";gap:10px;width:100%;padding:0}
-      .row-rank{position:absolute;top:10px;left:10px;z-index:1;font-size:14px;padding:4px 7px;color:#32684c;background:#ffffffdd;border-radius:7px}
-      .row-photo{grid-area:photo;width:100%;height:205px;border-radius:11px}
-      .row-score{grid-area:score;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:flex-start;gap:3px 8px;text-align:left;margin:0}
-      .row-score b{font-size:24px}
-      .row-score small{font-size:12px}
-      .row-score .stars{font-size:13px;letter-spacing:0}
-      .row-score em{font-size:12px;margin:0}
-      .row-main{grid-area:main;min-width:0}
-      .row-main>strong{font-size:20px;line-height:1.4}
-      .row-review{font-size:15px;line-height:1.65;margin-top:7px}
-      .review-label{font-size:13px;padding:2px 7px}
-      .row-highlight{font-size:15px;line-height:1.65;margin-top:7px}
-      .row-tags{gap:6px;margin-top:11px}
-      .row-tags span{font-size:12px;padding:4px 7px}
-      .rank-row .favorite{position:absolute;top:14px;right:14px;width:44px;height:44px;font-size:22px;border-radius:50%;background:#ffffffe6}
-      .list-empty{font-size:15px;padding:28px 18px}
-      .route-modal{width:100vw;max-width:100vw;height:100svh;max-height:100svh;margin:0;border-radius:0}
-      .route-modal .modal-bar{padding:13px 18px;font-size:15px}
-      .route-modal #closeRoute{font-size:14px;padding:8px 12px}
-      .route-modal .route-detail{padding:18px 18px max(30px,env(safe-area-inset-bottom))}
-      .modal-nav{top:53px;margin:0 -18px 14px;padding:9px 18px;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-      .modal-nav::-webkit-scrollbar{display:none}
-      .route-modal .modal-nav button{font-size:14px;padding:8px 10px;white-space:nowrap}
-      .modal-section{scroll-margin-top:110px}
-      .detail-top{display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:14px}
-      .route-modal .detail-top h2{font-size:25px;line-height:1.3}
-      .detail-top h2{font-size:25px;line-height:1.3}
-      .route-modal .detail-review{font-size:15px;line-height:1.7;margin-top:8px}
-      .detail-review{font-size:15px;line-height:1.7;margin-top:8px}
-      .detail-score{display:flex;align-items:baseline;gap:7px;text-align:left;white-space:normal}
-      .detail-score .stars{font-size:15px;letter-spacing:0}
-      .detail-score .score{font-size:18px;margin:0}
-      .route-modal .detail-sub{font-size:15px;line-height:1.7;max-width:none}
-      .detail-sub{font-size:15px;line-height:1.7;max-width:none}
-      .compact-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
-      .compact-gallery img{height:155px}
-      .compact-gallery figcaption{font-size:12px;line-height:1.55;margin-top:5px}
-      .activity-cards{grid-template-columns:1fr;gap:10px}
-      .activity-card{padding:14px}
-      .activity-card span{font-size:13px}
-      .activity-card b{font-size:16px}
-      .activity-card p{font-size:14px!important;line-height:1.7}
-      .note-box{font-size:14px;line-height:1.75;padding:12px 13px}
-      .jump-favorite{font-size:14px!important;padding:10px 13px!important}
-      .review-grid{grid-template-columns:1fr;gap:11px}
-      .review-card{padding:15px}
-      .review-card h4{font-size:16px}
-      .review-card ul{font-size:15px;line-height:1.75}
-      .review-card li{margin-bottom:7px}
-      .route-modal .review-card p{font-size:15px;line-height:1.75}
-      .review-card p{font-size:15px;line-height:1.75}
-      .route-modal .review-heading{font-size:20px;margin:24px 0 10px}
-      .review-heading{font-size:20px;margin:24px 0 10px}
-      .review-sample{font-size:13px!important;line-height:1.7!important}
-      .play-score-note{font-size:13px;line-height:1.7}
-      .evidence-list{gap:10px}
-      .evidence-item{padding:13px 14px}
-      .evidence-item p{font-size:15px;line-height:1.75}
-      .evidence-item small{font-size:12px;margin-top:6px}
-      .evidence-item a{font-size:12px}
-      .timeline-switch{gap:8px}
-      .timeline-switch span{font-size:14px}
-      .route-modal .choice{font-size:14px;padding:9px 14px}
-      .choice{font-size:14px;padding:9px 14px}
-      .days{grid-template-columns:1fr;gap:12px}
-      .day{padding:15px 16px}
-      .route-modal .modal-section .day h3{font-size:16px}
-      .modal-section .day h3{font-size:16px}
-      .time-row{grid-template-columns:92px 1fr;gap:10px;font-size:15px;line-height:1.65}
-      .time-row time{font-size:13px}
-      .route-modal .time-row p{font-size:15px;line-height:1.65}
-      .route-modal .section-note{font-size:14px;line-height:1.78;margin:14px 0}
-      .stay-inline{padding:16px}
-      .stay-inline h4{font-size:18px}
-      .stay-inline p{font-size:15px;line-height:1.75}
-      .stay-review-grid{grid-template-columns:1fr;gap:10px}
-      .stay-review-grid div{font-size:15px;line-height:1.75;padding:13px}
-      .photo-nav{gap:10px;margin:10px 0 12px}
-      .photo-nav button{font-size:14px!important;padding:9px 13px!important}
-      .photo-nav span{font-size:13px}
-      .gallery-track{grid-template-columns:1fr;gap:14px}
-      .gallery-track img{height:225px}
-      .gallery-track figcaption{font-size:12px;line-height:1.65;margin-top:6px}
-      .route-modal button.action{font-size:14px;padding:10px 13px}
-      .action{font-size:14px;padding:10px 13px}
-      .route-fold>summary{font-size:14px}
-      .sources{gap:8px}
-      .sources a{font-size:14px}
-      .stay-note{font-size:15px;line-height:1.75;padding:14px 15px}
-      .stay-grid{grid-template-columns:1fr;gap:15px}
-      .stay{padding:16px;border-radius:14px}
-      .stay h3{font-size:20px}
-      .stay>p{font-size:15px;line-height:1.75}
-      .stay .compact-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .stay .compact-gallery img{height:160px}
-      .stay .fold p{font-size:15px;line-height:1.75}
-      footer{font-size:13px;line-height:1.7;padding-top:20px;padding-bottom:max(26px,env(safe-area-inset-bottom))}
-      dialog#photoViewer{width:100vw;max-width:100vw;height:100svh;max-height:100svh;margin:0;padding:54px 18px max(22px,env(safe-area-inset-bottom));border-radius:0}
-      dialog#photoViewer button{top:16px;right:16px}
-      dialog#photoViewer img{max-height:72svh}
-      dialog#photoViewer p{font-size:14px}
-      dialog#photoViewer a{font-size:14px}
+    :root {
+      --ink: #24352e;
+      --muted: #64716b;
+      --paper: #f3f0e8;
+      --surface: #fffdf8;
+      --line: #dcd8cd;
+      --green: #35624d;
+      --green-wash: #e8efe8;
+      --clay: #a45c3f;
+      --clay-wash: #f3e8e1;
+      --blue: #376b70;
+      --blue-wash: #e4eef0;
+      --gold: #a26f23;
+      --warning: #81501e;
+      --warning-wash: #fbf0df;
+      --radius: 8px;
     }
 
-    @media(min-width:431px){
-      body{font-size:18px;line-height:1.72}
-      .masthead h1{font-size:34px;letter-spacing:0}
-      .masthead .intro{font-size:16px}
-      .trip-meta span{font-size:13px}
-      .tab{font-size:17px}
-      .heading h2{font-size:24px}
-      .heading p{font-size:14px}
-      .section-note{font-size:14px}
-      .pill{font-size:13px}
-      .filter-chip{font-size:14px}
-      .board-tools{font-size:14px}
-      .board-tools select{font-size:14px}
-      .rank-row{padding:16px 18px}
-      .row-main>strong{font-size:24px}
-      .row-review{font-size:17px;line-height:1.7;margin-top:8px}
-      .row-highlight{font-size:15px}
-      .row-tags span{font-size:12px}
-      .row-score b{font-size:27px}
-      .row-score small{font-size:12px}
-      .row-score .stars{font-size:14px}
-      .row-score em{font-size:12px}
-      .route-modal .detail-top h2{font-size:32px;line-height:1.3}
-      .route-modal .detail-sub{font-size:17px;line-height:1.7}
-      .route-modal .detail-review{font-size:17px;line-height:1.7;margin-top:8px}
-      .route-modal .review-heading{font-size:21px}
-      .route-modal .review-card h4{font-size:16px}
-      .route-modal .review-card p{font-size:15px}
-      .route-modal .activity-card b{font-size:16px}
-      .route-modal .activity-card p{font-size:15px}
-      .route-modal .stay-inline h4{font-size:18px}
-      .route-modal .stay-inline p{font-size:15px}
-      .route-modal .time-row p{font-size:15px}
-      .route-modal .section-note{font-size:14px}
-      .route-modal .modal-bar{font-size:15px}
-      .route-modal #closeRoute{font-size:14px}
-      .route-modal .modal-nav button{font-size:14px}
-      .route-modal .choice{font-size:14px}
-      .route-modal button.action{font-size:14px}
-      .action{font-size:14px}
-      .sources a{font-size:14px}
-      .stay h3{font-size:21px}
-      .stay>p{font-size:15px}
-      .stay .fold p{font-size:15px}
-      .stay-note{font-size:15px}
-      .compact-gallery figcaption{font-size:12px}
-      .gallery-track figcaption{font-size:12px}
-      .review-sample{font-size:13px!important}
-      footer{font-size:13px}
+    * {
+      box-sizing: border-box;
     }
-</style>
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        linear-gradient(to right, rgba(53, 98, 77, .045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+      color: var(--ink);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--green);
+      text-underline-offset: 3px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    dl,
+    dd,
+    figure {
+      margin: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.3;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+      padding: 10px 14px;
+      background: var(--ink);
+      color: #fff;
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .page-head {
+      padding: 68px 0 34px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 3px;
+      background: var(--clay);
+    }
+
+    h1 {
+      max-width: 920px;
+      margin-top: 18px;
+      font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.18;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    .trip-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .trip-meta span {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 15px;
+      border: 1px solid #c9d4c9;
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .8);
+      color: #3f5c4d;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .choice-guide {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .choice-guide strong {
+      color: var(--clay);
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .choice-guide p {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .stay-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+      padding-bottom: 42px;
+    }
+
+    .stay-card {
+      --accent: var(--green);
+      --accent-wash: var(--green-wash);
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 13px 30px rgba(40, 46, 39, .07);
+    }
+
+    .stay-card[data-style="clay"] {
+      --accent: var(--clay);
+      --accent-wash: var(--clay-wash);
+    }
+
+    .stay-card[data-style="blue"] {
+      --accent: var(--blue);
+      --accent-wash: var(--blue-wash);
+    }
+
+    .stay-media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--accent-wash);
+    }
+
+    .stay-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .stay-card[data-style="clay"] .stay-media img {
+      object-position: center 44%;
+    }
+
+    .stay-card[data-style="blue"] .stay-media img {
+      object-position: center 45%;
+    }
+
+    .stay-media figcaption {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 5px;
+      background: rgba(31, 43, 37, .82);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 22px;
+    }
+
+    .card-topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-label {
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      color: var(--gold);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .score b {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .score small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+      font-size: 31px;
+      font-weight: 700;
+    }
+
+    .location {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .quote {
+      margin: 18px 0;
+      padding: 14px 15px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-wash);
+      font-size: 18px;
+      font-weight: 650;
+      line-height: 1.65;
+    }
+
+    .quote span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .facts div {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid #e4e0d6;
+      border-radius: 6px;
+      background: #faf8f2;
+    }
+
+    .facts dt {
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .facts dd {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .bed-note {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .room-warning {
+      margin-top: 16px;
+      padding: 13px 14px;
+      border-radius: 6px;
+      background: var(--warning-wash);
+      color: var(--warning);
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    .room-warning strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #653b12;
+      font-size: 17px;
+    }
+
+    details {
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    summary {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 17px;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    summary:focus-visible {
+      outline: 3px solid #8fb19f;
+      outline-offset: 3px;
+    }
+
+    .itinerary {
+      padding: 4px 0 8px;
+    }
+
+    .day + .day {
+      margin-top: 22px;
+    }
+
+    .day h3 {
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    .timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 13px 25px;
+      color: #405049;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      top: .62em;
+      left: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: calc(.62em + 12px);
+      bottom: 0;
+      left: 5.5px;
+      width: 1px;
+      background: #d9ded8;
+    }
+
+    .fee-note {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed #d8d4c9;
+      color: #66543d;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .fee-note strong {
+      color: #4d3b26;
+    }
+
+    .source-note {
+      margin-top: auto;
+      padding-top: 16px;
+      color: #78827c;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .verification {
+      padding: 30px 0 56px;
+      border-top: 1px solid var(--line);
+    }
+
+    .verification h2 {
+      margin-bottom: 13px;
+      font-size: 25px;
+    }
+
+    .verification ul {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .verification li {
+      position: relative;
+      padding-left: 20px;
+      color: #5d6963;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .verification li::before {
+      content: "·";
+      position: absolute;
+      left: 2px;
+      color: var(--clay);
+      font-weight: 900;
+    }
+
+    .page-footer {
+      padding: 20px 0 calc(34px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--line);
+      color: #77817b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1050px) {
+      .stay-grid {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+      }
+
+      .stay-card {
+        display: grid;
+        grid-template-columns: minmax(300px, .9fr) minmax(0, 1.1fr);
+      }
+
+      .stay-media {
+        height: 100%;
+        aspect-ratio: auto;
+        min-height: 100%;
+      }
+
+      .card-body {
+        padding: 25px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        background-size: 26px 26px;
+        font-size: 18px;
+      }
+
+      .wrap {
+        width: calc(100% - 32px);
+      }
+
+      .page-head {
+        padding: 42px 0 24px;
+      }
+
+      .eyebrow {
+        font-size: 15px;
+      }
+
+      h1 {
+        margin-top: 13px;
+        font-size: 38px;
+        line-height: 1.22;
+      }
+
+      .intro {
+        margin-top: 14px;
+        font-size: 19px;
+      }
+
+      .trip-meta {
+        gap: 8px;
+        margin-top: 19px;
+      }
+
+      .trip-meta span {
+        min-height: 39px;
+        padding: 7px 12px;
+        font-size: 15px;
+      }
+
+      .choice-guide {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        margin-bottom: 16px;
+        padding: 16px 2px;
+      }
+
+      .choice-guide strong {
+        font-size: 16px;
+      }
+
+      .choice-guide p {
+        font-size: 18px;
+      }
+
+      .stay-grid {
+        gap: 16px;
+        padding-bottom: 32px;
+      }
+
+      .stay-card {
+        display: flex;
+      }
+
+      .stay-media {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .card-topline {
+        align-items: flex-start;
+      }
+
+      .card-label {
+        font-size: 15px;
+      }
+
+      .score b {
+        font-size: 26px;
+      }
+
+      .score small {
+        font-size: 15px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .location {
+        font-size: 17px;
+      }
+
+      .quote {
+        font-size: 19px;
+      }
+
+      .facts dd {
+        font-size: 18px;
+      }
+
+      .bed-note,
+      .room-warning,
+      summary {
+        font-size: 17px;
+      }
+
+      .timeline li {
+        font-size: 17px;
+      }
+
+      .fee-note {
+        font-size: 16px;
+      }
+
+      .source-note {
+        font-size: 14px;
+      }
+
+      .verification {
+        padding: 26px 0 46px;
+      }
+
+      .verification h2 {
+        font-size: 24px;
+      }
+
+      .verification li {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        font-size: 11pt;
+      }
+
+      .stay-grid {
+        display: block;
+      }
+
+      .stay-card {
+        break-inside: avoid;
+        margin-bottom: 16px;
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="wrap masthead">
-    <h1>这个周末，找个地方放松 🌿</h1>
-    <p class="intro">先选白天想玩的，晚上再找能一起吃饭、玩桌游的住处。</p>
-    <div class="trip-meta"><span>10月31日—11月1日</span><span>6人 · 两辆车</span><span>2间情侣房＋1间女生双床房</span></div>
+  <a class="skip-link" href="#plans">跳到住宿方案</a>
+
+  <header class="page-head wrap">
+    <p class="eyebrow">上海陆家嘴出发 · 苏州水乡</p>
+    <h1>苏州水乡 · 4间房周末方案</h1>
+    <p class="intro">6个人，住得舒服，玩得轻松。三个地方各有重点，先看你想怎么过周末。</p>
+    <div class="trip-meta" aria-label="行程信息">
+      <span>6人</span>
+      <span>4间房</span>
+      <span>10月31日入住1晚</span>
+      <span>上海陆家嘴出发</span>
+    </div>
   </header>
-  <div class="tabbar"><nav class="wrap tabs" role="tablist" aria-label="出游计划">
-    <button class="tab" id="tab-routes" role="tab" aria-selected="true" aria-controls="panel-routes" tabindex="0" data-tab="routes">去哪玩<span class="tab-count">15项</span></button>
-    <button class="tab" id="tab-stays" role="tab" aria-selected="false" aria-controls="panel-stays" tabindex="-1" data-tab="stays">住宿参考<span class="tab-count">11个候选</span></button>
-  </nav></div>
-  <main class="wrap">
-    <section id="panel-routes" role="tabpanel" aria-labelledby="tab-routes">
-      <div class="heading"><h2>15条路线</h2><p>看图选一个，点开看安排</p></div>
-      <div class="play-filters" aria-label="筛选玩法"><button class="filter-chip active" data-category="all" aria-pressed="true">全部</button><button class="filter-chip" data-category="古镇逛吃" aria-pressed="false">古镇逛吃</button><button class="filter-chip" data-category="水上运动" aria-pressed="false">水上／模型</button><button class="filter-chip" data-category="拍照赏景" aria-pressed="false">拍照赏景</button><button class="filter-chip" data-category="手作农趣" aria-pressed="false">手作农趣</button><button class="filter-chip" id="onlyFavorites" aria-pressed="false">只看收藏 <span id="favoriteCount">0</span></button></div><div class="board-tools"><label>片区 <select id="areaFilter"><option value="all">全部</option><option value="青浦">青浦</option><option value="浦东">浦东／临港</option><option value="金山">金山</option><option value="奉贤">奉贤</option></select></label><label>排序 <select id="sortBy"><option value="score">好玩优先</option><option value="easy">少走路优先</option><option value="rain">雨天有替代优先</option></select></label><span id="boardCount">15个玩法</span></div>
-      <div class="rank-board" id="routeBoard"></div>
-    </section>
-    <section id="panel-stays" role="tabpanel" aria-labelledby="tab-stays" hidden>
-      <div class="heading"><h2>11个住宿候选</h2><p>先看房型，再点链接确认</p></div>
-      <p class="stay-note">两间情侣房＋一间女生双床，最好有能坐6人的客厅。</p>
-      <div class="stay-grid" id="stayCards"></div>
+
+  <main id="plans">
+    <div class="wrap">
+      <section class="choice-guide" aria-label="快速选择">
+        <strong>怎么选</strong>
+        <p>想宅院子选橙屿，想看古镇夜景选觅家，想4房加泳池选西山。</p>
+      </section>
+
+      <div class="stay-grid">
+        <article class="stay-card" data-style="green">
+          <figure class="stay-media">
+            <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿的庭院和草坪" width="420" height="390">
+            <figcaption>携程房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">01 · 院子慢住</span>
+              <span class="score"><b>5.0</b><small>超棒 · 3条评价</small></span>
+            </div>
+            <h2>橙屿民宿</h2>
+            <p class="location">昆山锦溪 · 计家墩理想村</p>
+            <p class="quote"><span>一句话口碑</span>院子安静，适合6个人烧烤、聊天、慢住。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约81分钟</dd></div>
+              <div><dt>房型</dt><dd>5居6卫1厨</dd></div>
+              <div><dt>早餐</dt><dd>有早餐</dd></div>
+              <div><dt>可住</dt><dd>10至12人</dd></div>
+            </dl>
+            <p class="bed-note">床型：4张1.2米单人床 + 3张1.8米大床。整套约300平方米。</p>
+            <div class="room-warning">
+              <strong>4间房使用先确认</strong>
+              整套是5间房。6人只开4卧、剩余房间是否锁房，以及整栋计费方式，下单前问房东。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 住进院子</h3>
+                  <ol class="timeline">
+                    <li>陆家嘴出发，车程约81分钟</li>
+                    <li>到计家墩理想村，办理入住</li>
+                    <li>村内慢走，看看河边和手作小店</li>
+                    <li>傍晚回院子烧烤、聊天</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 锦溪古镇</h3>
+                  <ol class="timeline">
+                    <li>早餐后去锦溪古镇</li>
+                    <li>逛古砖瓦博物馆或莲池禅院</li>
+                    <li>午饭后再回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>锦溪主街免费；园内套票约40元，游船约180元/船、最多6人，现场为准。手作、皮划艇、烧烤等收费项目先问。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程问道命中 · 房源码 92499553</p>
+          </div>
+        </article>
+
+        <article class="stay-card" data-style="clay">
+          <figure class="stay-media">
+            <img src="assets/stays/miyi-card.jpg" alt="觅家一夜花香周庄民宿的白色小楼和院子" width="390" height="520">
+            <figcaption>携程房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">02 · 古镇夜游</span>
+              <span class="score"><b>5.0</b><small>超棒 · 8条评价</small></span>
+            </div>
+            <h2>觅家·一夜花香</h2>
+            <p class="location">周庄古镇 · 距云海塔约765米</p>
+            <p class="quote"><span>一句话口碑</span>晚上逛完古镇直接回独栋，位置省心。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约98分钟</dd></div>
+              <div><dt>房型</dt><dd>5居6卫3厅</dd></div>
+              <div><dt>早餐</dt><dd>无早餐</dd></div>
+              <div><dt>可住</dt><dd>11至13人</dd></div>
+            </dl>
+            <p class="bed-note">床型：4张1.8米大床 + 3张1.2米单人床。整套约288平方米。</p>
+            <div class="room-warning">
+              <strong>4间房使用先确认</strong>
+              整套是5间房。6人只开4卧是否可行、怎么计费，以及停车和古镇接送，先问房东。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 周庄白天到夜晚</h3>
+                  <ol class="timeline">
+                    <li>陆家嘴出发，车程约98分钟</li>
+                    <li>到民宿放行李，进周庄古镇</li>
+                    <li>看双桥、张厅、沈厅</li>
+                    <li>晚饭后看夜景，想坐船就坐摇橹船</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 清晨再走一圈</h3>
+                  <ol class="timeline">
+                    <li>早起看人少的古镇街巷</li>
+                    <li>南湖或全福寺走一走</li>
+                    <li>午饭后退房回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>周庄成人票约72元，摇橹船约220元/船、最多6人。青石板路不好拖箱，停车和接送先问房东。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程截图登记 · 问道和美团同名未完全命中</p>
+          </div>
+        </article>
+
+        <article class="stay-card" data-style="blue">
+          <figure class="stay-media">
+            <img src="assets/stays/xibaifang-hero.jpg" alt="苏州太湖西山小白房独栋泳池别墅正面" width="760" height="276">
+            <figcaption>小白房房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">03 · 4房泳池</span>
+              <span class="score"><b>5.0</b><small>超预期 · 11条评价</small></span>
+            </div>
+            <h2>太湖西山 · 小白房</h2>
+            <p class="location">苏州吴中 · 金庭镇 · 近西山雕花楼</p>
+            <p class="quote"><span>一句话口碑</span>4房刚好，泳池和院子适合6个人聚会。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约124分钟</dd></div>
+              <div><dt>房型</dt><dd>4房约200㎡</dd></div>
+              <div><dt>早餐</dt><dd>无早餐</dd></div>
+              <div><dt>可住</dt><dd>8人</dd></div>
+            </dl>
+            <p class="bed-note">床型：3张1.8米大床 + 1张1.5米大床。免费停车，可做饭、麻将。</p>
+            <div class="room-warning">
+              <strong>地址和收费先确认</strong>
+              4间房刚好满足6人。下单前核对详细门牌，并确认泳池、烧烤、麻将是否开放及怎么收费。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 雕花楼和湖边</h3>
+                  <ol class="timeline">
+                    <li>08:30左右从陆家嘴出发</li>
+                    <li>先到西山雕花楼</li>
+                    <li>去明月湾古村或湖边看日落</li>
+                    <li>晚上回小白房做饭、聚在院子</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 缥缈峰和林屋洞</h3>
+                  <ol class="timeline">
+                    <li>早饭后去缥缈峰</li>
+                    <li>下午看林屋洞或环岛慢开</li>
+                    <li>收好行李回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准。泳池、烧烤、麻将等开放情况和收费先问房东。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程截图登记 · 详细门牌待确认</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <section class="verification wrap" aria-labelledby="verification-title">
+      <h2 id="verification-title">核验状态</h2>
+      <ul>
+        <li>路线为高德从上海陆家嘴出发的真实驾车结果，出发前再看拥堵和天气。</li>
+        <li>橙屿已由携程问道命中；觅家和西山依据携程截图人工登记，未用相似民宿替代。</li>
+        <li>评分、评价条数、房型和床型来自携程页面；实际开放情况以房东或景区当天确认为准。</li>
+      </ul>
     </section>
   </main>
-  <footer class="wrap">图片为资料图，出行前请确认开放和房型。</footer>
-  <dialog id="routeModal" class="route-modal" aria-labelledby="routeModalTitle"><div class="modal-bar"><span>路线详情</span><button type="button" id="closeRoute" aria-label="关闭路线详情">关闭 ×</button></div><article id="routeDetail" class="route-detail"></article></dialog>
-  <dialog id="photoViewer" aria-label="查看照片"><button type="button" id="closePhoto" aria-label="关闭照片">×</button><img id="largePhoto" alt=""><p id="photoCaption"></p><a id="photoSource" target="_blank" rel="noopener">查看图源 ↗</a></dialog>
-  <noscript>请开启JavaScript查看路线和住宿。</noscript>
-  <script>
 
-    const tripData = {"routes":[{"n":"01","area":"青浦 · 太阳岛","title":"太阳岛 · 林地＋一项成人娱乐","subtitle":"林地散步，选一项获确认的保龄球/垂钓；温泉不默认开。","category":"手作农趣","tags":"spa stay lake","sat":[["08:30–10:00","出发，前往青浦 · 太阳岛"],["10:00–11:30","岛内林地/河边短走"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","一项已确认成人娱乐或茶"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","温泉仅确认开池和票价后才去，否则短走"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"手作农趣","rain":true,"walk":"少","primary":["岛内林地/河边短走","一项已确认成人娱乐或茶"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","一项已确认成人娱乐或茶"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"02","area":"青浦 · 淀山湖","title":"淀山湖 · 帆船候选＋金泽古镇","subtitle":"上午船体验，下午金泽古桥喝茶；没船就不专程追码头。","category":"水上运动","tags":"water lake","sat":[["08:30–10:00","出发，前往青浦 · 淀山湖"],["10:00–11:30","上午已预约的船体验"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","金泽古桥慢走/茶馆"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","水岸短走"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"水上运动","rain":false,"walk":"少","primary":["上午已预约的船体验","金泽古桥慢走/茶馆"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","金泽古桥慢走/茶馆"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"03","area":"青浦 · 朱家角","title":"朱家角 · 游船＋园林＋老街","subtitle":"老街逛吃、课植园和短游船，挑两项就够。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往青浦 · 朱家角"],["10:00–11:30","沿河老街＋小吃午饭"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","课植园或游船二选一"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30以后","老街短走，20点后安静休息"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","早上老街慢走"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":true,"walk":"适中","primary":["沿河老街＋小吃午饭","课植园或游船二选一"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","课植园或游船二选一"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","20点后安静休息"]]},{"n":"04","area":"金山 · 金山嘴","title":"金山嘴 · 渔村海鲜＋海边散步","subtitle":"吃海鲜、逛渔村老街，海边只走一小段，不排下水。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往金山 · 金山嘴"],["10:00–11:30","渔村老街＋午饭"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","城市沙滩滨海步道一段"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","渔村清晨/海边咖啡"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":false,"walk":"少","primary":["渔村老街＋午饭","城市沙滩滨海步道一段"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","城市沙滩滨海步道一段"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"05","area":"金山 · 枫泾","title":"枫泾 · 古镇寻味＋漫画展馆","subtitle":"古桥、丁蹄粽子、丁聪相关展馆，餐后坐茶馆。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往金山 · 枫泾"],["10:00–11:30","古镇桥边/长廊慢逛"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","一处公开展馆或茶馆"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","早上小吃店或咖啡"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":true,"walk":"适中","primary":["古镇桥边/长廊慢逛","一处公开展馆或茶馆"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","一处公开展馆或茶馆"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"06","area":"金山 · 廊下","title":"廊下 · 枫叶岛＋山塘乡野","subtitle":"赏枫短线、农家菜、山塘老街，白天不只坐客厅。","category":"拍照赏景","tags":"stay lake","sat":[["08:30–10:00","出发，前往金山 · 廊下"],["10:00–11:30","枫叶岛看当周叶色短逛"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","山塘上海侧老街/茶"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","乡村短走"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"拍照赏景","rain":false,"walk":"适中","primary":["枫叶岛看当周叶色短逛","山塘上海侧老街/茶"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","山塘上海侧老街/茶"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"08","area":"浦东 · 临港","title":"滴水湖 · 船体验＋航海博物馆","subtitle":"一个水上体验配一个室内馆；船班不开就改湖边＋博物馆。","category":"水上运动","tags":"water lake stay","sat":[["08:30–10:00","出发，前往浦东 · 临港"],["10:00–11:30","已预约船体验／没船则湖岸短走"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:15","航海博物馆（实名预约）"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","湖边咖啡或散步"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"水上运动","rain":true,"walk":"少","primary":["已预约船体验／没船则湖岸短走","航海博物馆（提前实名预约）"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","湖岸散步／博物馆若能及时预约则选一项"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"09","area":"奉贤 · 金海湖","title":"上海之鱼 · 湖景＋奉贤博物馆","subtitle":"湖岸、艺术建筑、博物馆，天气差就多留馆里。","category":"拍照赏景","tags":"water lake stay","sat":[["08:30–10:00","出发，前往奉贤 · 金海湖"],["10:00–11:30","上海之鱼选一段湖岸"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","奉贤博物馆1.5–2小时"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","湖边短走/咖啡"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"拍照赏景","rain":true,"walk":"少","primary":["上海之鱼选一段湖岸","奉贤博物馆1.5–2小时"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","奉贤博物馆1.5–2小时"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"11","area":"青浦 · 青西","title":"青西 · 水上森林＋莲湖村","subtitle":"走一段水上森林，莲湖村吃农家菜，别绕完整大圈。","category":"拍照赏景","tags":"stay lake","sat":[["08:30–10:00","出发，前往青浦 · 青西"],["10:00–11:30","保育区水上森林短线"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","莲湖村农家菜/茶"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","村内短走或休息"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"拍照赏景","rain":false,"walk":"适中","primary":["保育区水上森林短线","莲湖村农家菜/茶"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","莲湖村农家菜/茶"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"12","area":"奉贤 · 金汇","title":"花开半夏 · 成人手作＋乡村体验","subtitle":"披萨/面包、陶艺/扎染等任选一项，再喝茶玩桌游。","category":"手作农趣","tags":"stay lake","sat":[["08:30–10:00","出发，前往奉贤 · 金汇"],["10:00–11:30","已预约的成人烘焙或陶艺/扎染"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","庭院茶/农耕候选（成人场次先问）"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","园区短走/一个已确认小体验"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"手作农趣","rain":true,"walk":"少","primary":["已预约的成人烘焙或陶艺/扎染","庭院茶/农耕候选（成人场次先问）"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","庭院茶/农耕候选（成人场次先问）"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"13","area":"奉贤 · 青溪","title":"青溪 · 老街逛吃＋水乡夜景","subtitle":"汤圆等地方小吃、古桥、茶，晚上只短走看灯。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往奉贤 · 青溪"],["10:00–11:30","老街小吃/古桥慢走"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","望海楼外观/茶馆二选一"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","清晨老街与早餐"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":true,"walk":"少","primary":["老街小吃/古桥慢走","望海楼外观/茶馆二选一"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","望海楼外观/茶馆二选一"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"14","area":"浦东 · 新场","title":"新场古镇 · 逛吃＋茶馆","subtitle":"油墩子、鸡汤豆花、临河茶馆，白天真正有东西逛。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往浦东 · 新场"],["10:00–11:30","老街散步、油墩子等小吃"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","临河茶馆/公开展馆二选一"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","安静巷弄短走、早餐小吃"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":true,"walk":"少","primary":["老街散步、油墩子等小吃","临河茶馆/公开展馆二选一"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","临河茶馆/公开展馆二选一"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"15","area":"金山 · 朱泾","title":"花开海上 · 地肤花海＋朱泾","subtitle":"秋日花海拍照＋多人车候选，玩完就近吃饭。","category":"拍照赏景","tags":"stay lake","sat":[["08:30–10:00","出发，前往金山 · 朱泾"],["10:00–11:30","地肤/花田短步行"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","园内另一段花园或多人车（收费先问）"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","朱泾镇早餐/咖啡"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"拍照赏景","rain":false,"walk":"适中","primary":["地肤/花田短步行","园内另一段花园或多人车（收费先问）"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","园内另一段花园或多人车（收费先问）"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"16","area":"青浦 · 东方绿舟","title":"东方绿舟 · 航母模型＋湖滨步道","subtitle":"看航母模型、走趣桥，自行车只在价格合适时租。","category":"水上运动","tags":"stay lake","sat":[["08:30–10:00","出发，前往青浦 · 东方绿舟"],["10:00–11:30","航母/国防区候选"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","湖滨步道或趣桥短线"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–11:00","住处附近早餐/短走"],["11:00–11:30","回住处办理退房"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"水上运动","rain":false,"walk":"适中","primary":["航母/国防区候选","湖滨步道或趣桥短线"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","湖滨步道或趣桥短线"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]},{"n":"17","area":"浦东 · 川沙","title":"川沙 · 老街人文＋比斯特","subtitle":"老街和古城墙短逛，第二天去比斯特走走吃饭。","category":"古镇逛吃","tags":"stay lake","sat":[["08:30–10:00","出发，前往浦东 · 川沙"],["10:00–11:30","川沙老街/古城墙一段"],["12:00–13:00","午饭：当地小吃/本帮或农家菜"],["13:00–15:30","一处开放的人文点或茶馆"],["16:00–17:30","入住、短休息"],["18:00–19:30","晚饭"],["19:30–21:30","已获准空间聊天/桌游"]],"sun":[["08:30–09:30","早餐"],["09:30–10:00","提前退房并前往比斯特"],["10:00–12:00","比斯特街区/餐饮短逛"],["12:00–13:00","午饭"],["13:30左右出发","返沪"]],"play":{"category":"古镇逛吃","rain":true,"walk":"適中","primary":["川沙老街/古城墙一段","一处开放的人文点或茶馆"]},"noonSat":[["12:00","午饭后集合出发"],["14:00–16:00","一处开放的人文点或茶馆"],["16:00–17:30","入住、休息"],["18:00–19:30","晚饭"],["19:30以后","获准空间交流/桌游"]]}],"reviewData":{"11":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0HJ0v12000s9hv8ei8F8C_W_1280_853_R5_Q70.jpg","caption":"上海青西郊野公园 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2039390.html"},{"src":"https://dimg04.c-ctrip.com/images/1mh0v12000q6paagfC467_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"上海青西郊野公园 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2025-12-02","source":"https://m.ctrip.com/webapp/you/comment/detail/2039390/11/235865862.html"},{"src":"https://dimg04.c-ctrip.com/images/0HJ5z12000s9hv9ou61C1_W_1280_853_R5_Q70.jpg","caption":"上海青西郊野公园 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2039390.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6t12000tps8pceB5A1_W_1280_853_R5_Q70.jpg","caption":"上海浮生民宿(青西郊野公园店) · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5r12000akbodjoBE63_W_1280_853_R5_Q70.jpg","caption":"上海浮生民宿(青西郊野公园店) · 迎祥豪华大床房|观景+阳台","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1j12000okjoxl4EEF6_W_1280_853_R5_Q70.jpg","caption":"上海浮生民宿(青西郊野公园店) · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"}],"hotel":{"name":"上海浮生民宿(青西郊野公园店)","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/104617758.html"}},"12":{"photos":[{"src":"https://hot.online.sh.cn/images/attachement/jpeg/site1/20261008/IMGb8ca3abea89374143540060.jpeg","caption":"花开半夏 · 奉贤介绍实景 1","credit":"上海奉贤介绍配图，经上海热线转载","date":"报道发布2026-10-09","source":"https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm"},{"src":"https://hot.online.sh.cn/images/attachement/jpeg/site1/20261008/IMGb8ca3abea89374143540061.jpeg","caption":"花开半夏 · 奉贤介绍实景 2","credit":"上海奉贤介绍配图，经上海热线转载","date":"报道发布2026-10-09","source":"https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm"},{"src":"https://hot.online.sh.cn/images/attachement/jpeg/site1/20261008/IMGb8ca3abea89374143540062.jpeg","caption":"花开半夏 · 奉贤介绍实景 3","credit":"上海奉贤介绍配图，经上海热线转载","date":"报道发布2026-10-09","source":"https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm"},{"src":"https://dimg04.c-ctrip.com/images/1mc5c12000hrfkvtw3899_W_1280_853_R5_Q70.jpg","caption":"花开半夏·田园美墅度假村 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/125209818.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5l12000l4hjxns8014_W_1280_853_R5_Q70.jpg","caption":"花开半夏·田园美墅度假村 · 【1-3欢喜阁】花开庭院大床房（私人茶室+惬意秋千）","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/125209818.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc0f12000hrdqqzoD51D_W_1280_853_R5_Q70.jpg","caption":"花开半夏·田园美墅度假村 · 【1-6裸心居】花开庭院双床房（全景露台）","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/125209818.html"}],"hotel":{"name":"花开半夏·田园美墅度假村","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/125209818.html"}},"13":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0100g12000f6tjoib65C4_W_1280_853_R5_Q70.jpg","caption":"青溪老街 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/112366304.html"},{"src":"https://dimg04.c-ctrip.com/images/1mh3k12000m5l16h068FE_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"青溪老街 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2025-07-11","source":"https://m.ctrip.com/webapp/you/comment/detail/112366304/11/216521866.html"},{"src":"https://dimg04.c-ctrip.com/images/1mh2o12000m5kyjicC83F_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"青溪老街 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2025-07-11","source":"https://m.ctrip.com/webapp/you/comment/detail/112366304/11/216521866.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6312000dndy8kiC3D8_W_1280_853_R5_Q70.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6w12000dndzsnc3B6A_W_1280_853_R5_Q70.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 天溪大床房+全屋地暖+SLEEPWELL品牌床垫+智能卫浴","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4g12000dndylao589B_W_1280_853_R5_Q70.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"}],"hotel":{"name":"花筑·到家民宿(上海青溪老街店)","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/100371102.html"}},"14":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0103t120008ih7j0cF13E_W_1280_853_R5_Q70.jpg","caption":"新场古镇 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/107862.html"},{"src":"https://dimg04.c-ctrip.com/images/0101712000u27h48lA167_W_1280_853_R5_Q70.jpg","caption":"新场古镇 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/107862.html"},{"src":"https://dimg04.c-ctrip.com/images/0101112000u27h90o27D3_W_1280_853_R5_Q70.jpg","caption":"新场古镇 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/107862.html"},{"src":"https://dimg04.c-ctrip.com/images/20090k000000b8f3u051E_W_1280_853_R5_Q70.jpg","caption":"上海浓舍民宿 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"},{"src":"https://dimg04.c-ctrip.com/images/02012120008bruvh2D2DB_W_1280_853_R5_Q70.jpg","caption":"上海浓舍民宿 · 露台Loft大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"},{"src":"https://dimg04.c-ctrip.com/images/200u0q000000glsu77899_W_1280_853_R5_Q70.jpg","caption":"上海浓舍民宿 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"}],"hotel":{"name":"上海浓舍民宿","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/8857453.html"}},"15":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/01062120009x99men72FE_W_1280_853_R5_Q70.jpg","caption":"花开海上生态园 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2045955.html"},{"src":"https://dimg04.c-ctrip.com/images/01017120009x99ojq158D_W_1280_853_R5_Q70.png","caption":"花开海上生态园 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2045955.html"},{"src":"https://dimg04.c-ctrip.com/images/0105l120009x99nkz419D_W_1280_853_R5_Q70.jpg","caption":"花开海上生态园 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2045955.html"},{"src":"https://dimg04.c-ctrip.com/images/0202812000n3qp51170CB_W_1280_853_R5_Q70.jpg","caption":"待泾花海小憩民宿(上海金山北站花开海上生态园店) · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/68088831.html"},{"src":"https://dimg04.c-ctrip.com/images/0584u12000snqketfDA0D_W_1280_853_R5_Q70.jpg","caption":"待泾花海小憩民宿(上海金山北站花开海上生态园店) · 景观一室大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/68088831.html"},{"src":"https://dimg04.c-ctrip.com/images/0202812000n3qp51170CB_W_1280_853_R5_Q70.jpg","caption":"待泾花海小憩民宿(上海金山北站花开海上生态园店) · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/68088831.html"}],"hotel":{"name":"待泾花海小憩民宿(上海金山北站花开海上生态园店)","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/68088831.html"}},"16":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/1lo3u12000c2l3agx839E_W_1280_853_R5_Q70.jpg","caption":"东方绿舟景区 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/21756.html"},{"src":"https://dimg04.c-ctrip.com/images/1lo3h12000c2l3cps1E21_W_1280_853_R5_Q70.jpg","caption":"东方绿舟景区 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/21756.html"},{"src":"https://dimg04.c-ctrip.com/images/1lo5212000kukacq6C904_W_1280_853_R5_Q70.png","caption":"东方绿舟景区 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/21756.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4212000etti3co2921_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5f12000esoamo6E6C8_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 豪华商务大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6z12000esodx9u51B6_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"}],"hotel":{"name":"上海朱家角皇家郁金香花园酒店","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/445972.html"}},"17":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0103n1200094130tcCFCF_W_1280_853_R5_Q70.jpg","caption":"川沙古镇 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/5713996.html"},{"src":"https://dimg04.c-ctrip.com/images/0106r12000u38y6a492ED_W_1280_853_R5_Q70.jpg","caption":"川沙古镇 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/5713996.html"},{"src":"https://dimg04.c-ctrip.com/images/0104e12000u38yfgtA2C0_W_1280_853_R5_Q70.jpg","caption":"川沙古镇 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/5713996.html"},{"src":"https://dimg04.c-ctrip.com/images/1lo6g12000q9cetu108E3_W_1280_853_R5_Q70.jpg","caption":"比斯特上海购物村 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/5382360.html"},{"src":"https://dimg04.c-ctrip.com/images/1lo6y12000nuzbiuu9326_W_1280_853_R5_Q70.jpg","caption":"比斯特上海购物村 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/5382360.html"},{"src":"https://dimg04.c-ctrip.com/images/0204612000940w1iwC53B_W_1280_853_R5_Q70.jpg","caption":"上海闲舍shinehouse独栋别墅 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1d12000ce0ywxi3CBF_W_1280_853_R5_Q70.jpg","caption":"上海闲舍shinehouse独栋别墅 · 花园景大床套房（客厅+全明洗手间+室外南阳台）","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"},{"src":"https://dimg04.c-ctrip.com/images/2009190000016fkcz24FF_W_1280_853_R5_Q70.jpg","caption":"上海闲舍shinehouse独栋别墅 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"}],"hotel":{"name":"上海闲舍shinehouse独栋别墅","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/9559752.html"}},"01":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc6d12000jtf3povDC5B_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 花园","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6912000jtfuair780C_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 休闲娱乐设施","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6l12000jtf5icm06D0_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/0205m120009cywk8wDF78_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/0205e120009cywmlu587D_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/02069120009cywmrnAC8B_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/0204z120009cywevyFCCA_W_1280_853_R5_Q70.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"}],"hotel":{"name":"上海太阳岛度假酒店","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/1706857.html"}},"02":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/1me1k12000c270xjs7BAF_W_1280_853_R5_Q70.jpg","caption":"上海美帆游艇俱乐部 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/112366264.html"},{"src":"https://dimg04.c-ctrip.com/images/0104c120009cklltmC38A_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"上海美帆游艇俱乐部 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2022-03-03","source":"https://m.ctrip.com/webapp/you/comment/detail/112366264/66/169728951.html"},{"src":"https://dimg04.c-ctrip.com/images/01015120009ckn0un5361_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"上海美帆游艇俱乐部 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2022-03-03","source":"https://m.ctrip.com/webapp/you/comment/detail/112366264/66/169728951.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4212000etti3co2921_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5f12000esoamo6E6C8_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 豪华商务大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6z12000esodx9u51B6_W_1280_853_R5_Q70.jpg","caption":"上海朱家角皇家郁金香花园酒店 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/445972.html"}],"hotel":{"name":"上海朱家角皇家郁金香花园酒店","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/445972.html"}},"03":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0102n12000j11dauo6575_W_1280_853_R5_Q70.jpg","caption":"朱家角古镇景区 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/14903.html"},{"src":"https://dimg04.c-ctrip.com/images/0104a1200086ob7pyFA26_W_1280_853_R5_Q70.jpg","caption":"朱家角古镇景区 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/14903.html"},{"src":"https://dimg04.c-ctrip.com/images/10010p000000g1eqq3FEB_W_1280_853_R5_Q70.jpg","caption":"朱家角古镇景区 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/14903.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6a12000f9uaf97742E_W_1280_853_R5_Q70.jpg","caption":"上海朱家角珠溪里舍 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/122443760.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2512000jals8z9C2CE_W_1280_853_R5_Q70.jpg","caption":"上海朱家角珠溪里舍 · 私汤·阳台大床套房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/122443760.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2x12000f9u7gg020D3_W_1280_853_R5_Q70.jpg","caption":"上海朱家角珠溪里舍 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/122443760.html"}],"hotel":{"name":"上海朱家角珠溪里舍","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/122443760.html"}},"04":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0104a120008xn567d7985_W_1280_853_R5_Q70.jpg","caption":"金山嘴渔村 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/143744.html"},{"src":"https://dimg04.c-ctrip.com/images/1mh2f12000pb4y58mBA24_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"金山嘴渔村 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2025-10-26","source":"https://m.ctrip.com/webapp/you/comment/detail/143744/11/230310851.html"},{"src":"https://dimg04.c-ctrip.com/images/1mh2j12000pb51vx50649_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"金山嘴渔村 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2025-10-26","source":"https://m.ctrip.com/webapp/you/comment/detail/143744/11/230310851.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2v12000kp0iin8265A_W_1280_853_R5_Q70.jpg","caption":"渔见山居·民宿(金山城市沙滩金山嘴渔村店) · 全海景海夕大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/24478261.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2v12000kp0iin8265A_W_1280_853_R5_Q70.jpg","caption":"渔见山居·民宿(金山城市沙滩金山嘴渔村店) · 全海景海夕大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/24478261.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc3s12000lvdxybi166F_W_1280_853_R5_Q70.jpg","caption":"渔见山居·民宿(金山城市沙滩金山嘴渔村店) · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/24478261.html"}],"hotel":{"name":"渔见山居·民宿(金山城市沙滩金山嘴渔村店)","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/24478261.html"}},"05":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/10021f000001gxcsa66B7_W_1280_853_R5_Q70.jpg","caption":"枫泾古镇 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/49029.html"},{"src":"https://dimg04.c-ctrip.com/images/0106m12000f3w4pm0FA82_W_1280_853_R5_Q70.jpg","caption":"枫泾古镇 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/49029.html"},{"src":"https://dimg04.c-ctrip.com/images/1lo0212000kvj3ipc3247_W_1280_853_R5_Q70.jpg","caption":"枫泾古镇 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/49029.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5o12000e45urt95205_W_1280_853_R5_Q70.jpg","caption":"上海枫泾福朋喜来登酒店 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/117473229.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6q12000u0oyobj6E72_W_1280_853_R5_Q70.jpg","caption":"上海枫泾福朋喜来登酒店 · 小黄鸭主题大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/117473229.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4b12000e4l7og79C7C_W_1280_853_R5_Q70.jpg","caption":"上海枫泾福朋喜来登酒店 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/117473229.html"}],"hotel":{"name":"上海枫泾福朋喜来登酒店","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/117473229.html"}},"06":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/10090e00000077u2l56E8_W_1280_853_R5_Q70.jpg","caption":"枫叶岛 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/1510071.html"},{"src":"https://dimg04.c-ctrip.com/images/0105i1200085iki0h64B0_W_1280_853_R5_Q70.jpg","caption":"枫叶岛 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/1510071.html"},{"src":"https://dimg04.c-ctrip.com/images/0HJ6i12000u77uxlaA39A_W_1280_853_R5_Q70.jpg","caption":"枫叶岛 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/1510071.html"},{"src":"https://dimg04.c-ctrip.com/images/200t0z000000mpratD70E_W_1280_853_R5_Q70.jpg","caption":"上海涵七民宿 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"},{"src":"https://dimg04.c-ctrip.com/images/200t0z000000mpratD70E_W_1280_853_R5_Q70.jpg","caption":"上海涵七民宿 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"},{"src":"https://dimg04.c-ctrip.com/images/200g0z000000mqej39710_W_1280_853_R5_Q70.jpg","caption":"上海涵七民宿 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"}],"hotel":{"name":"上海涵七民宿","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/15698948.html"}},"08":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/35021c000001dcgw254AB_W_1280_853_R5_Q70.jpg","caption":"乐水滴水湖水上运动基地 · 景点照片 5","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/2095375.html"},{"src":"https://dimg04.c-ctrip.com/images/0103s120009ecfbto3880_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"乐水滴水湖水上运动基地 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2022-04-07","source":"https://m.ctrip.com/webapp/you/comment/detail/2095375/66/170182626.html"},{"src":"https://dimg04.c-ctrip.com/images/0102u120009ecfsx462A0_W_1280_853_R5_Q70.jpg?proc=autoorient","caption":"乐水滴水湖水上运动基地 · 游客图","credit":"携程游客上传，可能修图，非当前实景","date":"2022-04-07","source":"https://m.ctrip.com/webapp/you/comment/detail/2095375/66/170182626.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1k12000az8va6621FC_W_1280_853_R5_Q70.jpg","caption":"拾光民宿(上海临港滴水湖店) · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2912000axr00tb2F30_W_1280_853_R5_Q70.jpg","caption":"拾光民宿(上海临港滴水湖店) · 「桑落」观景露台浴缸大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc3c12000ay7s2i13C84_W_1280_853_R5_Q70.jpg","caption":"拾光民宿(上海临港滴水湖店) · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"}],"hotel":{"name":"拾光民宿(上海临港滴水湖店)","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/106571633.html"}},"09":{"photos":[{"src":"https://dimg04.c-ctrip.com/images/0103y120008c4geht3377_W_1280_853_R5_Q70.jpg","caption":"上海之鱼 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/69534791.html"},{"src":"https://dimg04.c-ctrip.com/images/0106i120006ybfq209B21_W_1280_853_R5_Q70.jpg","caption":"上海之鱼 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/69534791.html"},{"src":"https://dimg04.c-ctrip.com/images/01068120008appf3549DE_W_1280_853_R5_Q70.jpg","caption":"上海之鱼 · 景点照片 3","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/69534791.html"},{"src":"https://dimg04.c-ctrip.com/images/0106e120008e0i6nz63D3_W_1280_853_R5_Q70.jpg","caption":"上海市奉贤区博物馆 · 景点照片 1","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/111017.html"},{"src":"https://dimg04.c-ctrip.com/images/0103l120006ybgd6i9FCA_W_1280_853_R5_Q70.jpg","caption":"上海市奉贤区博物馆 · 景点照片 2","credit":"携程景点相册，非实时照片","date":"拍摄日期未标注","source":"https://gs.ctrip.com/html5/you/sight/shanghai2/111017.html"},{"src":"https://dimg04.c-ctrip.com/images/0203r120008gimuo7B5D0_W_1280_853_R5_Q70.jpg","caption":"上海东方美谷JW万豪酒店 · 酒店外部","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/70940118.html"},{"src":"https://dimg04.c-ctrip.com/images/0206y120008ij96e8C087_W_1280_853_R5_Q70.jpg","caption":"上海东方美谷JW万豪酒店 · 豪华园景大床房","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/70940118.html"},{"src":"https://dimg04.c-ctrip.com/images/0201o120008ijea9114C6_W_1280_853_R5_Q70.jpg","caption":"上海东方美谷JW万豪酒店 · 公共区域","credit":"携程房型/官方相册，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/70940118.html"}],"hotel":{"name":"上海东方美谷JW万豪酒店","rooms":"2间大床＋1间双床，床数和空房下单前确认。","url":"https://hotels.ctrip.com/hotels/70940118.html"}}},"routeRatings":{"11":{"rank":6,"total":80},"12":{"rank":9,"total":77},"13":{"rank":11,"total":75},"14":{"rank":1,"total":85},"15":{"rank":7,"total":79},"16":{"rank":14,"total":69},"17":{"rank":12,"total":75},"05":{"rank":4,"total":81},"09":{"rank":5,"total":80},"08":{"rank":2,"total":83},"03":{"rank":3,"total":82},"04":{"rank":8,"total":78},"02":{"rank":10,"total":76},"01":{"rank":15,"total":68},"06":{"rank":13,"total":71}},"villaCandidates":[{"key":"shiguang","route":"08","name":"拾光民宿(上海临港滴水湖店)","type":"同栋3房备选：公区可能共享","source":"https://hotels.ctrip.com/hotels/106571633.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc1k12000az8va6621FC_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc1k12000az8va6621FC.jpg","caption":"拾光民宿(上海临港滴水湖店) · 酒店外部","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2912000axr00tb2F30_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc2912000axr00tb2F30.jpg","caption":"拾光民宿(上海临港滴水湖店) · 「桑落」观景露台浴缸大床房","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2f12000axq4k2l52CA_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc2f12000axq4k2l52CA.jpg","caption":"拾光民宿(上海临港滴水湖店) · 「清秋」温馨园景双床房","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc3c12000ay7s2i13C84_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc3c12000ay7s2i13C84.jpg","caption":"拾光民宿(上海临港滴水湖店) · 公共区域","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/106571633.html"}]},{"key":"sun","route":"01","name":"太阳岛 · 俱乐部别墅三房一厅","type":"真正三卧独栋：床型已匹配","source":"https://www.shsunisland.cn/?page_id=183","reviewSource":"https://hotels.ctrip.com/hotels/1706857.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/0205m120009cywk8wDF78_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0205m120009cywk8wDF78.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/0205e120009cywmlu587D_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0205e120009cywmlu587D.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/02069120009cywmrnAC8B_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/02069120009cywmrnAC8B.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"},{"src":"https://dimg04.c-ctrip.com/images/0204z120009cywevyFCCA_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0204z120009cywevyFCCA.jpg","caption":"上海太阳岛度假酒店 · 俱乐部别墅三房一厅","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/1706857.html"}]},{"key":"hanqi","route":"06","name":"上海涵七民宿","type":"金山整栋候选：4室或6室","source":"https://hotels.ctrip.com/hotels/15698948.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/200t0z000000mpratD70E_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/200t0z000000mpratD70E.jpg","caption":"上海涵七民宿 · 酒店外部","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"},{"src":"https://dimg04.c-ctrip.com/images/200o15000000ykkc4EF87_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/200o15000000ykkc4EF87.jpg","caption":"上海涵七民宿 · 别墅包栋4室2厅4卫（棋牌、K歌、烧烤、品茗）","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"},{"src":"https://dimg04.c-ctrip.com/images/20070z000000n6ey8F34A_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/20070z000000n6ey8F34A.jpg","caption":"上海涵七民宿 · 花涧-标房","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"},{"src":"https://dimg04.c-ctrip.com/images/200g0z000000mqej39710_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/200g0z000000mqej39710.jpg","caption":"上海涵七民宿 · 公共区域","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/15698948.html"}]},{"key":"sangu","route":"08","name":"三顾茅庐民宿(上海临港滴水湖店)","type":"别墅型民宿：订3房＋共享厅","source":"https://hotels.ctrip.com/hotels/108600250.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/0204z12000bs5bey2081E_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0204z12000bs5bey2081E.jpg","caption":"三顾茅庐民宿(上海临港滴水湖店) · 酒店外部","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/108600250.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc0z12000bu2wdm09C3E_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc0z12000bu2wdm09C3E.jpg","caption":"三顾茅庐民宿(上海临港滴水湖店) · 智能豪华大床房（带阳台）（南北通透）","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/108600250.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4112000brzh9064E7A_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc4112000brzh9064E7A.jpg","caption":"三顾茅庐民宿(上海临港滴水湖店) · 智能豪华双床房（A）","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/108600250.html"},{"src":"https://dimg04.c-ctrip.com/images/0206d12000g2zpl1eFD6C_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0206d12000g2zpl1eFD6C.jpg","caption":"三顾茅庐民宿(上海临港滴水湖店) · 公共区域","credit":"携程房源相册；宣传/房型图，非已订房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/108600250.html"}]},{"key":"new_fusheng","route":"11","name":"上海浮生民宿(青西郊野公园店)","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/104617758.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc6t12000tps8pceB5A1_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc6t12000tps8pceB5A1.jpg","caption":"上海浮生民宿(青西郊野公园店) · 酒店外部","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1j12000okjoxl4EEF6_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc1j12000okjoxl4EEF6.jpg","caption":"上海浮生民宿(青西郊野公园店) · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc5r12000akbodjoBE63_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc5r12000akbodjoBE63.jpg","caption":"上海浮生民宿(青西郊野公园店) · 迎祥豪华大床房|观景+阳台","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2q12000kim39hv919C_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc2q12000kim39hv919C.jpg","caption":"上海浮生民宿(青西郊野公园店) · 万安豪华家庭套房|双卧室+投影+阳台","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/104617758.html"}]},{"key":"banxia","route":"12","name":"花开半夏·田园美墅度假村","type":"庭院客房/同片三房候选，不默认三卧整栋","source":"https://hotels.ctrip.com/hotels/125209818.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc5c12000hrfkvtw3899_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc5c12000hrfkvtw3899.jpg","caption":"花开半夏·田园美墅度假村 · 公共区域","credit":"携程房型/官方相册，非已订房间","source":"https://hotels.ctrip.com/hotels/125209818.html","date":"拍摄日期未标注"},{"src":"https://dimg04.c-ctrip.com/images/1mc5l12000l4hjxns8014_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc5l12000l4hjxns8014.jpg","caption":"花开半夏·田园美墅度假村 · 【1-3欢喜阁】花开庭院大床房（私人茶室+惬意秋千）","credit":"携程房型/官方相册，非已订房间","source":"https://hotels.ctrip.com/hotels/125209818.html","date":"拍摄日期未标注"},{"src":"https://dimg04.c-ctrip.com/images/1mc0f12000hrdqqzoD51D_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc0f12000hrdqqzoD51D.jpg","caption":"花开半夏·田园美墅度假村 · 【1-6裸心居】花开庭院双床房（全景露台）","credit":"携程房型/官方相册，非已订房间","source":"https://hotels.ctrip.com/hotels/125209818.html","date":"拍摄日期未标注"},{"src":"https://hot.online.sh.cn/images/attachement/jpeg/site1/20261008/IMGb8ca3abea89374143540060.jpeg","original":"https://hot.online.sh.cn/images/attachement/jpeg/site1/20261008/IMGb8ca3abea89374143540060.jpeg","caption":"花开半夏 · 奉贤介绍实景 1","credit":"上海奉贤介绍配图，经上海热线转载","source":"https://hot.online.sh.cn/content/2026-10/09/content_10493814.htm","date":"报道发布2026-10-09"}]},{"key":"new_daojia","route":"13","name":"花筑·到家民宿(上海青溪老街店)","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/100371102.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc6312000dndy8kiC3D8_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc6312000dndy8kiC3D8.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 酒店外部","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc4g12000dndylao589B_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc4g12000dndylao589B.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6w12000dndzsnc3B6A_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc6w12000dndzsnc3B6A.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 天溪大床房+全屋地暖+SLEEPWELL品牌床垫+智能卫浴","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1k12000dndw4uz2ECC_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc1k12000dndw4uz2ECC.jpg","caption":"花筑·到家民宿(上海青溪老街店) · 月溪双床房+全屋地暖+SLEEPWELL品牌床垫+智能卫浴","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/100371102.html"}]},{"key":"new_nongshe","route":"14","name":"上海浓舍民宿","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/8857453.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/20090k000000b8f3u051E_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/20090k000000b8f3u051E.jpg","caption":"上海浓舍民宿 · 酒店外部","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"},{"src":"https://dimg04.c-ctrip.com/images/200u0q000000glsu77899_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/200u0q000000glsu77899.jpg","caption":"上海浓舍民宿 · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"},{"src":"https://dimg04.c-ctrip.com/images/02012120008bruvh2D2DB_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/02012120008bruvh2D2DB.jpg","caption":"上海浓舍民宿 · 露台Loft大床房","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"},{"src":"https://dimg04.c-ctrip.com/images/02053120008brusrfD196_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/02053120008brusrfD196.jpg","caption":"上海浓舍民宿 · 露台榻榻米家庭房","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/8857453.html"}]},{"key":"new_guiyuan","route":"15","name":"归源田居","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/131306554.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/0204f12000n0i21poA80F_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0204f12000n0i21poA80F.jpg","caption":"归源田居 · 室外游泳池","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/131306554.html"},{"src":"https://dimg04.c-ctrip.com/images/0203z12000mybarne5D48_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0203z12000mybarne5D48.jpg","caption":"归源田居 · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/131306554.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc0w12000nadj0o36C1E_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc0w12000nadj0o36C1E.jpg","caption":"归源田居 · 基辅1103（欧式大床房）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/131306554.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2t12000nac78b47058_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc2t12000nac78b47058.jpg","caption":"归源田居 · 大阪8102（日式双床房）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/131306554.html"}]},{"key":"new_shuyuan","route":"16","name":"上海滴水湖临港书院人家逸扉酒店","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/124231539.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/1mc6e12000i2osscrE9FA_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc6e12000i2osscrE9FA.jpg","caption":"上海滴水湖临港书院人家逸扉酒店 · 酒店外部","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/124231539.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc2i12000i2p29sh11FB_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc2i12000i2p29sh11FB.jpg","caption":"上海滴水湖临港书院人家逸扉酒店 · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/124231539.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc3912000i29662q504D_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc3912000i29662q504D.jpg","caption":"上海滴水湖临港书院人家逸扉酒店 · 园景高级大床房（智能语音+私享Coffee机+小冰箱）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/124231539.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc6f12000u17fcx6B1C0_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc6f12000u17fcx6B1C0.jpg","caption":"上海滴水湖临港书院人家逸扉酒店 · 园景高级双床房（智能语音+私享Coffee机+小冰箱+智能马桶）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/124231539.html"}]},{"key":"new_xianshe","route":"17","name":"上海闲舍shinehouse独栋别墅","type":"同栋三房/包栋范围待问","source":"https://hotels.ctrip.com/hotels/9559752.html","bedrooms":"2间大床＋1间双床，床数和空房下单前确认。","photos":[{"src":"https://dimg04.c-ctrip.com/images/0204612000940w1iwC53B_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/0204612000940w1iwC53B.jpg","caption":"上海闲舍shinehouse独栋别墅 · 酒店外部","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"},{"src":"https://dimg04.c-ctrip.com/images/2009190000016fkcz24FF_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/2009190000016fkcz24FF.jpg","caption":"上海闲舍shinehouse独栋别墅 · 公共区域","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"},{"src":"https://dimg04.c-ctrip.com/images/1mc1d12000ce0ywxi3CBF_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/1mc1d12000ce0ywxi3CBF.jpg","caption":"上海闲舍shinehouse独栋别墅 · 花园景大床套房（客厅+全明洗手间+室外南阳台）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"},{"src":"https://dimg04.c-ctrip.com/images/20020u000000izgda54BB_W_1280_853_R5_Q70.jpg","original":"https://dimg04.c-ctrip.com/images/20020u000000izgda54BB.jpg","caption":"上海闲舍shinehouse独栋别墅 · 温馨家庭双床房（南北通透+大阳台）","credit":"携程房源官方相册；非当前实际房间","date":"拍摄日期未标注","source":"https://hotels.ctrip.com/hotels/9559752.html"}]}],"listTags":{"11":["拍照赏景","晴天更好","白天轻松玩"],"12":["手作农趣","雨天有替代","成人项目先核"],"13":["古镇逛吃","雨天有替代","白天轻松玩"],"14":["古镇逛吃","雨天有替代","白天轻松玩"],"15":["拍照赏景","晴天更好","白天轻松玩"],"16":["水上运动","晴天更好","白天轻松玩"],"17":["古镇逛吃","雨天有替代","白天轻松玩"],"04":["古镇逛吃","晴天更好","白天轻松玩"],"08":["水上运动","雨天有替代","成人项目先核"],"03":["古镇逛吃","雨天有替代","白天轻松玩"],"05":["古镇逛吃","雨天有替代","白天轻松玩"],"09":["拍照赏景","雨天有替代","白天轻松玩"],"02":["水上运动","晴天更好","成人项目先核"],"06":["拍照赏景","晴天更好","白天轻松玩"],"01":["手作农趣","雨天有替代","成人项目先核"]}};
-    const {routes,reviewData,routeRatings,villaCandidates}=tripData;
-    const reviewLines={
-      '01':'适合想彻底放松的人，项目要先确认。',
-      '02':'适合晴天玩水，没船体验就别硬去。',
-      '03':'经典但人流多，挑两项更舒服。',
-      '04':'海鲜氛围强，海边只当散步看。',
-      '05':'吃和逛都稳，节奏适合慢走。',
-      '06':'拍照看季节，适合晴天乡村线。',
-      '08':'水上有替代，雨天也稳。',
-      '09':'湖景出片，博物馆兜底。',
-      '11':'水上森林值得，别走大圈。',
-      '12':'手作氛围好，适合不爱暴走。',
-      '13':'夜景加分，晚上短走刚好。',
-      '14':'口碑最稳，白天有东西吃逛。',
-      '15':'花海很出片，晴天更值。',
-      '16':'模型和步道轻松，收费项目先问。',
-      '17':'老街加商圈，顺路感强。'
-    };
-    const ordered=routes.slice().sort((a,b)=>routeRatings[b.n].total-routeRatings[a.n].total);
-    let selectedRoute=ordered[0].n,activeTab='routes',departure='morning',area='all',category='all',sortBy='score',onlyFavorites=false;
-    let favorites=new Set();try{favorites=new Set(JSON.parse(localStorage.getItem('weekend-favorite-routes')||'[]').filter(n=>routes.some(r=>r.n===n)));}catch{}
-    const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    function photo(p){return '<button class="photo-button" type="button" data-photo="'+esc(p.src)+'" data-caption="'+esc(p.caption+' · '+p.credit+' · '+p.date)+'" data-source="'+esc(p.source)+'"><img src="'+esc(p.src)+'" alt="'+esc(p.caption)+'" loading="lazy" referrerpolicy="no-referrer"></button>';}
-    function saveFavorites(){try{localStorage.setItem('weekend-favorite-routes',JSON.stringify([...favorites]));}catch{}document.getElementById('favoriteCount').textContent=favorites.size;}
-    function toggleFavorite(n){favorites.has(n)?favorites.delete(n):favorites.add(n);saveFavorites();renderBoard();if(document.getElementById('routeModal').open){const b=document.querySelector('.jump-favorite');b.textContent=favorites.has(n)?'★ 已收藏':'☆ 收藏这条';b.setAttribute('aria-pressed',String(favorites.has(n)));}}
-    function renderBoard(){const selected=ordered.filter(r=>(area==='all'||r.area.includes(area))&&(category==='all'||r.play.category===category)&&(!onlyFavorites||favorites.has(r.n)));if(sortBy==='rain')selected.sort((a,b)=>Number(b.play.rain)-Number(a.play.rain)||routeRatings[b.n].total-routeRatings[a.n].total);if(sortBy==='easy')selected.sort((a,b)=>Number(b.play.walk==='少')-Number(a.play.walk==='少')||routeRatings[b.n].total-routeRatings[a.n].total);document.getElementById('boardCount').textContent=selected.length+'条路线';document.getElementById('routeBoard').innerHTML=selected.length?selected.map(r=>{const n=r.n,s=routeRatings[n],p=reviewData[n].photos[0];return '<article class="rank-row" data-row="'+n+'"><button class="row-open" type="button" data-route="'+n+'" aria-haspopup="dialog"><span class="row-rank">'+String(s.rank).padStart(2,'0')+'</span><img class="row-photo" src="'+esc(p.src)+'" alt="'+esc(p.caption)+'" loading="lazy" referrerpolicy="no-referrer"><span class="row-main"><strong>'+esc(r.title)+'</strong><span class="row-review"><b class="review-label">一句话评价</b>'+esc(reviewLines[n])+'</span></span></button><button class="favorite" type="button" data-favorite="'+n+'" aria-pressed="'+favorites.has(n)+'" aria-label="'+(favorites.has(n)?'取消收藏':'收藏')+esc(r.title)+'">'+(favorites.has(n)?'★':'☆')+'</button></article>';}).join(''):'<p class="list-empty">当前没有匹配项。试试其他片区或关闭“只看收藏”。</p>';saveFavorites();}
-    function short(s){if(s.includes('早餐'))return '早餐';if(s.includes('午饭'))return '午饭';if(s.includes('晚饭'))return '晚饭';return s;}
-    function row(s){return '<div class="time-row"><time>'+esc(s[0])+'</time><p>'+esc(short(s[1]))+'</p></div>';}
-    function lodgingHtml(n){const h=reviewData[n].hotel,pictures=reviewData[n].photos.filter(p=>p.source.includes('/hotels/')).slice(-2);return '<section class="modal-section stay-inline" id="modal-stay"><h4>住宿 · '+esc(h.name)+'</h4><p>'+esc(h.rooms)+'</p><div class="compact-gallery">'+pictures.map(p=>'<figure>'+photo(p)+'<figcaption>'+esc(p.caption)+'</figcaption></figure>').join('')+'</div><a class="action" href="'+esc(h.url)+'" target="_blank" rel="noopener">看房源 ↗</a> <button class="action" type="button" data-switch="stays">看全部住宿</button></section>';}
-    function renderModal(){const r=routes.find(r=>r.n===selectedRoute),n=r.n,d=reviewData[n],sat=departure==='noon'?r.noonSat:r.sat;document.getElementById('routeDetail').innerHTML='<section id="modal-play" class="modal-section"><div class="detail-top"><div><h2 id="routeModalTitle">'+esc(r.title)+'</h2><p class="detail-sub">'+esc(r.subtitle)+'</p><p class="detail-review"><b class="review-label">一句话评价</b>'+esc(reviewLines[n])+'</p></div><button type="button" class="jump-favorite" data-favorite="'+n+'" aria-pressed="'+favorites.has(n)+'">'+(favorites.has(n)?'★ 已收藏':'☆ 收藏')+'</button></div><div class="compact-gallery">'+d.photos.slice(0,3).map(p=>'<figure>'+photo(p)+'<figcaption>'+esc(p.caption)+'</figcaption></figure>').join('')+'</div><div class="activity-cards">'+r.play.primary.map(x=>'<article class="activity-card"><b>'+esc(x)+'</b></article>').join('')+'</div></section><section class="modal-section" id="modal-time"><h3 class="review-heading">两天安排</h3><div class="timeline-switch"><span>周六出发</span><button class="choice" type="button" data-departure="morning" aria-pressed="'+(departure==='morning')+'">上午</button><button class="choice" type="button" data-departure="noon" aria-pressed="'+(departure==='noon')+'">中午</button></div><div class="days"><section class="day"><h3>周六 · 10月31日</h3>'+sat.map(row).join('')+'</section><section class="day"><h3>周日 · 11月1日</h3>'+r.sun.map(row).join('')+'</section></div></section>'+lodgingHtml(n);}
-    function showRoute(n){if(!routes.some(r=>r.n===n))return;selectedRoute=n;departure='morning';renderModal();const d=document.getElementById('routeModal');if(!d.open)d.showModal();d.scrollTop=0;document.documentElement.style.overflow='hidden';}
-    function closeRoute(){const d=document.getElementById('routeModal');if(d.open)d.close();document.documentElement.style.overflow='';}
-    function switchTab(name,update=true){if(!['routes','stays'].includes(name))name='routes';closeRoute();activeTab=name;document.querySelectorAll('[data-tab]').forEach(b=>{const active=b.dataset.tab===name;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});document.querySelectorAll('[role=tabpanel]').forEach(p=>p.hidden=p.id!=='panel-'+name);if(update)history.replaceState(null,'','#'+name);}
-    function renderStays(){document.getElementById('stayCards').innerHTML=villaCandidates.map(v=>'<article class="stay"><span class="pill">'+esc(v.type)+'</span><h3>'+esc(v.name)+'</h3><p>'+esc(v.bedrooms)+'</p><div class="compact-gallery">'+v.photos.slice(0,2).map(p=>'<figure>'+photo(p)+'<figcaption>'+esc(p.caption)+'</figcaption></figure>').join('')+'</div><a class="action" href="'+esc(v.source)+'" target="_blank" rel="noopener">看房源 ↗</a><button class="action" data-route="'+v.route+'" type="button">看路线</button></article>').join('');}
-    function handleHash(){const h=location.hash.slice(1),m=/^route-([0-9]{2})$/.exec(h);if(m){switchTab('routes',false);showRoute(m[1]);return;}switchTab(h==='stays'?'stays':'routes',false);}
-    document.addEventListener('click',e=>{const fav=e.target.closest('[data-favorite]');if(fav){toggleFavorite(fav.dataset.favorite);return;}const cat=e.target.closest('[data-category]');if(cat){category=cat.dataset.category;document.querySelectorAll('[data-category]').forEach(b=>{const yes=b===cat;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes));});renderBoard();return;}const t=e.target.closest('[data-tab]');if(t){switchTab(t.dataset.tab);return;}const r=e.target.closest('[data-route]');if(r){showRoute(r.dataset.route);return;}const sw=e.target.closest('[data-switch]');if(sw){switchTab(sw.dataset.switch);return;}const dp=e.target.closest('[data-departure]');if(dp){departure=dp.dataset.departure;const y=document.getElementById('routeModal').scrollTop;renderModal();document.getElementById('routeModal').scrollTop=y;return;}const j=e.target.closest('[data-jump]');if(j){document.getElementById(j.dataset.jump).scrollIntoView({behavior:'smooth',block:'start'});return;}const p=e.target.closest('[data-photo]');if(p){document.getElementById('largePhoto').src=p.dataset.photo;document.getElementById('largePhoto').alt=p.dataset.caption;document.getElementById('photoCaption').textContent=p.dataset.caption;document.getElementById('photoSource').href=p.dataset.source;document.getElementById('photoViewer').showModal();}});
-    document.getElementById('areaFilter').onchange=e=>{area=e.target.value;renderBoard();};document.getElementById('sortBy').onchange=e=>{sortBy=e.target.value;renderBoard();};document.getElementById('onlyFavorites').onclick=function(){onlyFavorites=!onlyFavorites;this.setAttribute('aria-pressed',String(onlyFavorites));renderBoard();};document.getElementById('closeRoute').onclick=closeRoute;document.getElementById('closePhoto').onclick=()=>document.getElementById('photoViewer').close();document.getElementById('routeModal').addEventListener('close',()=>{if(!document.getElementById('routeModal').open)document.documentElement.style.overflow='';});for(const id of ['routeModal','photoViewer'])document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget){if(id==='routeModal')closeRoute();else e.currentTarget.close();}});document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const p=document.getElementById('photoViewer');if(p.open){e.preventDefault();p.close();}else if(document.getElementById('routeModal').open){e.preventDefault();closeRoute();}});document.querySelector('.tabs').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const next=activeTab==='routes'?'stays':'routes';switchTab(next);document.getElementById('tab-'+next).focus();});window.addEventListener('hashchange',handleHash);renderBoard();renderStays();handleHash();
-
-</script>
+  <footer class="page-footer wrap">
+    <p>6人 · 4间房 · 10月31日入住1晚 · 2026年10月27日整理</p>
+  </footer>
 </body>
 </html>

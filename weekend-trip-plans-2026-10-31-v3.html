@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="6人、4间房、苏州水乡周末方案。三处住宿和两天行程一次看明白。">
+  <meta name="theme-color" content="#f3f0e8">
+  <title>苏州水乡 · 4间房周末方案</title>
+  <style>
+    :root {
+      --ink: #24352e;
+      --muted: #64716b;
+      --paper: #f3f0e8;
+      --surface: #fffdf8;
+      --line: #dcd8cd;
+      --green: #35624d;
+      --green-wash: #e8efe8;
+      --clay: #a45c3f;
+      --clay-wash: #f3e8e1;
+      --blue: #376b70;
+      --blue-wash: #e4eef0;
+      --gold: #a26f23;
+      --warning: #81501e;
+      --warning-wash: #fbf0df;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        linear-gradient(to right, rgba(53, 98, 77, .045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+      color: var(--ink);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--green);
+      text-underline-offset: 3px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    dl,
+    dd,
+    figure {
+      margin: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.3;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+      padding: 10px 14px;
+      background: var(--ink);
+      color: #fff;
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .page-head {
+      padding: 68px 0 34px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 3px;
+      background: var(--clay);
+    }
+
+    h1 {
+      max-width: 920px;
+      margin-top: 18px;
+      font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.18;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    .trip-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .trip-meta span {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 15px;
+      border: 1px solid #c9d4c9;
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .8);
+      color: #3f5c4d;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .choice-guide {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .choice-guide strong {
+      color: var(--clay);
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .choice-guide p {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .stay-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+      padding-bottom: 42px;
+    }
+
+    .stay-card {
+      --accent: var(--green);
+      --accent-wash: var(--green-wash);
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 13px 30px rgba(40, 46, 39, .07);
+    }
+
+    .stay-card[data-style="clay"] {
+      --accent: var(--clay);
+      --accent-wash: var(--clay-wash);
+    }
+
+    .stay-card[data-style="blue"] {
+      --accent: var(--blue);
+      --accent-wash: var(--blue-wash);
+    }
+
+    .stay-media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--accent-wash);
+    }
+
+    .stay-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .stay-card[data-style="clay"] .stay-media img {
+      object-position: center 44%;
+    }
+
+    .stay-card[data-style="blue"] .stay-media img {
+      object-position: center 45%;
+    }
+
+    .stay-media figcaption {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 5px;
+      background: rgba(31, 43, 37, .82);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 22px;
+    }
+
+    .card-topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-label {
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      color: var(--gold);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .score b {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .score small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+      font-size: 31px;
+      font-weight: 700;
+    }
+
+    .location {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .quote {
+      margin: 18px 0;
+      padding: 14px 15px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-wash);
+      font-size: 18px;
+      font-weight: 650;
+      line-height: 1.65;
+    }
+
+    .quote span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .facts div {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid #e4e0d6;
+      border-radius: 6px;
+      background: #faf8f2;
+    }
+
+    .facts dt {
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .facts dd {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .bed-note {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .room-warning {
+      margin-top: 16px;
+      padding: 13px 14px;
+      border-radius: 6px;
+      background: var(--warning-wash);
+      color: var(--warning);
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    .room-warning strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #653b12;
+      font-size: 17px;
+    }
+
+    details {
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    summary {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 17px;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    summary:focus-visible {
+      outline: 3px solid #8fb19f;
+      outline-offset: 3px;
+    }
+
+    .itinerary {
+      padding: 4px 0 8px;
+    }
+
+    .day + .day {
+      margin-top: 22px;
+    }
+
+    .day h3 {
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    .timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 13px 25px;
+      color: #405049;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      top: .62em;
+      left: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: calc(.62em + 12px);
+      bottom: 0;
+      left: 5.5px;
+      width: 1px;
+      background: #d9ded8;
+    }
+
+    .fee-note {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed #d8d4c9;
+      color: #66543d;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .fee-note strong {
+      color: #4d3b26;
+    }
+
+    .source-note {
+      margin-top: auto;
+      padding-top: 16px;
+      color: #78827c;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .verification {
+      padding: 30px 0 56px;
+      border-top: 1px solid var(--line);
+    }
+
+    .verification h2 {
+      margin-bottom: 13px;
+      font-size: 25px;
+    }
+
+    .verification ul {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .verification li {
+      position: relative;
+      padding-left: 20px;
+      color: #5d6963;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .verification li::before {
+      content: "·";
+      position: absolute;
+      left: 2px;
+      color: var(--clay);
+      font-weight: 900;
+    }
+
+    .page-footer {
+      padding: 20px 0 calc(34px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--line);
+      color: #77817b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1050px) {
+      .stay-grid {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+      }
+
+      .stay-card {
+        display: grid;
+        grid-template-columns: minmax(300px, .9fr) minmax(0, 1.1fr);
+      }
+
+      .stay-media {
+        height: 100%;
+        aspect-ratio: auto;
+        min-height: 100%;
+      }
+
+      .card-body {
+        padding: 25px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        background-size: 26px 26px;
+        font-size: 18px;
+      }
+
+      .wrap {
+        width: calc(100% - 32px);
+      }
+
+      .page-head {
+        padding: 42px 0 24px;
+      }
+
+      .eyebrow {
+        font-size: 15px;
+      }
+
+      h1 {
+        margin-top: 13px;
+        font-size: 38px;
+        line-height: 1.22;
+      }
+
+      .intro {
+        margin-top: 14px;
+        font-size: 19px;
+      }
+
+      .trip-meta {
+        gap: 8px;
+        margin-top: 19px;
+      }
+
+      .trip-meta span {
+        min-height: 39px;
+        padding: 7px 12px;
+        font-size: 15px;
+      }
+
+      .choice-guide {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        margin-bottom: 16px;
+        padding: 16px 2px;
+      }
+
+      .choice-guide strong {
+        font-size: 16px;
+      }
+
+      .choice-guide p {
+        font-size: 18px;
+      }
+
+      .stay-grid {
+        gap: 16px;
+        padding-bottom: 32px;
+      }
+
+      .stay-card {
+        display: flex;
+      }
+
+      .stay-media {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .card-topline {
+        align-items: flex-start;
+      }
+
+      .card-label {
+        font-size: 15px;
+      }
+
+      .score b {
+        font-size: 26px;
+      }
+
+      .score small {
+        font-size: 15px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .location {
+        font-size: 17px;
+      }
+
+      .quote {
+        font-size: 19px;
+      }
+
+      .facts dd {
+        font-size: 18px;
+      }
+
+      .bed-note,
+      .room-warning,
+      summary {
+        font-size: 17px;
+      }
+
+      .timeline li {
+        font-size: 17px;
+      }
+
+      .fee-note {
+        font-size: 16px;
+      }
+
+      .source-note {
+        font-size: 14px;
+      }
+
+      .verification {
+        padding: 26px 0 46px;
+      }
+
+      .verification h2 {
+        font-size: 24px;
+      }
+
+      .verification li {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        font-size: 11pt;
+      }
+
+      .stay-grid {
+        display: block;
+      }
+
+      .stay-card {
+        break-inside: avoid;
+        margin-bottom: 16px;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#plans">跳到住宿方案</a>
+
+  <header class="page-head wrap">
+    <p class="eyebrow">上海陆家嘴出发 · 苏州水乡</p>
+    <h1>苏州水乡 · 4间房周末方案</h1>
+    <p class="intro">6个人，住得舒服，玩得轻松。三个地方各有重点，先看你想怎么过周末。</p>
+    <div class="trip-meta" aria-label="行程信息">
+      <span>6人</span>
+      <span>4间房</span>
+      <span>10月31日入住1晚</span>
+      <span>上海陆家嘴出发</span>
+    </div>
+  </header>
+
+  <main id="plans">
+    <div class="wrap">
+      <section class="choice-guide" aria-label="快速选择">
+        <strong>怎么选</strong>
+        <p>想宅院子选橙屿，想看古镇夜景选觅家，想4房加泳池选西山。</p>
+      </section>
+
+      <div class="stay-grid">
+        <article class="stay-card" data-style="green">
+          <figure class="stay-media">
+            <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿的庭院和草坪" width="420" height="390">
+            <figcaption>携程房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">01 · 院子慢住</span>
+              <span class="score"><b>5.0</b><small>超棒 · 3条评价</small></span>
+            </div>
+            <h2>橙屿民宿</h2>
+            <p class="location">昆山锦溪 · 计家墩理想村</p>
+            <p class="quote"><span>一句话口碑</span>院子安静，适合6个人烧烤、聊天、慢住。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约81分钟</dd></div>
+              <div><dt>房型</dt><dd>5居6卫1厨</dd></div>
+              <div><dt>早餐</dt><dd>有早餐</dd></div>
+              <div><dt>可住</dt><dd>10至12人</dd></div>
+            </dl>
+            <p class="bed-note">床型：4张1.2米单人床 + 3张1.8米大床。整套约300平方米。</p>
+            <div class="room-warning">
+              <strong>4间房使用先确认</strong>
+              整套是5间房。6人只开4卧、剩余房间是否锁房，以及整栋计费方式，下单前问房东。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 住进院子</h3>
+                  <ol class="timeline">
+                    <li>陆家嘴出发，车程约81分钟</li>
+                    <li>到计家墩理想村，办理入住</li>
+                    <li>村内慢走，看看河边和手作小店</li>
+                    <li>傍晚回院子烧烤、聊天</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 锦溪古镇</h3>
+                  <ol class="timeline">
+                    <li>早餐后去锦溪古镇</li>
+                    <li>逛古砖瓦博物馆或莲池禅院</li>
+                    <li>午饭后再回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>锦溪主街免费；园内套票约40元，游船约180元/船、最多6人，现场为准。手作、皮划艇、烧烤等收费项目先问。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程问道命中 · 房源码 92499553</p>
+          </div>
+        </article>
+
+        <article class="stay-card" data-style="clay">
+          <figure class="stay-media">
+            <img src="assets/stays/miyi-card.jpg" alt="觅家一夜花香周庄民宿的白色小楼和院子" width="390" height="520">
+            <figcaption>携程房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">02 · 古镇夜游</span>
+              <span class="score"><b>5.0</b><small>超棒 · 8条评价</small></span>
+            </div>
+            <h2>觅家·一夜花香</h2>
+            <p class="location">周庄古镇 · 距云海塔约765米</p>
+            <p class="quote"><span>一句话口碑</span>晚上逛完古镇直接回独栋，位置省心。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约98分钟</dd></div>
+              <div><dt>房型</dt><dd>5居6卫3厅</dd></div>
+              <div><dt>早餐</dt><dd>无早餐</dd></div>
+              <div><dt>可住</dt><dd>11至13人</dd></div>
+            </dl>
+            <p class="bed-note">床型：4张1.8米大床 + 3张1.2米单人床。整套约288平方米。</p>
+            <div class="room-warning">
+              <strong>4间房使用先确认</strong>
+              整套是5间房。6人只开4卧是否可行、怎么计费，以及停车和古镇接送，先问房东。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 周庄白天到夜晚</h3>
+                  <ol class="timeline">
+                    <li>陆家嘴出发，车程约98分钟</li>
+                    <li>到民宿放行李，进周庄古镇</li>
+                    <li>看双桥、张厅、沈厅</li>
+                    <li>晚饭后看夜景，想坐船就坐摇橹船</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 清晨再走一圈</h3>
+                  <ol class="timeline">
+                    <li>早起看人少的古镇街巷</li>
+                    <li>南湖或全福寺走一走</li>
+                    <li>午饭后退房回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>周庄成人票约72元，摇橹船约220元/船、最多6人。青石板路不好拖箱，停车和接送先问房东。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程截图登记 · 问道和美团同名未完全命中</p>
+          </div>
+        </article>
+
+        <article class="stay-card" data-style="blue">
+          <figure class="stay-media">
+            <img src="assets/stays/xibaifang-hero.jpg" alt="苏州太湖西山小白房独栋泳池别墅正面" width="760" height="276">
+            <figcaption>小白房房源图</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="card-label">03 · 4房泳池</span>
+              <span class="score"><b>5.0</b><small>超预期 · 11条评价</small></span>
+            </div>
+            <h2>太湖西山 · 小白房</h2>
+            <p class="location">苏州吴中 · 金庭镇 · 近西山雕花楼</p>
+            <p class="quote"><span>一句话口碑</span>4房刚好，泳池和院子适合6个人聚会。</p>
+
+            <dl class="facts">
+              <div><dt>高德车程</dt><dd>约124分钟</dd></div>
+              <div><dt>房型</dt><dd>4房约200㎡</dd></div>
+              <div><dt>早餐</dt><dd>无早餐</dd></div>
+              <div><dt>可住</dt><dd>8人</dd></div>
+            </dl>
+            <p class="bed-note">床型：3张1.8米大床 + 1张1.5米大床。免费停车，可做饭、麻将。</p>
+            <div class="room-warning">
+              <strong>地址和收费先确认</strong>
+              4间房刚好满足6人。下单前核对详细门牌，并确认泳池、烧烤、麻将是否开放及怎么收费。
+            </div>
+
+            <details>
+              <summary>看两天怎么玩</summary>
+              <div class="itinerary">
+                <section class="day">
+                  <h3>Day 1 · 雕花楼和湖边</h3>
+                  <ol class="timeline">
+                    <li>08:30左右从陆家嘴出发</li>
+                    <li>先到西山雕花楼</li>
+                    <li>去明月湾古村或湖边看日落</li>
+                    <li>晚上回小白房做饭、聚在院子</li>
+                  </ol>
+                </section>
+                <section class="day">
+                  <h3>Day 2 · 缥缈峰和林屋洞</h3>
+                  <ol class="timeline">
+                    <li>早饭后去缥缈峰</li>
+                    <li>下午看林屋洞或环岛慢开</li>
+                    <li>收好行李回上海</li>
+                  </ol>
+                </section>
+                <p class="fee-note"><strong>费用提示：</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准。泳池、烧烤、麻将等开放情况和收费先问房东。</p>
+              </div>
+            </details>
+
+            <p class="source-note">携程截图登记 · 详细门牌待确认</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <section class="verification wrap" aria-labelledby="verification-title">
+      <h2 id="verification-title">核验状态</h2>
+      <ul>
+        <li>路线为高德从上海陆家嘴出发的真实驾车结果，出发前再看拥堵和天气。</li>
+        <li>橙屿已由携程问道命中；觅家和西山依据携程截图人工登记，未用相似民宿替代。</li>
+        <li>评分、评价条数、房型和床型来自携程页面；实际开放情况以房东或景区当天确认为准。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="page-footer wrap">
+    <p>6人 · 4间房 · 10月31日入住1晚 · 2026年10月27日整理</p>
+  </footer>
+</body>
+</html>
