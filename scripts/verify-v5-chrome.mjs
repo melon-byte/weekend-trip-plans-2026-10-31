@@ -134,6 +134,23 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+const htmlSource = fs.readFileSync(htmlPath, "utf8");
+const referencedImagePaths = [...new Set(
+  [...htmlSource.matchAll(/src="(assets\/[^"]+)"/g)].map((match) => decodeURIComponent(match[1]))
+)];
+const imageFileStats = referencedImagePaths.map((assetPath) => {
+  const stats = fs.statSync(path.join(root, assetPath));
+  return { assetPath, bytes: stats.size };
+});
+const totalImageBytes = imageFileStats.reduce((sum, file) => sum + file.bytes, 0);
+const largestImage = imageFileStats.reduce((largest, file) => file.bytes > largest.bytes ? file : largest);
+
+assert(totalImageBytes <= 4 * 1024 * 1024, `referenced images are too heavy: ${Math.round(totalImageBytes / 1024)} KB`);
+assert(
+  largestImage.bytes <= 320 * 1024,
+  `largest image is too heavy: ${largestImage.assetPath} (${Math.round(largestImage.bytes / 1024)} KB)`
+);
+
 async function inspectAt(send, width, height, mobile, prefix) {
   console.error(`Inspecting ${prefix}...`);
   await send("Emulation.setDeviceMetricsOverride", {
@@ -326,7 +343,13 @@ async function inspectAt(send, width, height, mobile, prefix) {
       dialogSupported: typeof HTMLDialogElement !== "undefined",
       budgetMatches,
       images: document.images.length,
-      brokenImages
+      brokenImages,
+      loadedImages: document.querySelectorAll("img.image-loaded").length,
+      pendingImageFrames: document.querySelectorAll("[data-image-frame].image-pending").length,
+      asyncDecodedImages: document.querySelectorAll('img[decoding="async"]').length,
+      eagerHighPriorityImages: document.querySelectorAll('img[loading="eager"][fetchpriority="high"]').length,
+      imageFrames: document.querySelectorAll("[data-image-frame]").length,
+      imageSpinnerCss: document.documentElement.innerHTML.includes(".image-pending::after")
     };
   })()`);
 
@@ -442,6 +465,12 @@ async function inspectAt(send, width, height, mobile, prefix) {
     `${prefix}: child elements exceed the viewport: ${JSON.stringify(initial.overflowElements)}`
   );
   assert(initial.brokenImages.length === 0, `${prefix}: broken images: ${initial.brokenImages.join(", ")}`);
+  assert(initial.loadedImages === initial.images, `${prefix}: image load state tracking is incomplete`);
+  assert(initial.pendingImageFrames === 0, `${prefix}: image loading frames did not clear after load`);
+  assert(initial.asyncDecodedImages === initial.images, `${prefix}: images need async decoding`);
+  assert(initial.eagerHighPriorityImages >= 2, `${prefix}: first ranking images need eager high priority`);
+  assert(initial.imageFrames >= 30, `${prefix}: image spinner frames are missing`);
+  assert(initial.imageSpinnerCss, `${prefix}: image spinner styles are missing`);
   assert(
     initial.feeReminderTerms.join(",") === "票价,另收费,收费先问",
     `${prefix}: fee reminders are incomplete: ${initial.feeReminderTerms.join(",")}`

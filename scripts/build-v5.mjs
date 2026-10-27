@@ -995,8 +995,8 @@ function renderStayReference(route, mode) {
   const remaining = stays.length - visibleStays.length;
   const isRow = mode === "row";
   const renderStayItem = (stay) => `
-    <span class="stay-reference-item">
-      <img src="${escapeHtml(stay.photo)}" alt="" loading="lazy">
+    <span class="stay-reference-item" data-image-frame>
+      <img src="${escapeHtml(stay.photo)}" alt="" loading="lazy" decoding="async">
       <span class="stay-reference-copy">
         <strong>${escapeHtml(stay.name)}</strong>
         <span class="stay-reference-score">${escapeHtml(stay.rating)} · ${escapeHtml(stay.ratingLabel)}</span>
@@ -1079,8 +1079,8 @@ function renderRouteLauncher(route) {
     <article class="route-card" id="route-${escapeHtml(route.id)}">
       <button class="route-launcher" type="button" data-route-id="${escapeHtml(route.id)}"
         aria-haspopup="dialog" aria-controls="route-dialog-${escapeHtml(route.id)}">
-        <span class="route-photo">
-          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+        <span class="route-photo" data-image-frame>
+          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy" decoding="async">
           <span class="region-pill">${escapeHtml(regionLabel)}</span>
           <span class="card-score">${escapeHtml(rankedRoute.score)}<small>分</small></span>
         </span>
@@ -1106,13 +1106,16 @@ function renderRouteLauncher(route) {
 
 function renderRankRow(route) {
   const regionLabel = routeRegionLabel(route);
+  const imageLoading = route.rank <= 2 ? "eager" : "lazy";
+  const imagePriority = route.rank <= 2 ? "high" : "auto";
   return `
     <li>
       <button class="rank-row" type="button" data-route-id="${escapeHtml(route.id)}"
         aria-haspopup="dialog" aria-controls="route-dialog-${escapeHtml(route.id)}">
         <span class="row-head">
-          <span class="row-visual">
-            <img class="row-photo" src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+          <span class="row-visual" data-image-frame>
+            <img class="row-photo" src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}"
+              loading="${imageLoading}" fetchpriority="${imagePriority}" decoding="async">
             <span class="row-rank">${String(route.rank).padStart(2, "0")}</span>
           </span>
           <span class="row-main">
@@ -1139,8 +1142,8 @@ function renderRouteDialog(route) {
   const rankedRoute = rankedRouteById.get(route.id);
   const rating = route.rating;
   const secondaryPhoto = route.photo2 ? `
-    <figure class="detail-photo">
-      <img src="${escapeHtml(route.photo2)}" alt="${escapeHtml(route.photo2Alt)}" loading="lazy">
+    <figure class="detail-photo" data-image-frame>
+      <img src="${escapeHtml(route.photo2)}" alt="${escapeHtml(route.photo2Alt)}" loading="lazy" decoding="async">
       <figcaption>${escapeHtml(route.photo2Caption)}</figcaption>
     </figure>` : "";
   const source = /^https?:\/\//.test(route.source) ? `
@@ -1160,8 +1163,8 @@ function renderRouteDialog(route) {
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
-        <div class="dialog-hero">
-          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy">
+        <div class="dialog-hero" data-image-frame>
+          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy" decoding="async">
           <div class="dialog-hero-copy">
             <p class="dialog-region">${escapeHtml(routeRegionLabel(route))}</p>
             <h2 id="route-dialog-title-${escapeHtml(route.id)}">${escapeHtml(route.title)}</h2>
@@ -1198,8 +1201,8 @@ function renderRouteDialog(route) {
           </div>
           <div class="dialog-stay-grid">
             ${getRouteStays(route).map((stay) => `
-              <article class="dialog-stay-card">
-                <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy">
+              <article class="dialog-stay-card" data-image-frame>
+                <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async">
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>${escapeHtml(stay.name)}</h4>
@@ -1244,8 +1247,8 @@ function renderRouteDialog(route) {
 
 function renderStay(stay) {
   return `
-    <article class="stay-card">
-      <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy">
+    <article class="stay-card" data-image-frame>
+      <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async">
       <div class="stay-body">
         <div class="stay-heading">
           <h4>${escapeHtml(stay.name)}</h4>
@@ -1285,9 +1288,9 @@ function renderRegionMap() {
         </div>
         <p>底图和点位来自高德 POI/静态地图；绿色点是主游玩地，红色 S 是陆家嘴。车程来自高德距离测量，出发时仍以实时导航为准。</p>
       </header>
-      <div class="map-frame">
+      <div class="map-frame" data-image-frame>
         <img class="region-map region-map-photo" src="assets/amap-route-map-v5.png"
-          alt="高德实际地图底图：陆家嘴 S 为起点，${allRoutes.length} 个绿色点位对应下方路线索引" loading="lazy">
+          alt="高德实际地图底图：陆家嘴 S 为起点，${allRoutes.length} 个绿色点位对应下方路线索引" loading="lazy" decoding="async">
       </div>
       <div class="map-route-index" aria-label="路线地图索引">${routeIndex}</div>
       <div class="map-legend" aria-label="地图图例">
@@ -1397,6 +1400,40 @@ const html = `<!doctype html>
     img { display: block; max-width: 100%; }
     p, h1, h2, h3, h4, figure, ol { margin: 0; }
     h1, h2, h3, h4 { line-height: 1.25; letter-spacing: 0; }
+
+    @keyframes image-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    [data-image-frame] { position: relative; }
+    [data-image-frame].image-pending::before {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: #e6ece7;
+      content: "";
+      pointer-events: none;
+    }
+    [data-image-frame].image-pending::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      margin: -12px 0 0 -12px;
+      border: 3px solid rgba(31, 85, 65, .18);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: image-spin .8s linear infinite;
+      content: "";
+      pointer-events: none;
+    }
+    [data-image-frame].image-pending > img { opacity: .18; }
+    img.image-loaded {
+      opacity: 1;
+      transition: opacity .22s ease;
+    }
 
     .skip-link {
       position: fixed;
@@ -3100,6 +3137,29 @@ const html = `<!doctype html>
 
       const tabs = [...document.querySelectorAll('[role="tab"]')];
       const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+
+      document.querySelectorAll("[data-image-frame]").forEach((frame) => {
+        const image = frame.querySelector("img");
+        if (!image) return;
+        const finishLoading = () => {
+          image.classList.add("image-loaded");
+          frame.classList.remove("image-pending");
+        };
+        const failLoading = () => {
+          image.classList.add("image-error");
+          frame.classList.remove("image-pending");
+        };
+
+        if (image.complete) {
+          if (image.naturalWidth > 0) finishLoading();
+          else failLoading();
+          return;
+        }
+
+        frame.classList.add("image-pending");
+        image.addEventListener("load", finishLoading, { once: true });
+        image.addEventListener("error", failLoading, { once: true });
+      });
 
       const activateTab = (nextTab, shouldFocus = false) => {
         tabs.forEach((tab) => {
