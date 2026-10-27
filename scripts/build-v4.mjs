@@ -230,6 +230,13 @@ const newRoutes = [
     title: "锦溪古镇 · 水乡慢逛＋计家墩理想村",
     blurb: "白天看古桥、河巷和园内景点，傍晚回计家墩村里散步、烧烤聊天。",
     review: "古镇适合慢走，村里的院子适合6个人不赶时间地待着。",
+    placeReview: {
+      items: [
+        { source: "美团", score: "3.9" },
+        { source: "高德", score: "4.7" }
+      ],
+      note: "评价条数未返回；两平台口径不同"
+    },
     rating: {
       name: "锦溪古镇 · 水乡慢逛＋计家墩理想村",
       parts: [37, 20, 14, 6],
@@ -269,6 +276,13 @@ const newRoutes = [
     title: "周庄古镇 · 白天水巷＋晚上看灯",
     blurb: "把车停好后再进古镇，白天双桥、张厅沈厅慢慢逛，晚上只走一小圈看夜景。",
     review: "夜景是重点，住古镇里能省掉晚上来回折腾。",
+    placeReview: {
+      items: [
+        { source: "美团", score: "4.4" },
+        { source: "高德", score: "4.7" }
+      ],
+      note: "评价条数未返回；两平台口径不同"
+    },
     rating: {
       name: "周庄古镇 · 白天水巷＋晚上看灯",
       parts: [41, 22, 11, 7],
@@ -307,6 +321,13 @@ const newRoutes = [
     title: "太湖西山 · 雕花楼＋缥缈峰＋院子",
     blurb: "只选西山这一条，白天看雕花楼和湖景，傍晚回小白房做饭、聊天。",
     review: "景点和湖景才是主角；车程最长，适合整趟只为西山来。",
+    placeReview: {
+      items: [
+        { source: "美团", score: "4.1", count: "292条" },
+        { source: "高德", score: "4.2" }
+      ],
+      note: "两平台口径不同；美团评价条数已返回"
+    },
     rating: {
       name: "太湖西山 · 雕花楼＋缥缈峰＋院子",
       parts: [39, 21, 9, 7],
@@ -389,6 +410,31 @@ const newStays = [
 
 const groupLookup = new Map(groups.map((group) => [group.id, group]));
 
+function formatPlaceScore(value) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric.toFixed(1) : "";
+}
+
+function buildCtripPlaceReview(place) {
+  const score = formatPlaceScore(place?.score);
+  if (!score) {
+    return {
+      items: [{ source: "官方项目页", detail: "评分不单列" }],
+      note: "非游客平台聚合评分"
+    };
+  }
+
+  const count = place.count && place.count !== "—" ? `${place.count}条` : "";
+  return {
+    items: [{ source: "携程", score, count }],
+    note: Number(place.count) > 0 && Number(place.count) < 10
+      ? "样本少，仅供参考"
+      : count
+        ? ""
+        : "评价条数未返回"
+  };
+}
+
 function isUsableImageAsset(relativePath) {
   const assetPath = path.join(publishRoot, relativePath);
   if (!fs.existsSync(assetPath)) return false;
@@ -422,6 +468,7 @@ const oldRoutes = baseline.routes.map((route) => {
     title: route.title,
     blurb: baseline.routeBriefs[route.n].why,
     review: routeReviews[route.n],
+    placeReview: buildCtripPlaceReview(baseline.reviewData[route.n].place),
     rating: baseline.routeRatings[route.n],
     tags: baseline.listTags[route.n] || [],
     fee: meta.fee,
@@ -489,6 +536,29 @@ function renderStars(rating) {
     </span>`;
 }
 
+function renderPlaceReviewMeta(route, mode) {
+  const placeReview = route.placeReview;
+  if (!placeReview?.items?.length) return "";
+
+  const chips = placeReview.items.map((item) => {
+    const score = item.score ? `<strong>${escapeHtml(item.score)}</strong>` : "";
+    const detail = item.count || item.detail
+      ? `<small>${escapeHtml(item.count || item.detail)}</small>`
+      : "";
+    return `<span class="place-review-chip">${escapeHtml(item.source)}${score}${detail}</span>`;
+  }).join("");
+  const note = mode !== "row" && placeReview.note
+    ? `<span class="place-review-note">${escapeHtml(placeReview.note)}</span>`
+    : "";
+
+  return `
+    <span class="place-review-meta place-review-meta--${escapeHtml(mode)}" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      ${chips}
+      ${note}
+    </span>`;
+}
+
 function cleanRatingNote(value) {
   return String(value ?? "")
     .split(/(?<=[。！？])/u)
@@ -529,6 +599,7 @@ function renderRouteLauncher(route) {
             <span>${escapeHtml(route.travel)}</span>
           </span>
           <span class="route-title">${escapeHtml(route.title)}</span>
+          ${renderPlaceReviewMeta(route, "card")}
           <span class="review-line"><strong>一句话口碑</strong>${escapeHtml(route.review)}</span>
           <span class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</span>
           <span class="route-tags">${renderTags(route.tags)}</span>
@@ -553,6 +624,7 @@ function renderRankRow(route) {
           <span class="row-region">${escapeHtml(regionLabel)}</span>
           <strong>${escapeHtml(route.title)}</strong>
           <span class="row-review">${escapeHtml(route.review)}</span>
+          ${renderPlaceReviewMeta(route, "row")}
           <span class="row-tags">${renderTags(route.tags)}</span>
         </span>
         <span class="row-score">
@@ -622,6 +694,7 @@ function renderRouteDialog(route) {
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+        ${renderPlaceReviewMeta(route, "dialog")}
         <p class="review-line dialog-review"><strong>一句话口碑</strong>${escapeHtml(route.review)}</p>
         <p class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</p>
         <div class="activity-line">
@@ -1199,6 +1272,79 @@ const html = `<!doctype html>
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
     }
+    .place-review-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      min-width: 0;
+      margin-top: 12px;
+      padding: 9px 10px;
+      border: 1px solid #cfdad3;
+      border-radius: 6px;
+      background: #f7faf7;
+      color: #31463b;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .place-review-label {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .place-review-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      min-width: 0;
+      padding: 2px 7px;
+      border: 1px solid #d5e0d9;
+      border-radius: 4px;
+      background: var(--surface-strong);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .place-review-chip strong {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+    .place-review-chip small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .place-review-note {
+      flex-basis: 100%;
+      color: #665a44;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .place-review-meta--row {
+      gap: 5px 6px;
+      margin-top: 2px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: 15px;
+    }
+    .place-review-meta--row .place-review-label { font-size: 14px; }
+    .place-review-meta--row .place-review-chip { padding: 1px 6px; font-size: 15px; }
+    .place-review-meta--row .place-review-chip strong { font-size: 17px; }
+    .place-review-meta--row .place-review-chip small { font-size: 14px; }
+    .place-review-meta--dialog {
+      margin: 0 16px;
+      padding: 12px 13px;
+      font-size: 17px;
+    }
+    .place-review-meta--dialog .place-review-label { font-size: 15px; }
+    .place-review-meta--dialog .place-review-chip { padding: 3px 8px; font-size: 16px; }
+    .place-review-meta--dialog .place-review-chip strong { font-size: 19px; }
+    .place-review-meta--dialog .place-review-chip small,
+    .place-review-meta--dialog .place-review-note { font-size: 15px; }
     .row-tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .row-tags span {
       padding: 2px 7px;
@@ -1927,6 +2073,20 @@ const html = `<!doctype html>
       .row-region { font-size: 15px; }
       .row-main > strong { font-size: 22px; }
       .row-review { font-size: 17px; -webkit-line-clamp: 1; }
+      .place-review-meta { font-size: 17px; }
+      .place-review-chip { font-size: 16px; }
+      .place-review-chip strong { font-size: 19px; }
+      .place-review-chip small,
+      .place-review-note { font-size: 15px; }
+      .place-review-meta--row { font-size: 16px; }
+      .place-review-meta--row .place-review-label { font-size: 15px; }
+      .place-review-meta--row .place-review-chip { font-size: 16px; }
+      .place-review-meta--row .place-review-chip strong { font-size: 18px; }
+      .place-review-meta--row .place-review-chip small { font-size: 15px; }
+      .place-review-meta--dialog {
+        margin-left: 22px;
+        margin-right: 22px;
+      }
       .row-tags span { padding: 3px 8px; font-size: 14px; }
       .row-score { display: grid; align-content: center; justify-items: end; gap: 3px; }
       .row-score b { font-size: 28px; }

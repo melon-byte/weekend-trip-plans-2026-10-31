@@ -353,6 +353,79 @@
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
     }
+    .place-review-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      min-width: 0;
+      margin-top: 12px;
+      padding: 9px 10px;
+      border: 1px solid #cfdad3;
+      border-radius: 6px;
+      background: #f7faf7;
+      color: #31463b;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .place-review-label {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .place-review-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      min-width: 0;
+      padding: 2px 7px;
+      border: 1px solid #d5e0d9;
+      border-radius: 4px;
+      background: var(--surface-strong);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .place-review-chip strong {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+    .place-review-chip small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .place-review-note {
+      flex-basis: 100%;
+      color: #665a44;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .place-review-meta--row {
+      gap: 5px 6px;
+      margin-top: 2px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: 15px;
+    }
+    .place-review-meta--row .place-review-label { font-size: 14px; }
+    .place-review-meta--row .place-review-chip { padding: 1px 6px; font-size: 15px; }
+    .place-review-meta--row .place-review-chip strong { font-size: 17px; }
+    .place-review-meta--row .place-review-chip small { font-size: 14px; }
+    .place-review-meta--dialog {
+      margin: 0 16px;
+      padding: 12px 13px;
+      font-size: 17px;
+    }
+    .place-review-meta--dialog .place-review-label { font-size: 15px; }
+    .place-review-meta--dialog .place-review-chip { padding: 3px 8px; font-size: 16px; }
+    .place-review-meta--dialog .place-review-chip strong { font-size: 19px; }
+    .place-review-meta--dialog .place-review-chip small,
+    .place-review-meta--dialog .place-review-note { font-size: 15px; }
     .row-tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .row-tags span {
       padding: 2px 7px;
@@ -1081,6 +1154,20 @@
       .row-region { font-size: 15px; }
       .row-main > strong { font-size: 22px; }
       .row-review { font-size: 17px; -webkit-line-clamp: 1; }
+      .place-review-meta { font-size: 17px; }
+      .place-review-chip { font-size: 16px; }
+      .place-review-chip strong { font-size: 19px; }
+      .place-review-chip small,
+      .place-review-note { font-size: 15px; }
+      .place-review-meta--row { font-size: 16px; }
+      .place-review-meta--row .place-review-label { font-size: 15px; }
+      .place-review-meta--row .place-review-chip { font-size: 16px; }
+      .place-review-meta--row .place-review-chip strong { font-size: 18px; }
+      .place-review-meta--row .place-review-chip small { font-size: 15px; }
+      .place-review-meta--dialog {
+        margin-left: 22px;
+        margin-right: 22px;
+      }
       .row-tags span { padding: 3px 8px; font-size: 14px; }
       .row-score { display: grid; align-content: center; justify-items: end; gap: 3px; }
       .row-score b { font-size: 28px; }
@@ -1312,6 +1399,12 @@
           <span class="row-region">浦东</span>
           <strong>新场古镇 · 逛吃＋茶馆</strong>
           <span class="row-review">冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>704条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1334,6 +1427,12 @@
           <span class="row-region">浦东</span>
           <strong>滴水湖 · 船体验＋航海博物馆</strong>
           <span class="row-review">湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.8</strong><small>8条</small></span>
+
+    </span>
           <span class="row-tags"><span>水上运动</span><span>雨天有替代</span><span>成人项目先核</span></span>
         </span>
         <span class="row-score">
@@ -1356,6 +1455,12 @@
           <span class="row-region">青浦</span>
           <strong>朱家角 · 游船＋园林＋老街</strong>
           <span class="row-review">经典水乡、夜景最值；游船和园林挑两项就够。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>4420条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1378,6 +1483,12 @@
           <span class="row-region">金山</span>
           <strong>枫泾 · 古镇寻味＋漫画展馆</strong>
           <span class="row-review">人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>1990条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1400,6 +1511,12 @@
           <span class="row-region">昆山</span>
           <strong>周庄古镇 · 白天水巷＋晚上看灯</strong>
           <span class="row-review">夜景是重点，住古镇里能省掉晚上来回折腾。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.4</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+
+    </span>
           <span class="row-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
         </span>
         <span class="row-score">
@@ -1422,6 +1539,12 @@
           <span class="row-region">奉贤</span>
           <strong>上海之鱼 · 湖景＋奉贤博物馆</strong>
           <span class="row-review">湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>49条</small></span>
+
+    </span>
           <span class="row-tags"><span>拍照赏景</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1444,6 +1567,12 @@
           <span class="row-region">青浦</span>
           <strong>青西 · 水上森林＋莲湖村</strong>
           <span class="row-review">水上森林最出片，上午直奔短线；16点后停止进入。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>272条</small></span>
+
+    </span>
           <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1466,6 +1595,12 @@
           <span class="row-region">金山</span>
           <strong>花开海上 · 地肤花海＋朱泾</strong>
           <span class="row-review">地肤和花海很开阔，10 月底属转色期；晴天更值。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>2188条</small></span>
+
+    </span>
           <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1488,6 +1623,12 @@
           <span class="row-region">金山</span>
           <strong>金山嘴 · 渔村海鲜＋海边散步</strong>
           <span class="row-review">老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>381条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>晴天更好</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1510,6 +1651,12 @@
           <span class="row-region">奉贤</span>
           <strong>花开半夏 · 成人手作＋乡村体验</strong>
           <span class="row-review">手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+
+    </span>
           <span class="row-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
         </span>
         <span class="row-score">
@@ -1532,6 +1679,12 @@
           <span class="row-region">昆山</span>
           <strong>锦溪古镇 · 水乡慢逛＋计家墩理想村</strong>
           <span class="row-review">古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>3.9</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+
+    </span>
           <span class="row-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
         </span>
         <span class="row-score">
@@ -1554,6 +1707,12 @@
           <span class="row-region">青浦</span>
           <strong>淀山湖 · 帆船候选＋金泽古镇</strong>
           <span class="row-review">湖面开阔、古镇安静；没约上船就别专程追码头。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>5.0</strong><small>5条</small></span>
+
+    </span>
           <span class="row-tags"><span>水上运动</span><span>晴天更好</span><span>成人项目先核</span></span>
         </span>
         <span class="row-score">
@@ -1576,6 +1735,12 @@
           <span class="row-region">苏州</span>
           <strong>太湖西山 · 雕花楼＋缥缈峰＋院子</strong>
           <span class="row-review">景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.1</strong><small>292条</small></span><span class="place-review-chip">高德<strong>4.2</strong></span>
+
+    </span>
           <span class="row-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
         </span>
         <span class="row-score">
@@ -1598,6 +1763,12 @@
           <span class="row-region">奉贤</span>
           <strong>青溪 · 老街逛吃＋水乡夜景</strong>
           <span class="row-review">老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>70条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1620,6 +1791,12 @@
           <span class="row-region">浦东</span>
           <strong>川沙 · 老街人文＋比斯特</strong>
           <span class="row-review">老街免费、比斯特适合第二天吃饭逛；顺路感很强。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.1</strong><small>39条</small></span>
+
+    </span>
           <span class="row-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1642,6 +1819,12 @@
           <span class="row-region">金山</span>
           <strong>廊下 · 枫叶岛＋山塘乡野</strong>
           <span class="row-review">10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>61条</small></span>
+
+    </span>
           <span class="row-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1664,6 +1847,12 @@
           <span class="row-region">青浦</span>
           <strong>东方绿舟 · 航母模型＋湖滨步道</strong>
           <span class="row-review">航母和兵器馆是真亮点；园区大，另收费项目先问。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>6283条</small></span>
+
+    </span>
           <span class="row-tags"><span>水上运动</span><span>晴天更好</span><span>白天轻松玩</span></span>
         </span>
         <span class="row-score">
@@ -1686,6 +1875,12 @@
           <span class="row-region">青浦</span>
           <strong>太阳岛 · 林地＋一项成人娱乐</strong>
           <span class="row-review">项目多、环境好，但不少另收费且关得早；先电话确认再排。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+
+    </span>
           <span class="row-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
         </span>
         <span class="row-score">
@@ -1727,6 +1922,12 @@
             <span>陆家嘴驾车 59.8 km · 约 86 分钟</span>
           </span>
           <span class="route-title">太阳岛 · 林地＋一项成人娱乐</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+      <span class="place-review-note">非游客平台聚合评分</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>项目多、环境好，但不少另收费且关得早；先电话确认再排。</span>
           <span class="fee-line"><strong>费用提醒</strong>温泉 10 月 31 日大概率未开，先电话确认；保龄球、垂钓等另收费。</span>
           <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
@@ -1751,6 +1952,12 @@
             <span>淀山湖 57.4 km · 约 85 分钟；金泽 64.8 km · 约 80 分钟</span>
           </span>
           <span class="route-title">淀山湖 · 帆船候选＋金泽古镇</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>5.0</strong><small>5条</small></span>
+      <span class="place-review-note">样本少，仅供参考</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>湖面开阔、古镇安静；没约上船就别专程追码头。</span>
           <span class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</span>
           <span class="route-tags"><span>水上运动</span><span>晴天更好</span><span>成人项目先核</span></span>
@@ -1775,6 +1982,12 @@
             <span>陆家嘴驾车 51.0 km · 约 73 分钟</span>
           </span>
           <span class="route-title">朱家角 · 游船＋园林＋老街</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>4420条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</span>
           <span class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -1799,6 +2012,12 @@
             <span>陆家嘴驾车 60.0 km · 约 83 分钟</span>
           </span>
           <span class="route-title">青西 · 水上森林＋莲湖村</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>272条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>水上森林最出片，上午直奔短线；16点后停止进入。</span>
           <span class="fee-line"><strong>费用提醒</strong>公园免费；电瓶车 20 元/人；水上森林 16:00 停止进入，游船收费先问。</span>
           <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
@@ -1823,6 +2042,12 @@
             <span>陆家嘴驾车 52.7 km · 约 77 分钟</span>
           </span>
           <span class="route-title">东方绿舟 · 航母模型＋湖滨步道</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>6283条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区大，另收费项目先问。</span>
           <span class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</span>
           <span class="route-tags"><span>水上运动</span><span>晴天更好</span><span>白天轻松玩</span></span>
@@ -1859,6 +2084,12 @@
             <span>陆家嘴驾车 82.9 km · 约 94 分钟</span>
           </span>
           <span class="route-title">金山嘴 · 渔村海鲜＋海边散步</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>381条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</span>
           <span class="fee-line"><strong>费用提醒</strong>老街免费；展馆联票约 40 元、单馆 10 元；海边步道免费，停车现场确认。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>晴天更好</span><span>白天轻松玩</span></span>
@@ -1883,6 +2114,12 @@
             <span>陆家嘴驾车 73.8 km · 约 93 分钟</span>
           </span>
           <span class="route-title">枫泾 · 古镇寻味＋漫画展馆</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>1990条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
           <span class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -1907,6 +2144,12 @@
             <span>陆家嘴驾车 89.0 km · 约 101 分钟</span>
           </span>
           <span class="route-title">廊下 · 枫叶岛＋山塘乡野</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>61条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</span>
           <span class="fee-line"><strong>费用提醒</strong>枫叶岛免费，停车免费但车位少；划船收费先问；廊华路部分施工。</span>
           <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
@@ -1931,6 +2174,12 @@
             <span>陆家嘴驾车 73.9 km · 约 101 分钟</span>
           </span>
           <span class="route-title">花开海上 · 地肤花海＋朱泾</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>2188条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>地肤和花海很开阔，10 月底属转色期；晴天更值。</span>
           <span class="fee-line"><strong>费用提醒</strong>门票 30 元、实名入园；停车免费；观光车和多人车收费先问。</span>
           <span class="route-tags"><span>拍照赏景</span><span>晴天更好</span><span>白天轻松玩</span></span>
@@ -1967,6 +2216,12 @@
             <span>陆家嘴驾车 40.6 km · 约 70 分钟</span>
           </span>
           <span class="route-title">上海之鱼 · 湖景＋奉贤博物馆</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>49条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</span>
           <span class="fee-line"><strong>费用提醒</strong>上海之鱼免费；科幻馆 128 元起可选；奉贤博物馆免费，乾隆特展 11/18 撤展。</span>
           <span class="route-tags"><span>拍照赏景</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -1991,6 +2246,12 @@
             <span>陆家嘴驾车 35.1 km · 约 57 分钟</span>
           </span>
           <span class="route-title">花开半夏 · 成人手作＋乡村体验</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+      <span class="place-review-note">非游客平台聚合评分</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
           <span class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</span>
           <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
@@ -2015,6 +2276,12 @@
             <span>陆家嘴驾车 38.9 km · 约 61 分钟</span>
           </span>
           <span class="route-title">青溪 · 老街逛吃＋水乡夜景</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>70条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</span>
           <span class="fee-line"><strong>费用提醒</strong>老街免费；摇橹船价格现场问；望海楼登楼或品茗需提前预约。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -2051,6 +2318,12 @@
             <span>陆家嘴驾车约 69–71 km · 80–85 分钟</span>
           </span>
           <span class="route-title">滴水湖 · 船体验＋航海博物馆</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.8</strong><small>8条</small></span>
+      <span class="place-review-note">样本少，仅供参考</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</span>
           <span class="fee-line"><strong>费用提醒</strong>滴水湖免费；游船成人 100 元；航海馆 30 元、AR 另加 99 元；水上项目预约后问价。</span>
           <span class="route-tags"><span>水上运动</span><span>雨天有替代</span><span>成人项目先核</span></span>
@@ -2075,6 +2348,12 @@
             <span>陆家嘴驾车 34.8 km · 约 55 分钟</span>
           </span>
           <span class="route-title">新场古镇 · 逛吃＋茶馆</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>704条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</span>
           <span class="fee-line"><strong>费用提醒</strong>古镇免费；内部小馆单独购票；摇橹船先问价；剧本餐秀 138 元/人可选。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -2099,6 +2378,12 @@
             <span>川沙 28.6 km · 约 50 分钟；比斯特 30.3 km · 约 48 分钟</span>
           </span>
           <span class="route-title">川沙 · 老街人文＋比斯特</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.1</strong><small>39条</small></span>
+
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>老街免费、比斯特适合第二天吃饭逛；顺路感很强。</span>
           <span class="fee-line"><strong>费用提醒</strong>老街免费；轮渡 15 元/人；比斯特消费满 50 元可兑 5 小时免费停车。</span>
           <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
@@ -2135,6 +2420,12 @@
             <span>陆家嘴驾车约 69.8 km · 91 min，以实时导航为准</span>
           </span>
           <span class="route-title">锦溪古镇 · 水乡慢逛＋计家墩理想村</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>3.9</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
           <span class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</span>
           <span class="route-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
@@ -2159,6 +2450,12 @@
             <span>陆家嘴驾车约 79.5 km · 106 min，以实时导航为准</span>
           </span>
           <span class="route-title">周庄古镇 · 白天水巷＋晚上看灯</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.4</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</span>
           <span class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</span>
           <span class="route-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
@@ -2183,6 +2480,12 @@
             <span>陆家嘴驾车约 141.6 km · 145 min，尽量早出</span>
           </span>
           <span class="route-title">太湖西山 · 雕花楼＋缥缈峰＋院子</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.1</strong><small>292条</small></span><span class="place-review-chip">高德<strong>4.2</strong></span>
+      <span class="place-review-note">两平台口径不同；美团评价条数已返回</span>
+    </span>
           <span class="review-line"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
           <span class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</span>
           <span class="route-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
@@ -2484,6 +2787,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>704条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>冷门古镇、小吃和茶馆都扎实；白天真正有东西吃逛。</p>
         <p class="fee-line"><strong>费用提醒</strong>古镇免费；内部小馆单独购票；摇橹船先问价；剧本餐秀 138 元/人可选。</p>
         <div class="activity-line">
@@ -2607,6 +2916,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.8</strong><small>8条</small></span>
+      <span class="place-review-note">样本少，仅供参考</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>湖面开阔，周六 20:00 有烟花；水上项目要预约，雨天转航海馆。</p>
         <p class="fee-line"><strong>费用提醒</strong>滴水湖免费；游船成人 100 元；航海馆 30 元、AR 另加 99 元；水上项目预约后问价。</p>
         <div class="activity-line">
@@ -2730,6 +3045,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>4420条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</p>
         <p class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</p>
         <div class="activity-line">
@@ -2852,6 +3173,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>1990条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</p>
         <p class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</p>
         <div class="activity-line">
@@ -2974,6 +3301,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.4</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</p>
         <p class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</p>
         <div class="activity-line">
@@ -3073,6 +3406,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>49条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>湖景和草坪适合慢逛，博物馆免费又有乾隆特展；雨天更稳。</p>
         <p class="fee-line"><strong>费用提醒</strong>上海之鱼免费；科幻馆 128 元起可选；奉贤博物馆免费，乾隆特展 11/18 撤展。</p>
         <div class="activity-line">
@@ -3195,6 +3534,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>272条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>水上森林最出片，上午直奔短线；16点后停止进入。</p>
         <p class="fee-line"><strong>费用提醒</strong>公园免费；电瓶车 20 元/人；水上森林 16:00 停止进入，游船收费先问。</p>
         <div class="activity-line">
@@ -3318,6 +3663,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>2188条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>地肤和花海很开阔，10 月底属转色期；晴天更值。</p>
         <p class="fee-line"><strong>费用提醒</strong>门票 30 元、实名入园；停车免费；观光车和多人车收费先问。</p>
         <div class="activity-line">
@@ -3441,6 +3792,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>381条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>老街免费、海鲜氛围强；展馆挑一两个就够，先确认开放。</p>
         <p class="fee-line"><strong>费用提醒</strong>老街免费；展馆联票约 40 元、单馆 10 元；海边步道免费，停车现场确认。</p>
         <div class="activity-line">
@@ -3563,6 +3920,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+      <span class="place-review-note">非游客平台聚合评分</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</p>
         <p class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</p>
         <div class="activity-line">
@@ -3686,6 +4049,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>3.9</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</p>
         <p class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</p>
         <div class="activity-line">
@@ -3789,6 +4158,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>5.0</strong><small>5条</small></span>
+      <span class="place-review-note">样本少，仅供参考</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>湖面开阔、古镇安静；没约上船就别专程追码头。</p>
         <p class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</p>
         <div class="activity-line">
@@ -3911,6 +4286,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.1</strong><small>292条</small></span><span class="place-review-chip">高德<strong>4.2</strong></span>
+      <span class="place-review-note">两平台口径不同；美团评价条数已返回</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</p>
         <p class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</p>
         <div class="activity-line">
@@ -4018,6 +4399,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.3</strong><small>70条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>老街安静、夜景加分；望海楼和摇橹船顺路挑一个就够。</p>
         <p class="fee-line"><strong>费用提醒</strong>老街免费；摇橹船价格现场问；望海楼登楼或品茗需提前预约。</p>
         <div class="activity-line">
@@ -4141,6 +4528,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.1</strong><small>39条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>老街免费、比斯特适合第二天吃饭逛；顺路感很强。</p>
         <p class="fee-line"><strong>费用提醒</strong>老街免费；轮渡 15 元/人；比斯特消费满 50 元可兑 5 小时免费停车。</p>
         <div class="activity-line">
@@ -4264,6 +4657,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>61条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>10 月底红枫偏早，晴天来拍黄绿秋色；山塘顺路逛就好。</p>
         <p class="fee-line"><strong>费用提醒</strong>枫叶岛免费，停车免费但车位少；划船收费先问；廊华路部分施工。</p>
         <div class="activity-line">
@@ -4387,6 +4786,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>6283条</small></span>
+
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区大，另收费项目先问。</p>
         <p class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</p>
         <div class="activity-line">
@@ -4510,6 +4915,12 @@
           </details>
           <p class="score-method">统一口径；住宿不参与路线评分。</p>
         </section>
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+      <span class="place-review-note">非游客平台聚合评分</span>
+    </span>
         <p class="review-line dialog-review"><strong>一句话口碑</strong>项目多、环境好，但不少另收费且关得早；先电话确认再排。</p>
         <p class="fee-line"><strong>费用提醒</strong>温泉 10 月 31 日大概率未开，先电话确认；保龄球、垂钓等另收费。</p>
         <div class="activity-line">

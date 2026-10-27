@@ -189,6 +189,10 @@ async function inspectAt(send, width, height, mobile, prefix) {
     const budgetMatches = [...new Set(
       searchableText.match(/预算|人均|总价|房费|房价|每晚|5000|room budget|per person/gi) || []
     )];
+    const newRoutePlaceReviews = ["s01", "s02", "s03"].map((routeId) => {
+      const meta = document.querySelector("#route-" + routeId + " .place-review-meta--card");
+      return meta ? meta.textContent.replace(/\s+/g, " ").trim() : "";
+    });
     return {
       viewport: [innerWidth, innerHeight],
       documentWidth: docWidth,
@@ -205,6 +209,9 @@ async function inspectAt(send, width, height, mobile, prefix) {
       stayCards: stayCards.length,
       routeReviewCards: document.querySelectorAll(".route-card .review-line").length,
       routeFeeCards: document.querySelectorAll(".route-card .fee-line").length,
+      routePlaceReviews: document.querySelectorAll(".route-card .place-review-meta--card").length,
+      rankPlaceReviews: document.querySelectorAll(".rank-row .place-review-meta--row").length,
+      dialogPlaceReviews: document.querySelectorAll(".route-dialog .place-review-meta--dialog").length,
       dialogReviewBlocks: document.querySelectorAll(".route-dialog .dialog-review").length,
       rankScores: rankRows.map((row) => Number(row.querySelector(".row-score b").textContent)),
       staySectionPresent: Boolean(staySection),
@@ -216,6 +223,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
       desktopMapVisible: Boolean(document.querySelector(".desktop-region-map") &&
         getComputedStyle(document.querySelector(".desktop-region-map")).display !== "none"),
       dialogSupported: typeof HTMLDialogElement !== "undefined",
+      newRoutePlaceReviews,
       budgetMatches,
       images: document.images.length,
       brokenImages
@@ -228,6 +236,30 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.stayCards === 14, `${prefix}: expected 14 stay cards, got ${initial.stayCards}`);
   assert(initial.routeReviewCards === 18, `${prefix}: every route card needs a one-line review`);
   assert(initial.routeFeeCards === 18, `${prefix}: every route card needs a fee warning`);
+  assert(initial.routePlaceReviews === 18, `${prefix}: every route card needs a source place review`);
+  assert(initial.rankPlaceReviews === 18, `${prefix}: every ranking row needs a source place review`);
+  assert(initial.dialogPlaceReviews === 18, `${prefix}: every dialog needs a source place review`);
+  const jinxiReview = initial.newRoutePlaceReviews[0];
+  assert(
+    jinxiReview.includes("美团3.9") &&
+      jinxiReview.includes("高德4.7") &&
+      jinxiReview.includes("评价条数未返回"),
+    `${prefix}: Jinxi needs Meituan/Amap scores and a missing-count note; got ${JSON.stringify(initial.newRoutePlaceReviews[0])}`
+  );
+  const zhouzhuangReview = initial.newRoutePlaceReviews[1];
+  assert(
+    zhouzhuangReview.includes("美团4.4") &&
+      zhouzhuangReview.includes("高德4.7") &&
+      zhouzhuangReview.includes("评价条数未返回"),
+    `${prefix}: Zhouzhuang needs Meituan/Amap scores and a missing-count note; got ${JSON.stringify(initial.newRoutePlaceReviews[1])}`
+  );
+  const miaomiaoReview = initial.newRoutePlaceReviews[2];
+  assert(
+    miaomiaoReview.includes("美团4.1") &&
+      miaomiaoReview.includes("292条") &&
+      miaomiaoReview.includes("高德4.2"),
+    `${prefix}: Miaomiao Peak needs the Meituan score/count and Amap score; got ${JSON.stringify(initial.newRoutePlaceReviews[2])}`
+  );
   assert(initial.dialogReviewBlocks === 18, `${prefix}: every dialog needs a one-line review`);
   assert(initial.staySectionVisible && initial.stayCardVisible, `${prefix}: stays must remain visible`);
   assert(!initial.staySectionInDetails, `${prefix}: accommodation must not be folded into details`);
@@ -259,6 +291,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
       open: dialog.open,
       title: dialog.querySelector("h2").textContent.trim(),
       hasScoreParts: dialog.querySelectorAll(".score-parts > span").length === 4,
+      hasPlaceReview: Boolean(dialog.querySelector(".place-review-meta--dialog")),
       hasReview: Boolean(dialog.querySelector(".dialog-review")),
       hasFee: Boolean(dialog.querySelector(".fee-line"))
     };
@@ -268,6 +301,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   })()`);
   assert(openedFromRank.open, `${prefix}: ranking row did not open its dialog`);
   assert(openedFromRank.hasScoreParts, `${prefix}: dialog score breakdown is incomplete`);
+  assert(openedFromRank.hasPlaceReview, `${prefix}: dialog is missing the source place review`);
   assert(openedFromRank.hasReview, `${prefix}: dialog is missing its one-line review`);
   assert(openedFromRank.hasFee, `${prefix}: dialog is missing its fee warning`);
   assert(openedFromRank.closedByButton, `${prefix}: close button did not close the dialog`);
