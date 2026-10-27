@@ -222,6 +222,15 @@ async function inspectAt(send, width, height, mobile, prefix) {
     const routeTravel = routeCards.map((card) =>
       card.querySelector(".route-kicker span:last-child")?.textContent.trim() || ""
     );
+    const regionRouteScores = Object.fromEntries(
+      [...document.querySelectorAll("#panel-regions .region-section")]
+        .map((section) => [
+          section.id,
+          [...section.querySelectorAll(".route-card")].map((card) =>
+            Number(card.querySelector(".card-score")?.childNodes[0]?.textContent || 0)
+          )
+        ])
+    );
     const travelMinutes = routeTravel.flatMap((text) =>
       [...text.matchAll(/(\\d+)\\s*分钟/g)].map((match) => Number(match[1]))
     );
@@ -290,6 +299,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
       rankScores: rankRows.map((row) => Number(row.querySelector(".row-score b").textContent)),
       rankTitles: rankRows.map((row) => row.querySelector(".row-main > strong").textContent.trim()),
       routeTitles: routeCards.map((card) => card.querySelector(".route-title").textContent.trim()),
+      regionRouteScores,
       routeTravel,
       travelMinutes,
       staySectionPresent: Boolean(staySection),
@@ -459,6 +469,12 @@ async function inspectAt(send, width, height, mobile, prefix) {
       !initial.routeTitles.some((title) => title.includes("东平森林公园")) &&
       initial.routeTitles.some((title) => title.includes("碧海金沙")),
     `${prefix}: route list does not match the current 14-route scope`
+  );
+  assert(
+    Object.values(initial.regionRouteScores).every((scores) =>
+      scores.every((score, index) => index === 0 || scores[index - 1] >= score)
+    ),
+    `${prefix}: region routes are not sorted by score: ${JSON.stringify(initial.regionRouteScores)}`
   );
 
   const tabClickState = await evaluate(send, `(() => {

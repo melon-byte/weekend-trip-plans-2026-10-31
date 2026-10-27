@@ -1264,7 +1264,7 @@ function renderStay(stay) {
 function renderRegionMap() {
   const routeIndex = activeGroups
     .map((group) => {
-      const routes = allRoutes.filter((route) => route.group === group.id);
+      const routes = rankedRoutes.filter((route) => route.group === group.id);
       return `
         <div class="map-index-group">
           <p><i class="map-group-dot map-group-dot--${escapeHtml(group.id)}"></i>${escapeHtml(group.title)}</p>
@@ -1313,7 +1313,7 @@ const rankingBoard = `
   </section>`;
 
 const routeSections = activeGroups.map((group) => {
-  const routes = allRoutes.filter((route) => route.group === group.id);
+  const routes = rankedRoutes.filter((route) => route.group === group.id);
   return `
     <section class="region-section" id="region-${group.id}" aria-labelledby="region-title-${group.id}">
       <header class="region-heading">
