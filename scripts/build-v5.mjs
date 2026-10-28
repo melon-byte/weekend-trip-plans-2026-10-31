@@ -9,6 +9,7 @@ const baseline = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
 const amapRouteDataPath = path.join(publishRoot, "research", "v4", "amap-v5-routes.json");
 const amapRouteData = JSON.parse(fs.readFileSync(amapRouteDataPath, "utf8"));
 const outputPath = path.join(publishRoot, "weekend-trip-plans-2026-10-31-v5.html");
+const indexPath = path.join(publishRoot, "index.html");
 
 const routeReviews = {
   "01": "项目多、环境好，但不少另收费且关得早；先电话确认再排。",
@@ -1305,7 +1306,6 @@ const rankingBoard = `
   <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
     <header class="ranking-heading">
       <div>
-        <p class="section-eyebrow">同一套标准比 ${allRoutes.length} 条</p>
         <h2 id="ranking-title">周末路线总榜</h2>
       </div>
       <p>白天体验 45 · 内容组合 25 · 省心程度 20 · 证据质量 10。住宿不参与加分。</p>
@@ -1544,38 +1544,33 @@ const html = `<!doctype html>
     .intro {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 46px 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 28px 0 22px;
     }
 
     .intro-label {
       display: inline-flex;
       align-items: center;
-      min-height: 40px;
-      padding: 5px 13px;
+      min-height: 34px;
+      padding: 4px 11px;
       border: 1px solid #c7bca5;
       border-radius: 999px;
       background: var(--gold-soft);
       color: #74501d;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 800;
+      white-space: nowrap;
     }
 
     .intro h1 {
-      max-width: 900px;
-      margin-top: 18px;
-      font-size: 42px;
+      margin: 0;
+      font-size: 30px;
       font-weight: 900;
+      line-height: 1.3;
+      white-space: nowrap;
     }
-
-    .intro-lead {
-      max-width: 850px;
-      margin-top: 16px;
-      color: #44534b;
-      font-size: 21px;
-      line-height: 1.65;
-    }
-
-    .intro-lead strong { color: var(--ink); }
 
     .overview {
       width: min(1180px, calc(100% - 28px));
@@ -2881,9 +2876,8 @@ const html = `<!doctype html>
       .trip-tab { min-height: 58px; font-size: 20px; }
       .region-panel-nav { width: min(1180px, calc(100% - 48px)); padding-top: 44px; }
       .region-panel-nav > p { font-size: 17px; }
-      .intro { width: min(1180px, calc(100% - 48px)); padding: 64px 0 42px; }
-      .intro h1 { font-size: 58px; }
-      .intro-lead { font-size: 24px; }
+      .intro { width: min(1180px, calc(100% - 48px)); padding: 34px 0 24px; }
+      .intro h1 { font-size: 30px; }
       .overview { width: min(1180px, calc(100% - 48px)); padding: 26px; margin-bottom: 60px; }
       .overview h2 { font-size: 30px; }
       .overview p { font-size: 19px; }
@@ -3005,9 +2999,9 @@ const html = `<!doctype html>
     }
 
     @media (max-width: 719px) {
-      .intro { padding-top: 34px; }
-      .intro h1 { font-size: 46px; }
-      .intro-lead { font-size: 20px; }
+      .intro { gap: 10px; padding: 22px 0 18px; }
+      .intro-label { min-height: 30px; padding: 3px 9px; font-size: 13px; }
+      .intro h1 { font-size: 22px; }
       .trip-tab { font-size: 19px; }
       .map-heading h2,
       .ranking-heading h2,
@@ -3092,9 +3086,6 @@ const html = `<!doctype html>
     <section class="intro" aria-labelledby="page-title">
       <p class="intro-label">两天一夜 · 玩优先</p>
       <h1 id="page-title">出行计划</h1>
-      <p class="intro-lead">
-        <strong>${routeCount} 条玩法路线</strong>，住宿直接跟着对应玩法走。先看白天怎么玩，再在路线里挑 4 房适配和多人设施。
-      </p>
     </section>
 
     ${primaryTabs}
@@ -3238,6 +3229,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-fs.writeFileSync(outputPath, html.replace(/[ \t]+$/gm, ""), "utf8");
-console.log(`Wrote ${path.basename(outputPath)}`);
+const renderedHtml = html.replace(/[ \t]+$/gm, "");
+fs.writeFileSync(outputPath, renderedHtml, "utf8");
+fs.writeFileSync(indexPath, renderedHtml, "utf8");
+console.log(`Wrote ${path.basename(outputPath)} and ${path.basename(indexPath)}`);
 console.log(`Routes: ${routeCount}; stays: ${stayCount}`);
