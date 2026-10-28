@@ -48,17 +48,13 @@ function readAmapKey() {
 }
 
 async function renderStaticMap(key, options) {
-  const { center, zoom, size, places: mapPlaces, output } = options;
-  const markerGroups = [
-    `large,0xC34A2D,S:${origin.location}`,
-    `mid,0x1F6B53,:${mapPlaces.map((place) => `${place.label}:${place.location}`).join(";")}`
-  ];
+  const { center, zoom, size, output } = options;
   const url = new URL("https://restapi.amap.com/v3/staticmap");
   url.searchParams.set("key", key);
   url.searchParams.set("location", center);
   url.searchParams.set("zoom", zoom);
   url.searchParams.set("size", size);
-  url.searchParams.set("markers", markerGroups.join("|"));
+  url.searchParams.set("scale", "1");
 
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Static map HTTP ${response.status}`);
@@ -69,7 +65,17 @@ async function renderStaticMap(key, options) {
   const outputPath = path.join(publishRoot, output);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, bytes);
-  return { path: output, bytes: bytes.length };
+  return {
+    path: output,
+    bytes: bytes.length,
+    width: bytes.readUInt32BE(16),
+    height: bytes.readUInt32BE(20),
+    center,
+    zoom: Number(zoom),
+    scale: 1,
+    worldSize: 512 * (2 ** Number(zoom)),
+    markersBaked: false
+  };
 }
 
 async function renderStaticMapOrReuse(key, options) {
@@ -78,9 +84,16 @@ async function renderStaticMapOrReuse(key, options) {
   } catch (error) {
     const outputPath = path.join(publishRoot, options.output);
     if (fs.existsSync(outputPath) && fs.statSync(outputPath).size > 10000) {
-      return { path: options.output, bytes: fs.statSync(outputPath).size, reused: true, refreshError: error.message };
+      const bytes = fs.readFileSync(outputPath);
+      return {
+        path: options.output, bytes: bytes.length,
+        width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20),
+        center: options.center, zoom: Number(options.zoom), scale: 1,
+        worldSize: 512 * (2 ** Number(options.zoom)), markersBaked: false,
+        reused: true, refreshError: error.message
+      };
     }
-    return { path: "", bytes: 0, unavailable: true, refreshError: error.message };
+    throw error;
   }
 }
 
@@ -90,14 +103,7 @@ const map = await renderStaticMapOrReuse(key, {
   zoom: "8",
   size: "1000*500",
   places,
-  output: "assets/amap-route-map-v5.png"
-});
-const nearbyMap = await renderStaticMapOrReuse(key, {
-  center: "121.205,31.215",
-  zoom: "9",
-  size: "1000*420",
-  places: nearbyPlaces,
-  output: "assets/amap-nearby-route-map-v1.png"
+  output: "assets/amap-route-basemap-v6.png"
 });
 const output = {
   fetchedAt: new Date().toISOString(),
@@ -105,8 +111,7 @@ const output = {
   origin,
   places,
   nearbyPlaces,
-  map,
-  nearbyMap
+  map
 };
 fs.mkdirSync(researchDir, { recursive: true });
 fs.writeFileSync(path.join(researchDir, "amap-v5-routes.json"), `${JSON.stringify(output, null, 2)}\n`, "utf8");

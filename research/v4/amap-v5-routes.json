@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T03:33:06.750Z",
+  "fetchedAt": "2026-10-28T04:32:26.395Z",
   "provider": "高德地图 POI / 距离测量 / 静态地图",
   "origin": {
     "id": "origin",
@@ -156,15 +156,14 @@
     }
   ],
   "map": {
-    "path": "assets/amap-route-map-v5.png",
-    "bytes": 114894,
-    "reused": true,
-    "refreshError": "Static map did not return PNG: {\"status\":\"0\",\"info\":\"UNKNOWN_ERROR\",\"infocode\":\"20003\"}"
-  },
-  "nearbyMap": {
-    "path": "",
-    "bytes": 0,
-    "unavailable": true,
-    "refreshError": "Static map did not return PNG: {\"status\":\"0\",\"info\":\"UNKNOWN_ERROR\",\"infocode\":\"20003\"}"
+    "path": "assets/amap-route-basemap-v6.png",
+    "bytes": 112854,
+    "width": 1000,
+    "height": 500,
+    "center": "121.08,31.00",
+    "zoom": 8,
+    "scale": 1,
+    "worldSize": 131072,
+    "markersBaked": false
   }
 }

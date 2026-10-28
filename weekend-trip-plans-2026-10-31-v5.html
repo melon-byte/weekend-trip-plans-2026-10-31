@@ -6,6 +6,7 @@
   <meta name="description" content="6位成人、4间房的周末玩法攻略。先选去哪玩，再看晚上住哪。">
   <meta name="theme-color" content="#f6f2e9">
   <title>周末去哪玩 · 10月31日两天一夜</title>
+  <link rel="stylesheet" href="assets/vendor/leaflet.css">
   <style>
     :root {
       --ink: #202d27;
@@ -98,14 +99,14 @@
     .trip-tab-shell {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding-bottom: 10px;
+      padding-bottom: 4px;
     }
 
     .trip-tabs {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 7px;
-      padding: 6px;
+      gap: 4px;
+      padding: 4px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface);
@@ -114,7 +115,7 @@
 
     .trip-tab {
       min-width: 0;
-      min-height: 52px;
+      min-height: 46px;
       padding: 8px 10px;
       border: 1px solid transparent;
       border-radius: 6px;
@@ -145,7 +146,7 @@
     .region-nav {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 0;
       padding-bottom: 2px;
       overflow-x: auto;
       overscroll-behavior-inline: contain;
@@ -177,13 +178,7 @@
     .region-panel-nav {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 34px 0 4px;
-    }
-
-    .region-panel-nav > p {
-      color: var(--rust);
-      font-size: 16px;
-      font-weight: 900;
+      padding: 10px 0 4px;
     }
 
     main { overflow: clip; }
@@ -194,7 +189,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 28px 0 22px;
+      padding: 12px 0 8px;
     }
 
     .intro-label {
@@ -262,33 +257,11 @@
 
     .map-section,
     .ranking-section {
-      padding: 44px max(14px, calc((100% - 1180px) / 2)) 56px;
+      padding: 14px max(14px, calc((100% - 1180px) / 2)) 32px;
       border-top: 1px solid var(--line);
     }
 
     .map-section { background: rgba(255, 253, 248, .52); }
-
-    .map-heading,
-    .ranking-heading {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .map-heading h2,
-    .ranking-heading h2 {
-      margin-top: 3px;
-      font-size: 38px;
-      font-weight: 900;
-    }
-
-    .map-heading > p,
-    .ranking-heading > p {
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.65;
-    }
 
     .map-frame {
       overflow: hidden;
@@ -300,17 +273,70 @@
     }
 
     .region-map {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      min-width: 620px;
       height: 100%;
-      margin-left: 50%;
-      transform: translateX(-50%);
-      object-fit: cover;
-      object-position: center 50%;
+      object-fit: contain;
     }
 
-    .map-frame { height: clamp(260px, 30vw, 420px); }
+    .map-frame {
+      width: min(100%, 840px);
+      height: clamp(220px, 30vw, 420px);
+      margin-inline: auto;
+    }
+    .map-canvas { position: absolute; inset: 0; z-index: 2; background: #edf1ec; }
+    .map-ready > .region-map { visibility: hidden; }
+    .map-route-icon { background: none; border: 0; }
+    .map-origin-marker {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--rust);
+      color: white;
+      font: 900 11px system-ui, sans-serif;
+    }
+    .map-canvas .leaflet-control-zoom a { color: var(--ink); }
+    .map-canvas .leaflet-tooltip { font-family: inherit; font-size: 12px; }
+    .map-picker {
+      position: absolute;
+      z-index: 600;
+      right: 8px;
+      bottom: 8px;
+      width: min(320px, calc(100% - 16px));
+      padding: 26px 10px 4px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      box-shadow: 0 3px 14px #202d2730;
+    }
+    .map-picker-close {
+      position: absolute;
+      top: 0;
+      right: 2px;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .map-choice-list { display: grid; max-height: 136px; overflow-y: auto; }
+    .map-choice-list button {
+      padding: 9px 4px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      text-align: left;
+      font: 600 13px/1.4 "Microsoft YaHei", sans-serif;
+      cursor: pointer;
+    }
+    .map-choice-list button:last-child { border-bottom: 0; }
     .nearby-map-details { margin-top: 14px; }
     .nearby-map-details summary {
       width: fit-content;
@@ -327,22 +353,24 @@
     .nearby-map-frame { height: clamp(220px, 25vw, 330px); margin-top: 10px; }
     .map-extra-stops { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
     .map-extra-stop {
-      position: absolute;
       display: grid;
-      width: 30px;
-      height: 30px;
+      width: 22px;
+      height: 22px;
       place-items: center;
-      transform: translate(-50%, -50%);
       border: 2px solid white;
       border-radius: 50%;
-      background: var(--rust);
+      background: var(--green);
       box-shadow: 0 2px 8px #202d2750;
       color: white;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 900;
       text-decoration: none;
       pointer-events: auto;
+      touch-action: manipulation;
     }
+    .map-extra-stop:hover { filter: brightness(1.15); }
+    .map-canvas .map-extra-stop { color: white; }
+    .map-extra-stop[data-route-id="r01"] { background: var(--rust); }
     .map-extra-stop[data-route-id="r02"] { background: var(--blue); }
     .map-extra-stop:focus-visible { outline: 3px solid white; outline-offset: 2px; }
 
@@ -407,6 +435,31 @@
       gap: 12px;
       margin-top: 14px;
     }
+    .map-index-route {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      align-items: center;
+      gap: 9px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.4;
+      text-decoration: none;
+    }
+    .map-index-route > strong {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 15px;
+    }
+    .map-index-route small { display: block; margin-top: 4px; color: var(--blue); font-size: 13px; }
+    .map-index-route:focus-visible { outline: 3px solid #89ad98; outline-offset: 2px; }
     .map-index-group {
       padding: 13px 14px 10px;
       border: 1px solid var(--line);
@@ -1638,11 +1691,10 @@
       body { font-size: 20px; }
       html { scroll-padding-top: 140px; }
       .region-nav a { font-size: 18px; }
-      .trip-tab-shell { width: min(1180px, calc(100% - 48px)); padding-bottom: 16px; }
-      .trip-tab { min-height: 58px; font-size: 20px; }
-      .region-panel-nav { width: min(1180px, calc(100% - 48px)); padding-top: 44px; }
-      .region-panel-nav > p { font-size: 17px; }
-      .intro { width: min(1180px, calc(100% - 48px)); padding: 34px 0 24px; }
+      .trip-tab-shell { width: min(1180px, calc(100% - 48px)); padding-bottom: 8px; }
+      .trip-tab { min-height: 48px; font-size: 20px; }
+      .region-panel-nav { width: min(1180px, calc(100% - 48px)); padding-top: 16px; }
+      .intro { width: min(1180px, calc(100% - 48px)); padding: 12px 0 8px; }
       .intro h1 { font-size: 30px; }
       .overview { width: min(1180px, calc(100% - 48px)); padding: 26px; margin-bottom: 60px; }
       .overview h2 { font-size: 30px; }
@@ -1682,13 +1734,7 @@
     @media (min-width: 720px) {
       body { font-size: 21px; }
       .map-section,
-      .ranking-section { padding-top: 58px; padding-bottom: 70px; }
-      .map-heading,
-      .ranking-heading { grid-template-columns: 1fr 1fr; align-items: end; gap: 28px; }
-      .map-heading h2,
-      .ranking-heading h2 { font-size: 48px; }
-      .map-heading > p,
-      .ranking-heading > p { font-size: 19px; }
+      .ranking-section { padding-top: 20px; padding-bottom: 40px; }
       .section-eyebrow { font-size: 17px; }
       .region-map { min-width: 0; }
       .map-route-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1763,7 +1809,7 @@
     @media (max-width: 719px) {
       .nearby-map-details summary { min-height: 40px; font-size: 14px; }
       .nearby-map-frame { height: 220px; }
-      .map-extra-stop { width: 27px; height: 27px; }
+      .map-extra-stop { width: 22px; height: 22px; }
       .map-index-group > p small { font-size: 11px; }
       .region-distance { font-size: 12px; }
       .region-extension { font-size: 13px; }
@@ -1775,15 +1821,11 @@
       .dialog-place-source { width: auto; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid var(--line); }
       .dialog-place-source .source-note { max-width: none; }
       .route-detail-heading { font-size: 18px; }
-      .intro { gap: 10px; padding: 22px 0 18px; }
+      .intro { gap: 10px; padding: 10px 0 6px; }
       .intro-label { min-height: 30px; padding: 3px 9px; font-size: 13px; }
       .intro h1 { font-size: 22px; }
       .trip-tab { font-size: 19px; }
-      .map-heading h2,
-      .ranking-heading h2,
       .region-heading h2 { font-size: 36px; }
-      .map-heading > p,
-      .ranking-heading > p,
       .region-intro { font-size: 18px; }
       .map-frame { margin-right: -1px; }
       .rank-row {
@@ -1882,13 +1924,7 @@
     <section class="tab-panel" id="panel-ranking" role="tabpanel"
       aria-labelledby="tab-ranking" tabindex="0">
 
-  <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
-    <header class="ranking-heading">
-      <div>
-        <h2 id="ranking-title">周末路线总榜</h2>
-      </div>
-      <p>白天体验 45 · 内容组合 25 · 省心程度 20 · 证据质量 10。住宿不参与加分。</p>
-    </header>
+  <section class="ranking-section" id="ranking" aria-label="周末路线总榜">
     <ol class="rank-board">
 
     <li>
@@ -1956,76 +1992,13 @@
     </li>
     <li>
       <article class="rank-row">
-        <button class="rank-row-open" type="button" data-route-id="17"
-        aria-haspopup="dialog" aria-controls="route-dialog-17">
-          <span class="row-head">
-            <span class="row-visual" data-image-frame>
-              <img class="row-photo" src="assets/routes/route-17-disney.jpg" alt="上海迪士尼度假区入口"
-                loading="eager" fetchpriority="high" decoding="async">
-              <span class="row-rank">02</span>
-            </span>
-            <span class="row-main">
-              <span class="row-meta">
-                <span class="row-region">浦东</span>
-                <span class="row-score">
-                  <span><b>84</b><small>分</small></span>
-
-    <span class="stars" aria-label="4.5星">
-      <span aria-hidden="true">★★★★★</span>
-      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
-    </span>
-                </span>
-              </span>
-              <strong>迪士尼 · 乐园＋川沙老街</strong>
-            </span>
-            <span class="row-arrow" aria-hidden="true">›</span>
-          </span>
-          <span class="row-review">适合想认真玩一天乐园的人；住得近是最大优势，第二天不用硬排项目。</span>
-
-    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.9</strong></span><span class="place-review-chip">携程<small>10/31–11/1 开放至 22:00</small></span>
-
-    </span>
-        </button>
-
-    <span class="stay-reference stay-reference--row" data-stay-count="2">
-
-      <span class="stay-reference-list">
-
-    <button class="stay-reference-item" type="button" data-open-stay="new_xianshe" data-route-id="17" aria-label="打开路线并定位到住宿：上海闲舍shinehouse独栋别墅" data-image-frame>
-      <img src="assets/stays/stay-new_xianshe.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海闲舍shinehouse独栋别墅</strong>
-        <span class="stay-reference-score">携程4.9 / 美团4.6 · 携程190条 / 美团本轮41条；旧记录22条</span>
-        <span class="stay-amenities"><span>独栋</span><span>泳池</span><span>KTV</span></span>
-        <span class="stay-reference-fit">4间房适配：5间客房；4房方案及地址待核</span>
-      </span>
-    </button>
-    <button class="stay-reference-item" type="button" data-open-stay="shiguangli" data-route-id="17" aria-label="打开路线并定位到住宿：如果拾光里别墅（迪士尼）" data-image-frame>
-      <img src="assets/stays/stay-shiguangli.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>如果拾光里别墅（迪士尼）</strong>
-        <span class="stay-reference-score">4.7 / 4.5 · 携程190条 / 美团22条（既有核验）</span>
-        <span class="stay-amenities"><span>泳池</span><span>烧烤</span><span>棋牌</span></span>
-        <span class="stay-reference-fit">4间房适配：包栋口径冲突，订前确认</span>
-      </span>
-    </button>
-      </span>
-
-    </span>
-        <span class="row-tags"><span>主题乐园</span><span>住得近</span><span>第二天轻松</span></span>
-      </article>
-    </li>
-    <li>
-      <article class="rank-row">
         <button class="rank-row-open" type="button" data-route-id="r01"
         aria-haspopup="dialog" aria-controls="route-dialog-r01">
           <span class="row-head">
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/nearby-songjiang.jpg" alt="广富林文化遗址水岸古建"
-                loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">03</span>
+                loading="eager" fetchpriority="high" decoding="async">
+              <span class="row-rank">02</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2097,7 +2070,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">04</span>
+              <span class="row-rank">03</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2154,76 +2127,13 @@
     </li>
     <li>
       <article class="rank-row">
-        <button class="rank-row-open" type="button" data-route-id="p01"
-        aria-haspopup="dialog" aria-controls="route-dialog-p01">
-          <span class="row-head">
-            <span class="row-visual" data-image-frame>
-              <img class="row-photo" src="assets/routes/route-p01.jpg" alt="上海海昌海洋公园入口"
-                loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">05</span>
-            </span>
-            <span class="row-main">
-              <span class="row-meta">
-                <span class="row-region">浦东</span>
-                <span class="row-score">
-                  <span><b>82</b><small>分</small></span>
-
-    <span class="stars" aria-label="4.5星">
-      <span aria-hidden="true">★★★★★</span>
-      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
-    </span>
-                </span>
-              </span>
-              <strong>海昌海洋公园 · 游乐＋滴水湖</strong>
-            </span>
-            <span class="row-arrow" aria-hidden="true">›</span>
-          </span>
-          <span class="row-review">比只去滴水湖更有内容；但住宿口径冲突明显，订前要逐项确认。</span>
-
-    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.7</strong></span><span class="place-review-chip">携程<small>09:30–21:00</small></span>
-
-    </span>
-        </button>
-
-    <span class="stay-reference stay-reference--row" data-stay-count="2">
-
-      <span class="stay-reference-list">
-
-    <button class="stay-reference-item" type="button" data-open-stay="zhuji" data-route-id="p01" aria-label="打开路线并定位到住宿：上海竹迹别墅" data-image-frame>
-      <img src="assets/stays/stay-zhuji.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海竹迹别墅</strong>
-        <span class="stay-reference-score">携程4.9 · 美团近名店4.6/16，地址在鹿达路迪士尼商圈，未确认同店</span>
-        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>游戏室</span></span>
-        <span class="stay-reference-fit">4间房适配：美团近名店，主体/4房待核</span>
-      </span>
-    </button>
-    <button class="stay-reference-item" type="button" data-open-stay="sangu" data-route-id="p01" aria-label="打开路线并定位到住宿：三顾茅庐民宿(上海临港滴水湖店)" data-image-frame>
-      <img src="assets/stays/stay-sangu.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>三顾茅庐民宿(上海临港滴水湖店)</strong>
-        <span class="stay-reference-score">4.9 · 携程97条 / 美团5条（未返回评分）</span>
-        <span class="stay-amenities"><span>独栋</span><span>KTV</span><span>影音</span></span>
-        <span class="stay-reference-fit">4间房适配：5间客房，4房组合待确认</span>
-      </span>
-    </button>
-      </span>
-
-    </span>
-        <span class="row-tags"><span>乐园</span><span>湖岸</span><span>晚上可玩</span></span>
-      </article>
-    </li>
-    <li>
-      <article class="rank-row">
         <button class="rank-row-open" type="button" data-route-id="s04"
         aria-haspopup="dialog" aria-controls="route-dialog-s04">
           <span class="row-head">
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s04.jpg" alt="陆巷古村村口"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">06</span>
+              <span class="row-rank">04</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2277,7 +2187,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">07</span>
+              <span class="row-rank">05</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2340,7 +2250,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s02.jpg" alt="周庄古镇夜晚水巷与临水民居"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">08</span>
+              <span class="row-rank">06</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2394,7 +2304,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/nearby-jiading.jpg" alt="菊园百果园田园采摘区"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">09</span>
+              <span class="row-rank">07</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2466,7 +2376,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-04.jpg" alt="金山城市沙滩、海滨与亲水活动"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">10</span>
+              <span class="row-rank">08</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2529,7 +2439,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-f01.jpg" alt="碧海金沙海边与沙滩"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">11</span>
+              <span class="row-rank">09</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2592,7 +2502,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-12.jpg" alt="花开半夏活动园区的院子、草坪与泳池"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">12</span>
+              <span class="row-rank">10</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2655,7 +2565,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s01.jpg" alt="锦溪古镇河巷、石桥与游船"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">13</span>
+              <span class="row-rank">11</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2709,7 +2619,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">14</span>
+              <span class="row-rank">12</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2772,7 +2682,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s03.jpg" alt="太湖缥缈峰山顶眺望湖面与群山"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">15</span>
+              <span class="row-rank">13</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2835,7 +2745,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">16</span>
+              <span class="row-rank">14</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2897,527 +2807,25 @@
     <section class="tab-panel" id="panel-regions" role="tabpanel"
       aria-labelledby="tab-regions" tabindex="0" hidden>
       <div class="region-panel-nav">
-        <p>按区域看路线</p>
         <nav class="region-nav" aria-label="路线地区">
 
-  <a href="#region-suzhou">苏州</a>
-  <a href="#region-jinshan">金山</a>
-  <a href="#region-qingpu">青浦</a>
   <a href="#region-pudong">浦东</a>
-  <a href="#region-fengxian">奉贤</a>
   <a href="#region-nearby">近郊体验</a>
+  <a href="#region-fengxian">奉贤</a>
+  <a href="#region-qingpu">青浦</a>
+  <a href="#region-jinshan">金山</a>
+  <a href="#region-suzhou">苏州</a>
         </nav>
       </div>
 
-    <section class="region-section" id="region-suzhou" aria-labelledby="region-title-suzhou">
-      <header class="region-heading">
-        <div>
-          <p>古镇 · 太湖 · 岛岸</p>
-          <h2 id="region-title-suzhou">苏州 <span>4 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 106.4 km</small>
-        </div>
-        <p class="region-intro">锦溪、周庄和太湖东西山；车程更长，但住宿和湖景更像一次小度假。</p>
-      </header>
-      <div class="route-grid">
-
-    <article class="route-card" id="route-s04">
-      <button class="route-launcher" type="button" data-route-id="s04"
-        aria-haspopup="dialog" aria-controls="route-dialog-s04">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-s04.jpg" alt="陆巷古村村口" loading="lazy" decoding="async">
-          <span class="region-pill">苏州</span>
-          <span class="card-score">82<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 6</span>
-            <span>高德驾车 131 km · 约 126 分钟</span>
-          </span>
-          <span class="route-title">太湖东山 · 陆巷古村＋湖边庄园</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>3.9</strong><small>818条</small></span><span class="place-review-chip">高德<strong>4.4</strong></span>
-      <span class="place-review-note">陆巷古村偏生活化，不是高强度景区</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>东山比西山少点孤岛感，但庄园住宿和古村内容更均衡。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="1">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>墅之韵太湖庄园别墅（东山）</strong>
-        <span class="stay-reference-score">携程4.8 / 美团4.3 · 携程高分 / 美团105条</span>
-        <span class="stay-amenities"><span>4室套房</span><span>泳池</span><span>KTV</span><span>麻将</span></span>
-        <span class="stay-reference-fit">4间房适配：携程四室 / 美团多户型，4房待核</span>
-      </span>
-    </span>
-      </span>
-
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>陆巷古村成人票约58.5元；雕花楼约54元；橘子采摘、烧烤和湖鲜另问。</span>
-          <span class="route-tags"><span>太湖</span><span>古村</span><span>庄园聚会</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-s02">
-      <button class="route-launcher" type="button" data-route-id="s02"
-        aria-haspopup="dialog" aria-controls="route-dialog-s02">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-s02.jpg" alt="周庄古镇夜晚水巷与临水民居" loading="lazy" decoding="async">
-          <span class="region-pill">昆山</span>
-          <span class="card-score">81<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 8</span>
-            <span>高德驾车 87.1 km · 约 92 分钟</span>
-          </span>
-          <span class="route-title">周庄古镇 · 白天水巷＋晚上看灯</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">美团<strong>4.4</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
-      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="1">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>觅家·一夜花香（周庄）</strong>
-        <span class="stay-reference-score">5.0 · 携程截图8条 / 美团未命中同店</span>
-        <span class="stay-amenities"><span>独栋</span><span>古镇内</span><span>院子</span></span>
-        <span class="stay-reference-fit">4间房适配：5房，只开4卧待确认</span>
-      </span>
-    </span>
-      </span>
-
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</span>
-          <span class="route-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-s01">
-      <button class="route-launcher" type="button" data-route-id="s01"
-        aria-haspopup="dialog" aria-controls="route-dialog-s01">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-s01.jpg" alt="锦溪古镇河巷、石桥与游船" loading="lazy" decoding="async">
-          <span class="region-pill">昆山</span>
-          <span class="card-score">77<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 13</span>
-            <span>高德驾车 67.3 km · 约 83 分钟</span>
-          </span>
-          <span class="route-title">锦溪古镇 · 水乡慢逛＋计家墩理想村</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">美团<strong>3.9</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
-      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="1">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>橙屿民宿（锦溪·计家墩）</strong>
-        <span class="stay-reference-score">5.0 · 携程截图3条 / 美团未命中同店</span>
-        <span class="stay-amenities"><span>独栋</span><span>院子</span><span>烧烤</span><span>桌游</span></span>
-        <span class="stay-reference-fit">4间房适配：5房，只开4卧待确认</span>
-      </span>
-    </span>
-      </span>
-
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</span>
-          <span class="route-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-s03">
-      <button class="route-launcher" type="button" data-route-id="s03"
-        aria-haspopup="dialog" aria-controls="route-dialog-s03">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-s03.jpg" alt="太湖缥缈峰山顶眺望湖面与群山" loading="lazy" decoding="async">
-          <span class="region-pill">苏州</span>
-          <span class="card-score">76<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 15</span>
-            <span>高德驾车 140.4 km · 约 134 分钟</span>
-          </span>
-          <span class="route-title">太湖西山 · 雕花楼＋缥缈峰＋院子</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">美团<strong>4.1</strong><small>292条</small></span><span class="place-review-chip">高德<strong>4.2</strong></span>
-      <span class="place-review-note">两平台口径不同；美团评价条数已返回</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>太湖西山 · 小白房</strong>
-        <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
-        <span class="stay-amenities"><span>4房</span><span>院子</span><span>泳池</span><span>麻将</span></span>
-        <span class="stay-reference-fit">4间房适配：美团4卧8人；床型与携程记录有差异</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</span>
-          <span class="route-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-      </div>
-
-    </section>
-    <section class="region-section" id="region-jinshan" aria-labelledby="region-title-jinshan">
-      <header class="region-heading">
-        <div>
-          <p>海边 · 古镇 · 花田</p>
-          <h2 id="region-title-jinshan">金山 <span>2 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 73.3 km</small>
-        </div>
-        <p class="region-intro">看海、吃海鲜、逛古镇都在这里；适合愿意多开一点路换海边氛围。</p>
-      </header>
-      <div class="route-grid">
-
-    <article class="route-card" id="route-05">
-      <button class="route-launcher" type="button" data-route-id="05"
-        aria-haspopup="dialog" aria-controls="route-dialog-05">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy" decoding="async">
-          <span class="region-pill">金山</span>
-          <span class="card-score">81<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 7</span>
-            <span>高德驾车 69.3 km · 约 83 分钟</span>
-          </span>
-          <span class="route-title">枫泾 · 古镇寻味＋漫画展馆</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>4.4</strong><small>1990条</small></span>
-
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海涵七民宿</strong>
-        <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
-        <span class="stay-amenities"><span>独栋</span><span>麻将/棋牌</span><span>K歌</span><span>烧烤</span></span>
-        <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</span>
-          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-04">
-      <button class="route-launcher" type="button" data-route-id="04"
-        aria-haspopup="dialog" aria-controls="route-dialog-04">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-04.jpg" alt="金山城市沙滩、海滨与亲水活动" loading="lazy" decoding="async">
-          <span class="region-pill">金山</span>
-          <span class="card-score">78<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 10</span>
-            <span>高德驾车 77.3 km · 约 90 分钟</span>
-          </span>
-          <span class="route-title">金山城市沙滩 · 海边＋金山嘴海鲜</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>4.4</strong><small>381条</small></span>
-
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>海边氛围和城市沙滩项目够用；真正吃的是金山嘴的海鲜和老街烟火气。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海涵七民宿</strong>
-        <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
-        <span class="stay-amenities"><span>独栋</span><span>麻将/棋牌</span><span>K歌</span><span>烧烤</span></span>
-        <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>城市沙滩非泳期入园免费，游船/帆船/皮划艇另收费；金山嘴老街免费。</span>
-          <span class="route-tags"><span>海边</span><span>海鲜</span><span>晴天更好</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-      </div>
-
-    </section>
-    <section class="region-section" id="region-qingpu" aria-labelledby="region-title-qingpu">
-      <header class="region-heading">
-        <div>
-          <p>水乡 · 湖岸 · 森林</p>
-          <h2 id="region-title-qingpu">青浦 <span>3 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 53.8 km</small>
-        </div>
-        <p class="region-intro">湖、森林和经典水乡最集中；适合白天玩够，晚上回湖边或古镇附近住。</p>
-      </header>
-      <div class="route-grid">
-
-    <article class="route-card" id="route-03">
-      <button class="route-launcher" type="button" data-route-id="03"
-        aria-haspopup="dialog" aria-controls="route-dialog-03">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy" decoding="async">
-          <span class="region-pill">青浦</span>
-          <span class="card-score">82<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 4</span>
-            <span>高德驾车 50.9 km · 约 68 分钟</span>
-          </span>
-          <span class="route-title">朱家角 · 游船＋园林＋老街</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>4.6</strong><small>4420条</small></span>
-
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>淀山湖·留夏拾光民宿</strong>
-        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
-        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
-        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</span>
-          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-02">
-      <button class="route-launcher" type="button" data-route-id="02"
-        aria-haspopup="dialog" aria-controls="route-dialog-02">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy" decoding="async">
-          <span class="region-pill">青浦</span>
-          <span class="card-score">76<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 14</span>
-            <span>高德驾车 57 km · 约 77 分钟</span>
-          </span>
-          <span class="route-title">淀山湖 · 湖岸骑行＋金泽古镇</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>5.0</strong><small>5条</small></span>
-      <span class="place-review-note">样本少，仅供参考</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>湖岸和古镇组合完整，住宿就在蔡浜村；水上项目没约到也能改成慢逛。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>淀山湖·留夏拾光民宿</strong>
-        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
-        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
-        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</span>
-          <span class="route-tags"><span>湖岸</span><span>水上项目先约</span><span>住宿近</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-16">
-      <button class="route-launcher" type="button" data-route-id="16"
-        aria-haspopup="dialog" aria-controls="route-dialog-16">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy" decoding="async">
-          <span class="region-pill">青浦</span>
-          <span class="card-score">69<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 16</span>
-            <span>高德驾车 53.4 km · 约 72 分钟</span>
-          </span>
-          <span class="route-title">东方绿舟 · 航母＋草地＋淀山湖住宿</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">携程<strong>4.6</strong><small>6283条</small></span>
-
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区项目别贪多，挑两个就够。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>淀山湖·留夏拾光民宿</strong>
-        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
-        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
-        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</span>
-          <span class="route-tags"><span>大型园区</span><span>拍照</span><span>住宿近</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-      </div>
-
-    </section>
     <section class="region-section" id="region-pudong" aria-labelledby="region-title-pudong">
       <header class="region-heading">
         <div>
           <p>乐园 · 古镇 · 湖岸</p>
-          <h2 id="region-title-pudong">浦东 <span>3 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 44.2 km</small>
+          <h2 id="region-title-pudong">浦东 <span>1 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 33.1 km</small>
         </div>
-        <p class="region-intro">迪士尼、海昌、新场、川沙方向多；住别墅或古镇里，转场最顺。</p>
+        <p class="region-intro">新场古镇逛吃、茶馆和小店都集中；住宿选古镇附近，晚上继续慢逛。</p>
       </header>
       <div class="route-grid">
 
@@ -3472,224 +2880,6 @@
         </span>
       </button>
     </article>
-    <article class="route-card" id="route-17">
-      <button class="route-launcher" type="button" data-route-id="17"
-        aria-haspopup="dialog" aria-controls="route-dialog-17">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-17-disney.jpg" alt="上海迪士尼度假区入口" loading="lazy" decoding="async">
-          <span class="region-pill">浦东</span>
-          <span class="card-score">84<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 2</span>
-            <span>高德驾车 29.9 km · 约 43 分钟</span>
-          </span>
-          <span class="route-title">迪士尼 · 乐园＋川沙老街</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.9</strong></span><span class="place-review-chip">携程<small>10/31–11/1 开放至 22:00</small></span>
-      <span class="place-review-note">乐园评价高，但周末排队和票价都要接受</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>适合想认真玩一天乐园的人；住得近是最大优势，第二天不用硬排项目。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-new_xianshe.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海闲舍shinehouse独栋别墅</strong>
-        <span class="stay-reference-score">携程4.9 / 美团4.6 · 携程190条 / 美团本轮41条；旧记录22条</span>
-        <span class="stay-amenities"><span>独栋</span><span>泳池</span><span>KTV</span><span>烧烤</span></span>
-        <span class="stay-reference-fit">4间房适配：5间客房；4房方案及地址待核</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>迪士尼 1 日票 449 元起；川沙老街免费；星愿湖轮渡 15 元/人。</span>
-          <span class="route-tags"><span>主题乐园</span><span>住得近</span><span>第二天轻松</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-p01">
-      <button class="route-launcher" type="button" data-route-id="p01"
-        aria-haspopup="dialog" aria-controls="route-dialog-p01">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-p01.jpg" alt="上海海昌海洋公园入口" loading="lazy" decoding="async">
-          <span class="region-pill">浦东</span>
-          <span class="card-score">82<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 5</span>
-            <span>高德驾车 69.6 km · 约 76 分钟</span>
-          </span>
-          <span class="route-title">海昌海洋公园 · 游乐＋滴水湖</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.7</strong></span><span class="place-review-chip">携程<small>09:30–21:00</small></span>
-      <span class="place-review-note">海昌内容丰富，部分设备可能维保</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>比只去滴水湖更有内容；但住宿口径冲突明显，订前要逐项确认。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-zhuji.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海竹迹别墅</strong>
-        <span class="stay-reference-score">携程4.9 · 美团近名店4.6/16，地址在鹿达路迪士尼商圈，未确认同店</span>
-        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>游戏室</span><span>烧烤</span></span>
-        <span class="stay-reference-fit">4间房适配：美团近名店，主体/4房待核</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>海昌成人票 199 元起；停车按时段收费；园内项目和剧场以当天开放为准。</span>
-          <span class="route-tags"><span>乐园</span><span>湖岸</span><span>晚上可玩</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-      </div>
-
-    </section>
-    <section class="region-section" id="region-fengxian" aria-labelledby="region-title-fengxian">
-      <header class="region-heading">
-        <div>
-          <p>海边 · 手作 · 庭院</p>
-          <h2 id="region-title-fengxian">奉贤 <span>2 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 43.8 km</small>
-        </div>
-        <p class="region-intro">海边和庭院住宿能放在一条线里；适合白天少跑、晚上一起玩。</p>
-      </header>
-      <div class="route-grid">
-
-    <article class="route-card" id="route-f01">
-      <button class="route-launcher" type="button" data-route-id="f01"
-        aria-haspopup="dialog" aria-controls="route-dialog-f01">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-f01.jpg" alt="碧海金沙海边与沙滩" loading="lazy" decoding="async">
-          <span class="region-pill">奉贤</span>
-          <span class="card-score">78<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 11</span>
-            <span>高德驾车 52.5 km · 约 80 分钟</span>
-          </span>
-          <span class="route-title">碧海金沙 · 海边散步＋吴房村住一晚</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.2</strong></span><span class="place-review-chip">携程<small>非泳期 30 元</small></span>
-      <span class="place-review-note">10月底按非泳期安排，水上项目看天气</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>这条适合想看海但不想跑金山的人；住宿 4 房匹配度比海边散房更稳。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海朵云闲居民宿（吴房村）</strong>
-        <span class="stay-reference-score">携程5.0 / 美团暂无评分 · 携程3条 / 美团37条；3.9为热度分</span>
-        <span class="stay-amenities"><span>4室别墅</span><span>KTV</span><span>棋牌</span><span>烧烤</span></span>
-        <span class="stay-reference-fit">4间房适配：携程有4室4卫，待复核</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>碧海金沙非泳期成人票 30 元；帆板、皮划艇和烧烤另收费先问。</span>
-          <span class="route-tags"><span>海边</span><span>非泳期</span><span>4室别墅</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
-    <article class="route-card" id="route-12">
-      <button class="route-launcher" type="button" data-route-id="12"
-        aria-haspopup="dialog" aria-controls="route-dialog-12">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/route-12.jpg" alt="花开半夏活动园区的院子、草坪与泳池" loading="lazy" decoding="async">
-          <span class="region-pill">奉贤</span>
-          <span class="card-score">77<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 12</span>
-            <span>高德驾车 35 km · 约 58 分钟</span>
-          </span>
-          <span class="route-title">花开半夏 · 成人手作＋乡村体验</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
-      <span class="place-review-note">非游客平台聚合评分</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="2">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 2 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>花筑·到家民宿(上海青溪老街店)</strong>
-        <span class="stay-reference-score">4.5 · 携程137条 / 美团未命中；近名半移堂非同店</span>
-        <span class="stay-amenities"><span>老街内</span><span>KTV</span><span>棋牌室</span></span>
-        <span class="stay-reference-fit">4间房适配：携程页面有房型；美团未命中同店</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 1 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</span>
-          <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
       </div>
 
     </section>
@@ -3704,57 +2894,6 @@
       </header>
       <div class="route-grid">
 
-    <article class="route-card" id="route-r01">
-      <button class="route-launcher" type="button" data-route-id="r01"
-        aria-haspopup="dialog" aria-controls="route-dialog-r01">
-        <span class="route-photo" data-image-frame>
-          <img src="assets/routes/nearby-songjiang.jpg" alt="广富林文化遗址水岸古建" loading="lazy" decoding="async">
-          <span class="region-pill">松江</span>
-          <span class="card-score">84<small>分</small></span>
-        </span>
-        <span class="route-summary">
-          <span class="route-kicker">
-            <span>总榜第 3</span>
-            <span>高德驾车 43.8 km · 约 70 分钟</span>
-          </span>
-          <span class="route-title">广富林遗址 · 水下展馆＋古宅掌灯</span>
-
-    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.7</strong><small>广富林文化遗址</small></span>
-      <span class="place-review-note">携程未返回遗址评分；酒店评价单独列在住宿卡片。</span>
-    </span>
-          <span class="review-line"><strong>一句话口碑</strong>古建与考古内容扎实，宰相府有掌灯和讲解活动；10月31日还是古陶、木艺馆闭馆前最后一天。</span>
-
-    <span class="stay-reference stay-reference--card" data-stay-count="3">
-
-        <span class="stay-reference-heading">
-          <strong>主推住宿</strong>
-          <small>共 3 处候选 · 4 房适配单列</small>
-        </span>
-      <span class="stay-reference-list">
-
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
-      <span class="stay-reference-copy">
-        <strong>上海松江广富林宰相府酒店</strong>
-        <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
-        <span class="stay-amenities"><span>广富林遗址旁</span><span>古宅掌灯</span><span>古建讲解</span><span>汉服体验</span></span>
-        <span class="stay-reference-fit">4间房适配：多种客房；四间同晚库存未确认</span>
-      </span>
-    </span>
-      </span>
-      <span class="stay-reference-more">另 2 处候选</span>
-    </span>
-          <span class="fee-line"><strong>费用提醒</strong>广富林展馆按单馆或联票购票；酒店掌灯/讲解以住客活动安排为准，汉服和下午茶等另确认是否收费。</span>
-          <span class="route-tags"><span>近郊</span><span>古建讲解</span><span>夜间掌灯</span></span>
-          <span class="open-label">
-            看评分和两天行程
-            <span class="open-arrow" aria-hidden="true">→</span>
-          </span>
-        </span>
-      </button>
-    </article>
     <article class="route-card" id="route-r02">
       <button class="route-launcher" type="button" data-route-id="r02"
         aria-haspopup="dialog" aria-controls="route-dialog-r02">
@@ -3765,7 +2904,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 9</span>
+            <span>总榜第 7</span>
             <span>高德驾车 42.5 km · 约 60 分钟</span>
           </span>
           <span class="route-title">嘉定秋收 · 菊园百果园＋州桥古城</span>
@@ -3806,6 +2945,674 @@
         </span>
       </button>
     </article>
+    <article class="route-card" id="route-r01">
+      <button class="route-launcher" type="button" data-route-id="r01"
+        aria-haspopup="dialog" aria-controls="route-dialog-r01">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/nearby-songjiang.jpg" alt="广富林文化遗址水岸古建" loading="lazy" decoding="async">
+          <span class="region-pill">松江</span>
+          <span class="card-score">84<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 2</span>
+            <span>高德驾车 43.8 km · 约 70 分钟</span>
+          </span>
+          <span class="route-title">广富林遗址 · 水下展馆＋古宅掌灯</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">高德<strong>4.7</strong><small>广富林文化遗址</small></span>
+      <span class="place-review-note">携程未返回遗址评分；酒店评价单独列在住宿卡片。</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>古建与考古内容扎实，宰相府有掌灯和讲解活动；10月31日还是古陶、木艺馆闭馆前最后一天。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="3">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 3 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>上海松江广富林宰相府酒店</strong>
+        <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
+        <span class="stay-amenities"><span>广富林遗址旁</span><span>古宅掌灯</span><span>古建讲解</span><span>汉服体验</span></span>
+        <span class="stay-reference-fit">4间房适配：多种客房；四间同晚库存未确认</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 2 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>广富林展馆按单馆或联票购票；酒店掌灯/讲解以住客活动安排为准，汉服和下午茶等另确认是否收费。</span>
+          <span class="route-tags"><span>近郊</span><span>古建讲解</span><span>夜间掌灯</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+      </div>
+
+    </section>
+    <section class="region-section" id="region-fengxian" aria-labelledby="region-title-fengxian">
+      <header class="region-heading">
+        <div>
+          <p>海边 · 手作 · 庭院</p>
+          <h2 id="region-title-fengxian">奉贤 <span>2 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 43.8 km</small>
+        </div>
+        <p class="region-intro">海边和庭院住宿能放在一条线里；适合白天少跑、晚上一起玩。</p>
+      </header>
+      <div class="route-grid">
+
+    <article class="route-card" id="route-12">
+      <button class="route-launcher" type="button" data-route-id="12"
+        aria-haspopup="dialog" aria-controls="route-dialog-12">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-12.jpg" alt="花开半夏活动园区的院子、草坪与泳池" loading="lazy" decoding="async">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">77<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 10</span>
+            <span>高德驾车 35 km · 约 58 分钟</span>
+          </span>
+          <span class="route-title">花开半夏 · 成人手作＋乡村体验</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">官方项目页<small>评分不单列</small></span>
+      <span class="place-review-note">非游客平台聚合评分</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>手作、庭院和晚间活动都在同一处，适合不想暴走的一天。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>花筑·到家民宿(上海青溪老街店)</strong>
+        <span class="stay-reference-score">4.5 · 携程137条 / 美团未命中；近名半移堂非同店</span>
+        <span class="stay-amenities"><span>老街内</span><span>KTV</span><span>棋牌室</span></span>
+        <span class="stay-reference-fit">4间房适配：携程页面有房型；美团未命中同店</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>园区无门票；烧烤 500 元/次；成人手作和烘焙需先问场次与收费。</span>
+          <span class="route-tags"><span>手作农趣</span><span>雨天有替代</span><span>成人项目先核</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-f01">
+      <button class="route-launcher" type="button" data-route-id="f01"
+        aria-haspopup="dialog" aria-controls="route-dialog-f01">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-f01.jpg" alt="碧海金沙海边与沙滩" loading="lazy" decoding="async">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">78<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 9</span>
+            <span>高德驾车 52.5 km · 约 80 分钟</span>
+          </span>
+          <span class="route-title">碧海金沙 · 海边散步＋吴房村住一晚</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">高德<strong>4.2</strong></span><span class="place-review-chip">携程<small>非泳期 30 元</small></span>
+      <span class="place-review-note">10月底按非泳期安排，水上项目看天气</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>这条适合想看海但不想跑金山的人；住宿 4 房匹配度比海边散房更稳。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>上海朵云闲居民宿（吴房村）</strong>
+        <span class="stay-reference-score">携程5.0 / 美团暂无评分 · 携程3条 / 美团37条；3.9为热度分</span>
+        <span class="stay-amenities"><span>4室别墅</span><span>KTV</span><span>棋牌</span><span>烧烤</span></span>
+        <span class="stay-reference-fit">4间房适配：携程有4室4卫，待复核</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>碧海金沙非泳期成人票 30 元；帆板、皮划艇和烧烤另收费先问。</span>
+          <span class="route-tags"><span>海边</span><span>非泳期</span><span>4室别墅</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+      </div>
+
+    </section>
+    <section class="region-section" id="region-qingpu" aria-labelledby="region-title-qingpu">
+      <header class="region-heading">
+        <div>
+          <p>水乡 · 湖岸 · 森林</p>
+          <h2 id="region-title-qingpu">青浦 <span>3 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 53.8 km</small>
+        </div>
+        <p class="region-intro">湖、森林和经典水乡最集中；适合白天玩够，晚上回湖边或古镇附近住。</p>
+      </header>
+      <div class="route-grid">
+
+    <article class="route-card" id="route-03">
+      <button class="route-launcher" type="button" data-route-id="03"
+        aria-haspopup="dialog" aria-controls="route-dialog-03">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-03.jpg" alt="朱家角古镇景区 · 景点照片 1" loading="lazy" decoding="async">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">82<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 3</span>
+            <span>高德驾车 50.9 km · 约 68 分钟</span>
+          </span>
+          <span class="route-title">朱家角 · 游船＋园林＋老街</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>4420条</small></span>
+
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>经典水乡、夜景最值；游船和园林挑两项就够。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>淀山湖·留夏拾光民宿</strong>
+        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
+        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
+        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>古镇免费；3 景点联票约 45–55 元；游船 200–300 元/船，最多 6 人。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-16">
+      <button class="route-launcher" type="button" data-route-id="16"
+        aria-haspopup="dialog" aria-controls="route-dialog-16">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1" loading="lazy" decoding="async">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">69<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 14</span>
+            <span>高德驾车 53.4 km · 约 72 分钟</span>
+          </span>
+          <span class="route-title">东方绿舟 · 航母＋草地＋淀山湖住宿</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.6</strong><small>6283条</small></span>
+
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>航母和兵器馆是真亮点；园区项目别贪多，挑两个就够。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>淀山湖·留夏拾光民宿</strong>
+        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
+        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
+        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>门票 45 元起，观光车 40 元/人；园内项目另收费，最晚 16:00 入园。</span>
+          <span class="route-tags"><span>大型园区</span><span>拍照</span><span>住宿近</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-02">
+      <button class="route-launcher" type="button" data-route-id="02"
+        aria-haspopup="dialog" aria-controls="route-dialog-02">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1" loading="lazy" decoding="async">
+          <span class="region-pill">青浦</span>
+          <span class="card-score">76<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 12</span>
+            <span>高德驾车 57 km · 约 77 分钟</span>
+          </span>
+          <span class="route-title">淀山湖 · 湖岸骑行＋金泽古镇</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>5.0</strong><small>5条</small></span>
+      <span class="place-review-note">样本少，仅供参考</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>湖岸和古镇组合完整，住宿就在蔡浜村；水上项目没约到也能改成慢逛。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>淀山湖·留夏拾光民宿</strong>
+        <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
+        <span class="stay-amenities"><span>KTV</span><span>棋牌</span><span>烧烤</span><span>游戏室</span></span>
+        <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>帆船要预约，6 人票价和天气退改先问；金泽免大门票，游船现场问价。</span>
+          <span class="route-tags"><span>湖岸</span><span>水上项目先约</span><span>住宿近</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+      </div>
+
+    </section>
+    <section class="region-section" id="region-jinshan" aria-labelledby="region-title-jinshan">
+      <header class="region-heading">
+        <div>
+          <p>海边 · 古镇 · 花田</p>
+          <h2 id="region-title-jinshan">金山 <span>2 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 73.3 km</small>
+        </div>
+        <p class="region-intro">看海、吃海鲜、逛古镇都在这里；适合愿意多开一点路换海边氛围。</p>
+      </header>
+      <div class="route-grid">
+
+    <article class="route-card" id="route-05">
+      <button class="route-launcher" type="button" data-route-id="05"
+        aria-haspopup="dialog" aria-controls="route-dialog-05">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-05.jpg" alt="枫泾古镇 · 景点照片 1" loading="lazy" decoding="async">
+          <span class="region-pill">金山</span>
+          <span class="card-score">81<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 5</span>
+            <span>高德驾车 69.3 km · 约 83 分钟</span>
+          </span>
+          <span class="route-title">枫泾 · 古镇寻味＋漫画展馆</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>1990条</small></span>
+
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>人少、烟火气足，长廊雨天也好走；一船正好 6 人。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>上海涵七民宿</strong>
+        <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
+        <span class="stay-amenities"><span>独栋</span><span>麻将/棋牌</span><span>K歌</span><span>烧烤</span></span>
+        <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>古镇免费；场馆通票约 42 元；手摇船约 40 分钟，票价现场问。</span>
+          <span class="route-tags"><span>古镇逛吃</span><span>雨天有替代</span><span>白天轻松玩</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-04">
+      <button class="route-launcher" type="button" data-route-id="04"
+        aria-haspopup="dialog" aria-controls="route-dialog-04">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-04.jpg" alt="金山城市沙滩、海滨与亲水活动" loading="lazy" decoding="async">
+          <span class="region-pill">金山</span>
+          <span class="card-score">78<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 8</span>
+            <span>高德驾车 77.3 km · 约 90 分钟</span>
+          </span>
+          <span class="route-title">金山城市沙滩 · 海边＋金山嘴海鲜</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>4.4</strong><small>381条</small></span>
+
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>海边氛围和城市沙滩项目够用；真正吃的是金山嘴的海鲜和老街烟火气。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>上海涵七民宿</strong>
+        <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
+        <span class="stay-amenities"><span>独栋</span><span>麻将/棋牌</span><span>K歌</span><span>烧烤</span></span>
+        <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>城市沙滩非泳期入园免费，游船/帆船/皮划艇另收费；金山嘴老街免费。</span>
+          <span class="route-tags"><span>海边</span><span>海鲜</span><span>晴天更好</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+      </div>
+
+    </section>
+    <section class="region-section" id="region-suzhou" aria-labelledby="region-title-suzhou">
+      <header class="region-heading">
+        <div>
+          <p>古镇 · 太湖 · 岛岸</p>
+          <h2 id="region-title-suzhou">苏州 <span>4 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 106.4 km</small>
+        </div>
+        <p class="region-intro">锦溪、周庄和太湖东西山；车程更长，但住宿和湖景更像一次小度假。</p>
+      </header>
+      <div class="route-grid">
+
+    <article class="route-card" id="route-s01">
+      <button class="route-launcher" type="button" data-route-id="s01"
+        aria-haspopup="dialog" aria-controls="route-dialog-s01">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-s01.jpg" alt="锦溪古镇河巷、石桥与游船" loading="lazy" decoding="async">
+          <span class="region-pill">昆山</span>
+          <span class="card-score">77<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 11</span>
+            <span>高德驾车 67.3 km · 约 83 分钟</span>
+          </span>
+          <span class="route-title">锦溪古镇 · 水乡慢逛＋计家墩理想村</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>3.9</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>古镇适合慢走，村里的院子适合6个人不赶时间地待着。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="1">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>橙屿民宿（锦溪·计家墩）</strong>
+        <span class="stay-reference-score">5.0 · 携程截图3条 / 美团未命中同店</span>
+        <span class="stay-amenities"><span>独栋</span><span>院子</span><span>烧烤</span><span>桌游</span></span>
+        <span class="stay-reference-fit">4间房适配：5房，只开4卧待确认</span>
+      </span>
+    </span>
+      </span>
+
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>锦溪园内套票约40元，游船约180元/船、最多6人；手作、皮划艇和烧烤另问价。</span>
+          <span class="route-tags"><span>水乡</span><span>院子烧烤</span><span>慢住</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-s02">
+      <button class="route-launcher" type="button" data-route-id="s02"
+        aria-haspopup="dialog" aria-controls="route-dialog-s02">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-s02.jpg" alt="周庄古镇夜晚水巷与临水民居" loading="lazy" decoding="async">
+          <span class="region-pill">昆山</span>
+          <span class="card-score">81<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 6</span>
+            <span>高德驾车 87.1 km · 约 92 分钟</span>
+          </span>
+          <span class="route-title">周庄古镇 · 白天水巷＋晚上看灯</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.4</strong></span><span class="place-review-chip">高德<strong>4.7</strong></span>
+      <span class="place-review-note">评价条数未返回；两平台口径不同</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>夜景是重点，住古镇里能省掉晚上来回折腾。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="1">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>觅家·一夜花香（周庄）</strong>
+        <span class="stay-reference-score">5.0 · 携程截图8条 / 美团未命中同店</span>
+        <span class="stay-amenities"><span>独栋</span><span>古镇内</span><span>院子</span></span>
+        <span class="stay-reference-fit">4间房适配：5房，只开4卧待确认</span>
+      </span>
+    </span>
+      </span>
+
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>周庄古镇成人票约72元；摇橹船约220元/船、最多6人；停车和行李接送先问房东。</span>
+          <span class="route-tags"><span>水乡夜景</span><span>摇橹船</span><span>古镇住一晚</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-s04">
+      <button class="route-launcher" type="button" data-route-id="s04"
+        aria-haspopup="dialog" aria-controls="route-dialog-s04">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-s04.jpg" alt="陆巷古村村口" loading="lazy" decoding="async">
+          <span class="region-pill">苏州</span>
+          <span class="card-score">82<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 4</span>
+            <span>高德驾车 131 km · 约 126 分钟</span>
+          </span>
+          <span class="route-title">太湖东山 · 陆巷古村＋湖边庄园</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">携程<strong>3.9</strong><small>818条</small></span><span class="place-review-chip">高德<strong>4.4</strong></span>
+      <span class="place-review-note">陆巷古村偏生活化，不是高强度景区</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>东山比西山少点孤岛感，但庄园住宿和古村内容更均衡。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="1">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>墅之韵太湖庄园别墅（东山）</strong>
+        <span class="stay-reference-score">携程4.8 / 美团4.3 · 携程高分 / 美团105条</span>
+        <span class="stay-amenities"><span>4室套房</span><span>泳池</span><span>KTV</span><span>麻将</span></span>
+        <span class="stay-reference-fit">4间房适配：携程四室 / 美团多户型，4房待核</span>
+      </span>
+    </span>
+      </span>
+
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>陆巷古村成人票约58.5元；雕花楼约54元；橘子采摘、烧烤和湖鲜另问。</span>
+          <span class="route-tags"><span>太湖</span><span>古村</span><span>庄园聚会</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
+    <article class="route-card" id="route-s03">
+      <button class="route-launcher" type="button" data-route-id="s03"
+        aria-haspopup="dialog" aria-controls="route-dialog-s03">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-s03.jpg" alt="太湖缥缈峰山顶眺望湖面与群山" loading="lazy" decoding="async">
+          <span class="region-pill">苏州</span>
+          <span class="card-score">76<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 13</span>
+            <span>高德驾车 140.4 km · 约 134 分钟</span>
+          </span>
+          <span class="route-title">太湖西山 · 雕花楼＋缥缈峰＋院子</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">美团<strong>4.1</strong><small>292条</small></span><span class="place-review-chip">高德<strong>4.2</strong></span>
+      <span class="place-review-note">两平台口径不同；美团评价条数已返回</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>景点和湖景才是主角；车程最长，适合整趟只为西山来。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="2">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>共 2 处候选 · 4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item"  data-image-frame>
+      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
+      <span class="stay-reference-copy">
+        <strong>太湖西山 · 小白房</strong>
+        <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
+        <span class="stay-amenities"><span>4房</span><span>院子</span><span>泳池</span><span>麻将</span></span>
+        <span class="stay-reference-fit">4间房适配：美团4卧8人；床型与携程记录有差异</span>
+      </span>
+    </span>
+      </span>
+      <span class="stay-reference-more">另 1 处候选</span>
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>缥缈峰门票含景区交通约65元；雕花楼票价以官方渠道为准；泳池、烧烤、麻将开放与收费先问房东。</span>
+          <span class="route-tags"><span>太湖</span><span>古村古建</span><span>泳池院子</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
       </div>
 
     </section>
@@ -3814,121 +3621,176 @@
     <section class="tab-panel" id="panel-map" role="tabpanel"
       aria-labelledby="tab-map" tabindex="0" hidden>
 
-    <section class="map-section" id="map" aria-labelledby="map-title">
-      <header class="map-heading">
-        <div>
-          <p class="section-eyebrow">高德真实底图 · 陆家嘴出发</p>
-          <h2 id="map-title">先看位置，再选路线</h2>
-        </div>
-        <p>底图和点位来自高德 POI/静态地图；各区按陆家嘴至主游玩地的平均驾车公里数由远到近排列，出发时以实时导航为准。</p>
-      </header>
-      <div class="map-frame" data-image-frame>
-        <img class="region-map region-map-photo" src="assets/amap-route-map-v5.png"
+    <section class="map-section" id="map" aria-label="路线位置图">
+      <div class="map-frame" data-image-frame data-amap-overlay
+        data-map-width="1000" data-map-height="500">
+        <img class="region-map region-map-photo" src="assets/amap-route-basemap-v6.png"
           alt="高德实际地图底图：陆家嘴 S 为起点，周边区域路线位置图" loading="lazy" decoding="async">
-        <div class="map-extra-stops" data-amap-overlay data-center="121.08,31.00" data-zoom="8" aria-label="新增近郊路线位置">
+        <div class="map-canvas" data-route-map role="region" aria-label="可缩放的路线地图"></div>
+        <div data-map-source hidden>
+          <span class="map-origin-marker" data-map-origin
+            data-map-x="655.6527" data-map-y="150.3585" title="陆家嘴 · 出发点">S</span>
 
-    <a class="map-extra-stop" data-map-stop data-location="121.196269,31.062675"
-      data-route-id="r01" href="#route-r01"
-      aria-label="广富林文化遗址，距陆家嘴约43.8公里">O</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.642786,31.023532"
+      data-route-id="14" data-route-group="pudong"
+      data-map-x="704.9041" data-map-y="240.0034"
+      data-map-title="新场古镇" data-map-km="33.1"
+      title="新场古镇 · 33.1 km"
+      href="#route-14"
+      aria-label="新场古镇 · 逛吃＋茶馆，距陆家嘴约33.1公里，点击查看路线">H</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.532529,30.984180"
+      data-route-id="12" data-route-group="fengxian"
+      data-map-x="664.7608" data-map-y="256.7191"
+      data-map-title="花开半夏" data-map-km="35"
+      title="花开半夏 · 35 km"
+      href="#route-12"
+      aria-label="花开半夏 · 成人手作＋乡村体验，距陆家嘴约35公里，点击查看路线">G</a>
     <a class="map-extra-stop" data-map-stop data-location="121.210974,31.370895"
-      data-route-id="r02" href="#route-r02"
-      aria-label="菊园百果园，距陆家嘴约42.5公里">P</a>
+      data-route-id="r02" data-route-group="nearby"
+      data-map-x="547.6862" data-map-y="92.1510"
+      data-map-title="菊园百果园" data-map-km="42.5"
+      title="菊园百果园 · 42.5 km"
+      href="#route-r02"
+      aria-label="嘉定秋收 · 菊园百果园＋州桥古城，距陆家嘴约42.5公里，点击查看路线">P</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.196269,31.062675"
+      data-route-id="r01" data-route-group="nearby"
+      data-map-x="542.3323" data-map-y="223.3695"
+      data-map-title="广富林文化遗址" data-map-km="43.8"
+      title="广富林文化遗址 · 43.8 km"
+      href="#route-r01"
+      aria-label="广富林遗址 · 水下展馆＋古宅掌灯，距陆家嘴约43.8公里，点击查看路线">O</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.053846,31.111260"
+      data-route-id="03" data-route-group="qingpu"
+      data-map-x="490.4776" data-map-y="202.7138"
+      data-map-title="朱家角" data-map-km="50.9"
+      title="朱家角 · 50.9 km"
+      href="#route-03"
+      aria-label="朱家角 · 游船＋园林＋老街，距陆家嘴约50.9公里，点击查看路线">B</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.551519,30.819573"
+      data-route-id="f01" data-route-group="fengxian"
+      data-map-x="671.6748" data-map-y="326.5656"
+      data-map-title="碧海金沙" data-map-km="52.5"
+      title="碧海金沙 · 52.5 km"
+      href="#route-f01"
+      aria-label="碧海金沙 · 海边散步＋吴房村住一晚，距陆家嘴约52.5公里，点击查看路线">F</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.014970,31.100305"
+      data-route-id="16" data-route-group="qingpu"
+      data-map-x="476.3233" data-map-y="207.3722"
+      data-map-title="东方绿舟" data-map-km="53.4"
+      title="东方绿舟 · 53.4 km"
+      href="#route-16"
+      aria-label="东方绿舟 · 航母＋草地＋淀山湖住宿，距陆家嘴约53.4公里，点击查看路线">C</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.009195,31.131111"
+      data-route-id="02" data-route-group="qingpu"
+      data-map-x="474.2207" data-map-y="194.2712"
+      data-map-title="淀山湖" data-map-km="57"
+      title="淀山湖 · 57 km"
+      href="#route-02"
+      aria-label="淀山湖 · 湖岸骑行＋金泽古镇，距陆家嘴约57公里，点击查看路线">A</a>
+    <a class="map-extra-stop" data-map-stop data-location="120.902516,31.177927"
+      data-route-id="s01" data-route-group="suzhou"
+      data-map-x="435.3800" data-map-y="174.3533"
+      data-map-title="锦溪古镇" data-map-km="67.3"
+      title="锦溪古镇 · 67.3 km"
+      href="#route-s01"
+      aria-label="锦溪古镇 · 水乡慢逛＋计家墩理想村，距陆家嘴约67.3公里，点击查看路线">K</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.014236,30.886131"
+      data-route-id="05" data-route-group="jinshan"
+      data-map-x="476.0561" data-map-y="298.3380"
+      data-map-title="枫泾古镇" data-map-km="69.3"
+      title="枫泾古镇 · 69.3 km"
+      href="#route-05"
+      aria-label="枫泾 · 古镇寻味＋漫画展馆，距陆家嘴约69.3公里，点击查看路线">E</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.347900,30.718416"
+      data-route-id="04" data-route-group="jinshan"
+      data-map-x="597.5394" data-map-y="369.4294"
+      data-map-title="金山城市沙滩" data-map-km="77.3"
+      title="金山城市沙滩 · 77.3 km"
+      href="#route-04"
+      aria-label="金山城市沙滩 · 海边＋金山嘴海鲜，距陆家嘴约77.3公里，点击查看路线">D</a>
+    <a class="map-extra-stop" data-map-stop data-location="120.850910,31.114744"
+      data-route-id="s02" data-route-group="suzhou"
+      data-map-x="416.5909" data-map-y="201.2322"
+      data-map-title="周庄古镇" data-map-km="87.1"
+      title="周庄古镇 · 87.1 km"
+      href="#route-s02"
+      aria-label="周庄古镇 · 白天水巷＋晚上看灯，距陆家嘴约87.1公里，点击查看路线">L</a>
+    <a class="map-extra-stop" data-map-stop data-location="120.363392,31.074631"
+      data-route-id="s04" data-route-group="suzhou"
+      data-map-x="239.0910" data-map-y="218.2874"
+      data-map-title="太湖东山陆巷古村" data-map-km="131"
+      title="太湖东山陆巷古村 · 131 km"
+      href="#route-s04"
+      aria-label="太湖东山 · 陆巷古村＋湖边庄园，距陆家嘴约131公里，点击查看路线">N</a>
+    <a class="map-extra-stop" data-map-stop data-location="120.255924,31.116207"
+      data-route-id="s03" data-route-group="suzhou"
+      data-map-x="199.9631" data-map-y="200.6100"
+      data-map-title="太湖西山" data-map-km="140.4"
+      title="太湖西山 · 140.4 km"
+      href="#route-s03"
+      aria-label="太湖西山 · 雕花楼＋缥缈峰＋院子，距陆家嘴约140.4公里，点击查看路线">M</a>
         </div>
       </div>
-
       <div class="map-route-index" aria-label="路线地图索引">
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--suzhou"></i>苏州<small>平均106 km</small></p>
-
-            <a href="#route-s04" data-route-id="s04">
-              <strong>N</strong>
-              <span>太湖东山 · 陆巷古村＋湖边庄园<small>高德驾车 131 km · 约 126 分钟</small></span>
-            </a>
-            <a href="#route-s02" data-route-id="s02">
-              <strong>L</strong>
-              <span>周庄古镇 · 白天水巷＋晚上看灯<small>高德驾车 87.1 km · 约 92 分钟</small></span>
-            </a>
-            <a href="#route-s01" data-route-id="s01">
-              <strong>K</strong>
-              <span>锦溪古镇 · 水乡慢逛＋计家墩理想村<small>高德驾车 67.3 km · 约 83 分钟</small></span>
-            </a>
-            <a href="#route-s03" data-route-id="s03">
-              <strong>M</strong>
-              <span>太湖西山 · 雕花楼＋缥缈峰＋院子<small>高德驾车 140.4 km · 约 134 分钟</small></span>
-            </a>
-        </div>
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--jinshan"></i>金山<small>平均73 km</small></p>
-
-            <a href="#route-05" data-route-id="05">
-              <strong>E</strong>
-              <span>枫泾 · 古镇寻味＋漫画展馆<small>高德驾车 69.3 km · 约 83 分钟</small></span>
-            </a>
-            <a href="#route-04" data-route-id="04">
-              <strong>D</strong>
-              <span>金山城市沙滩 · 海边＋金山嘴海鲜<small>高德驾车 77.3 km · 约 90 分钟</small></span>
-            </a>
-        </div>
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--qingpu"></i>青浦<small>平均54 km</small></p>
-
-            <a href="#route-03" data-route-id="03">
-              <strong>B</strong>
-              <span>朱家角 · 游船＋园林＋老街<small>高德驾车 50.9 km · 约 68 分钟</small></span>
-            </a>
-            <a href="#route-02" data-route-id="02">
-              <strong>A</strong>
-              <span>淀山湖 · 湖岸骑行＋金泽古镇<small>高德驾车 57 km · 约 77 分钟</small></span>
-            </a>
-            <a href="#route-16" data-route-id="16">
-              <strong>C</strong>
-              <span>东方绿舟 · 航母＋草地＋淀山湖住宿<small>高德驾车 53.4 km · 约 72 分钟</small></span>
-            </a>
-        </div>
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--pudong"></i>浦东<small>平均44 km</small></p>
-
-            <a href="#route-14" data-route-id="14">
-              <strong>H</strong>
-              <span>新场古镇 · 逛吃＋茶馆<small>高德驾车 33.1 km · 约 42 分钟</small></span>
-            </a>
-            <a href="#route-17" data-route-id="17">
-              <strong>J</strong>
-              <span>迪士尼 · 乐园＋川沙老街<small>高德驾车 29.9 km · 约 43 分钟</small></span>
-            </a>
-            <a href="#route-p01" data-route-id="p01">
-              <strong>I</strong>
-              <span>海昌海洋公园 · 游乐＋滴水湖<small>高德驾车 69.6 km · 约 76 分钟</small></span>
-            </a>
-        </div>
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--fengxian"></i>奉贤<small>平均44 km</small></p>
-
-            <a href="#route-f01" data-route-id="f01">
-              <strong>F</strong>
-              <span>碧海金沙 · 海边散步＋吴房村住一晚<small>高德驾车 52.5 km · 约 80 分钟</small></span>
-            </a>
-            <a href="#route-12" data-route-id="12">
-              <strong>G</strong>
-              <span>花开半夏 · 成人手作＋乡村体验<small>高德驾车 35 km · 约 58 分钟</small></span>
-            </a>
-        </div>
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--nearby"></i>近郊体验<small>平均43 km</small></p>
-
-            <a href="#route-r01" data-route-id="r01">
-              <strong>O</strong>
-              <span>广富林遗址 · 水下展馆＋古宅掌灯<small>高德驾车 43.8 km · 约 70 分钟</small></span>
-            </a>
-            <a href="#route-r02" data-route-id="r02">
-              <strong>P</strong>
-              <span>嘉定秋收 · 菊园百果园＋州桥古城<small>高德驾车 42.5 km · 约 60 分钟</small></span>
-            </a>
-        </div></div>
+    <a class="map-index-route" href="#route-14" data-route-id="14">
+      <strong>H</strong>
+      <span>新场古镇 · 逛吃＋茶馆<small>浦东 · 高德驾车 33.1 km · 约 42 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-12" data-route-id="12">
+      <strong>G</strong>
+      <span>花开半夏 · 成人手作＋乡村体验<small>奉贤 · 高德驾车 35 km · 约 58 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-r02" data-route-id="r02">
+      <strong>P</strong>
+      <span>嘉定秋收 · 菊园百果园＋州桥古城<small>嘉定 · 高德驾车 42.5 km · 约 60 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-r01" data-route-id="r01">
+      <strong>O</strong>
+      <span>广富林遗址 · 水下展馆＋古宅掌灯<small>松江 · 高德驾车 43.8 km · 约 70 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-03" data-route-id="03">
+      <strong>B</strong>
+      <span>朱家角 · 游船＋园林＋老街<small>青浦 · 高德驾车 50.9 km · 约 68 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-f01" data-route-id="f01">
+      <strong>F</strong>
+      <span>碧海金沙 · 海边散步＋吴房村住一晚<small>奉贤 · 高德驾车 52.5 km · 约 80 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-16" data-route-id="16">
+      <strong>C</strong>
+      <span>东方绿舟 · 航母＋草地＋淀山湖住宿<small>青浦 · 高德驾车 53.4 km · 约 72 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-02" data-route-id="02">
+      <strong>A</strong>
+      <span>淀山湖 · 湖岸骑行＋金泽古镇<small>青浦 · 高德驾车 57 km · 约 77 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-s01" data-route-id="s01">
+      <strong>K</strong>
+      <span>锦溪古镇 · 水乡慢逛＋计家墩理想村<small>昆山 · 高德驾车 67.3 km · 约 83 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-05" data-route-id="05">
+      <strong>E</strong>
+      <span>枫泾 · 古镇寻味＋漫画展馆<small>金山 · 高德驾车 69.3 km · 约 83 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-04" data-route-id="04">
+      <strong>D</strong>
+      <span>金山城市沙滩 · 海边＋金山嘴海鲜<small>金山 · 高德驾车 77.3 km · 约 90 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-s02" data-route-id="s02">
+      <strong>L</strong>
+      <span>周庄古镇 · 白天水巷＋晚上看灯<small>昆山 · 高德驾车 87.1 km · 约 92 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-s04" data-route-id="s04">
+      <strong>N</strong>
+      <span>太湖东山 · 陆巷古村＋湖边庄园<small>苏州 · 高德驾车 131 km · 约 126 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-s03" data-route-id="s03">
+      <strong>M</strong>
+      <span>太湖西山 · 雕花楼＋缥缈峰＋院子<small>苏州 · 高德驾车 140.4 km · 约 134 分钟</small></span>
+    </a></div>
       <div class="map-legend" aria-label="地图图例">
         <span><i class="legend-dot"></i>陆家嘴 S · 出发点</span>
-        <span>点位字母对应下方分区路线索引</span>
-        <span>O/P为新增近郊路线位置标记</span>
+        <span>地图字母对应下方路线；点击标记打开详情</span>
       </div>
     </section>
     </section>
@@ -4119,185 +3981,10 @@
         </section>
       </div>
     </dialog>
-    <dialog class="route-dialog" id="route-dialog-17"
-      aria-labelledby="route-dialog-title-17">
-      <div class="dialog-bar">
-        <span>总榜第 2 · 浦东</span>
-        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
-      </div>
-      <div class="route-dialog-body">
-        <div class="dialog-hero">
-          <div class="dialog-hero-gallery" data-photo-carousel data-current-index="0">
-
-    <figure class="dialog-hero-slide is-active"
-      data-image-frame data-gallery-slide data-caption="上海迪士尼度假区｜来源：高德 POI 相册"
-      aria-hidden="false">
-      <img src="assets/routes/route-17-disney.jpg" alt="上海迪士尼度假区入口" loading="lazy" decoding="async">
-    </figure>
-    <figure class="dialog-hero-slide"
-      data-image-frame data-gallery-slide data-caption="川沙古镇 · 景点照片 2"
-      aria-hidden="true">
-      <img src="assets/routes/route-17-2.jpg" alt="川沙古镇 · 景点照片 2" loading="lazy" decoding="async">
-    </figure>
-
-    <div class="dialog-gallery-controls" aria-label="景点照片切换">
-      <button type="button" data-gallery-step="-1" aria-label="上一张景点照片">‹</button>
-      <span data-gallery-count>1 / 2</span>
-      <button type="button" data-gallery-step="1" aria-label="下一张景点照片">›</button>
-    </div>
-          </div>
-          <div class="dialog-hero-copy">
-            <p class="dialog-region">浦东</p>
-            <h2 id="route-dialog-title-17">迪士尼 · 乐园＋川沙老街</h2>
-            <p class="dialog-travel">高德驾车 29.9 km · 约 43 分钟</p>
-          </div>
-        </div>
-        <p class="dialog-photo-caption" data-gallery-caption>上海迪士尼度假区｜来源：高德 POI 相册</p>
-        <section class="score-panel" aria-label="路线评分">
-          <div class="score-heading">
-            <div>
-              <strong>84</strong><span>分</span>
-            </div>
-
-    <span class="stars" aria-label="4.5星">
-      <span aria-hidden="true">★★★★★</span>
-      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
-    </span>
-          </div>
-          <div class="score-parts">
-            <span><b>42</b><small>白天体验 / 45</small></span>
-            <span><b>22</b><small>内容组合 / 25</small></span>
-            <span><b>12</b><small>省心程度 / 20</small></span>
-            <span><b>8</b><small>证据质量 / 10</small></span>
-          </div>
-          <p class="score-reason">乐园内容最满，住宿也近；但门票、排队和体力消耗都高。</p>
-          <p class="score-concern"><strong>主要扣分点</strong>周末热门项目排队；迪士尼票价高，住宿包栋口径在携程和美团之间有冲突，订前必须复核。</p>
-        </section>
-        <section class="dialog-place-info" aria-label="景点评价和出行提醒">
-          <div class="dialog-info-grid">
-            <div class="dialog-info-card dialog-info-rating">
-
-    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.9</strong></span><span class="place-review-chip">携程<small>10/31–11/1 开放至 22:00</small></span>
-      <span class="place-review-note">乐园评价高，但周末排队和票价都要接受</span>
-    </span>
-              <div class="dialog-place-source">
-    <a class="source-link" href="https://m.ctrip.com/webapp/you/gspoi/sight/2/0.html?poiId=13412802" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a></div>
-            </div>
-            <div class="dialog-info-card dialog-info-review">
-              <p class="review-line dialog-review"><strong>一句话口碑</strong>适合想认真玩一天乐园的人；住得近是最大优势，第二天不用硬排项目。</p>
-            </div>
-            <div class="dialog-info-card dialog-info-fee">
-              <p class="fee-line"><strong>费用提醒</strong>迪士尼 1 日票 449 元起；川沙老街免费；星愿湖轮渡 15 元/人。</p>
-            </div>
-          </div>
-          <div class="activity-line">
-            <span>上海迪士尼</span><span>川沙老街</span><span>比斯特上海</span>
-          </div>
-        </section>
-        <section class="dialog-stay-section" aria-labelledby="dialog-stay-title-17">
-          <div class="dialog-stay-heading">
-            <h3 id="dialog-stay-title-17">住宿参考</h3>
-            <p>2 处就近候选；路线分只比玩法，住宿单独按多人设施和 4 房适配比较。</p>
-          </div>
-          <div class="dialog-stay-grid">
-
-              <article class="dialog-stay-card" id="dialog-stay-17-new_xianshe"
-                data-stay-id="new_xianshe" data-image-frame>
-                <img src="assets/stays/stay-new_xianshe.jpg" alt="上海闲舍shinehouse独栋别墅 · 酒店外部" loading="lazy" decoding="async">
-                <div class="dialog-stay-body">
-                  <div class="dialog-stay-title-row">
-                    <h4>上海闲舍shinehouse独栋别墅</h4>
-                    <span>携程4.9 / 美团4.6</span>
-                  </div>
-                  <p class="dialog-stay-rating">携程190条 / 美团本轮41条；旧记录22条</p>
-                  <div class="stay-amenities stay-amenities--dialog"><span>独栋</span><span>泳池</span><span>KTV</span><span>烧烤</span></div>
-                  <p class="dialog-stay-review"><strong>一句话口碑</strong>带泳池、KTV 和烧烤的独栋，晚上不出门也能玩到散场。</p>
-                  <p class="dialog-stay-fit">4间房适配：5间客房；4房方案及地址待核</p>
-                  <p class="dialog-stay-confirm"><strong>订前先问</strong>美团本轮确认单店、5间客房，4.6分/41条；旧记录为4.5分/22条，页面卡片又标暂无评分，口径冲突，评分请以美团当前商户页再核。高德门牌与美团不同，预订前用房东定位确认。</p>
-                  <a href="https://hotels.ctrip.com/hotels/9559752.html" target="_blank" rel="noreferrer">携程房源页 ↗</a>
-                </div>
-              </article>
-              <article class="dialog-stay-card" id="dialog-stay-17-shiguangli"
-                data-stay-id="shiguangli" data-image-frame>
-                <img src="assets/stays/stay-shiguangli.jpg" alt="如果拾光里别墅庭院" loading="lazy" decoding="async">
-                <div class="dialog-stay-body">
-                  <div class="dialog-stay-title-row">
-                    <h4>如果拾光里别墅（迪士尼）</h4>
-                    <span>4.7 / 4.5</span>
-                  </div>
-                  <p class="dialog-stay-rating">携程190条 / 美团22条（既有核验）</p>
-                  <div class="stay-amenities stay-amenities--dialog"><span>泳池</span><span>烧烤</span><span>棋牌</span><span>花园</span><span>接送</span></div>
-                  <p class="dialog-stay-review"><strong>一句话口碑</strong>离迪士尼近，院子泳池适合收尾；但4房包栋口径两平台不一致。</p>
-                  <p class="dialog-stay-fit">4间房适配：包栋口径冲突，订前确认</p>
-                  <p class="dialog-stay-confirm"><strong>订前先问</strong>携程写6/7房包栋，美团只见单间/双床房；能否4房同订和是否拼栋必须问。</p>
-                  <a href="https://hotels.ctrip.com/hotels/76147352.html" target="_blank" rel="noreferrer">携程房源页 ↗</a>
-                </div>
-              </article>
-          </div>
-        </section>
-        <section class="route-detail" aria-labelledby="itinerary-title-17">
-          <h3 class="route-detail-heading" id="itinerary-title-17">两天行程</h3>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:00–08:50</time>
-      <span>陆家嘴出发到迪士尼</span>
-    </li>
-    <li>
-      <time>09:00–12:00</time>
-      <span>优先玩最想排的项目</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>园内午饭</span>
-    </li>
-    <li>
-      <time>13:00–18:00</time>
-      <span>演出＋项目组合，别硬排满</span>
-    </li>
-    <li>
-      <time>18:00–21:30</time>
-      <span>晚饭和夜间项目</span>
-    </li>
-    <li>
-      <time>21:30以后</time>
-      <span>回拾光里或附近别墅休息</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>09:00–10:00</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>10:00–12:00</time>
-      <span>川沙老街短逛</span>
-    </li>
-    <li>
-      <time>12:00–13:30</time>
-      <span>比斯特午饭或咖啡</span>
-    </li>
-    <li>
-      <time>14:00以后</time>
-      <span>返沪</span>
-    </li></ol>
-            </section>
-          </div>
-        </section>
-      </div>
-    </dialog>
     <dialog class="route-dialog" id="route-dialog-r01"
       aria-labelledby="route-dialog-title-r01">
       <div class="dialog-bar">
-        <span>总榜第 3 · 松江</span>
+        <span>总榜第 2 · 松江</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -4471,7 +4158,7 @@
     <dialog class="route-dialog" id="route-dialog-03"
       aria-labelledby="route-dialog-title-03">
       <div class="dialog-bar">
-        <span>总榜第 4 · 青浦</span>
+        <span>总榜第 3 · 青浦</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -4651,167 +4338,10 @@
         </section>
       </div>
     </dialog>
-    <dialog class="route-dialog" id="route-dialog-p01"
-      aria-labelledby="route-dialog-title-p01">
-      <div class="dialog-bar">
-        <span>总榜第 5 · 浦东</span>
-        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
-      </div>
-      <div class="route-dialog-body">
-        <div class="dialog-hero">
-          <div class="dialog-hero-gallery" data-photo-carousel data-current-index="0">
-
-    <figure class="dialog-hero-slide is-active"
-      data-image-frame data-gallery-slide data-caption="上海海昌海洋公园｜来源：高德 POI 相册"
-      aria-hidden="false">
-      <img src="assets/routes/route-p01.jpg" alt="上海海昌海洋公园入口" loading="lazy" decoding="async">
-    </figure>
-
-          </div>
-          <div class="dialog-hero-copy">
-            <p class="dialog-region">浦东</p>
-            <h2 id="route-dialog-title-p01">海昌海洋公园 · 游乐＋滴水湖</h2>
-            <p class="dialog-travel">高德驾车 69.6 km · 约 76 分钟</p>
-          </div>
-        </div>
-        <p class="dialog-photo-caption" data-gallery-caption>上海海昌海洋公园｜来源：高德 POI 相册</p>
-        <section class="score-panel" aria-label="路线评分">
-          <div class="score-heading">
-            <div>
-              <strong>82</strong><span>分</span>
-            </div>
-
-    <span class="stars" aria-label="4.5星">
-      <span aria-hidden="true">★★★★★</span>
-      <span class="stars-fill" style="width:90%" aria-hidden="true">★★★★★</span>
-    </span>
-          </div>
-          <div class="score-parts">
-            <span><b>41</b><small>白天体验 / 45</small></span>
-            <span><b>22</b><small>内容组合 / 25</small></span>
-            <span><b>12</b><small>省心程度 / 20</small></span>
-            <span><b>7</b><small>证据质量 / 10</small></span>
-          </div>
-          <p class="score-reason">海洋馆、演出和游乐设施够白天玩，湖边第二天不赶。</p>
-          <p class="score-concern"><strong>主要扣分点</strong>住宿泳池口径在携程和美团冲突；周末剧场时间和设备开放要当天看。</p>
-        </section>
-        <section class="dialog-place-info" aria-label="景点评价和出行提醒">
-          <div class="dialog-info-grid">
-            <div class="dialog-info-card dialog-info-rating">
-
-    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
-      <span class="place-review-label">景点评价</span>
-      <span class="place-review-chip">高德<strong>4.7</strong></span><span class="place-review-chip">携程<small>09:30–21:00</small></span>
-      <span class="place-review-note">海昌内容丰富，部分设备可能维保</span>
-    </span>
-              <div class="dialog-place-source">
-    <a class="source-link" href="https://m.ctrip.com/webapp/you/gspoi/sight/2/0.html?poiId=52075446" target="_blank" rel="noreferrer">
-      查看出行来源 <span aria-hidden="true">↗</span>
-    </a></div>
-            </div>
-            <div class="dialog-info-card dialog-info-review">
-              <p class="review-line dialog-review"><strong>一句话口碑</strong>比只去滴水湖更有内容；但住宿口径冲突明显，订前要逐项确认。</p>
-            </div>
-            <div class="dialog-info-card dialog-info-fee">
-              <p class="fee-line"><strong>费用提醒</strong>海昌成人票 199 元起；停车按时段收费；园内项目和剧场以当天开放为准。</p>
-            </div>
-          </div>
-          <div class="activity-line">
-            <span>海昌海洋公园</span><span>滴水湖短走</span><span>别墅泳池/KTV待确认</span>
-          </div>
-        </section>
-        <section class="dialog-stay-section" aria-labelledby="dialog-stay-title-p01">
-          <div class="dialog-stay-heading">
-            <h3 id="dialog-stay-title-p01">住宿参考</h3>
-            <p>2 处就近候选；路线分只比玩法，住宿单独按多人设施和 4 房适配比较。</p>
-          </div>
-          <div class="dialog-stay-grid">
-
-              <article class="dialog-stay-card" id="dialog-stay-p01-zhuji"
-                data-stay-id="zhuji" data-image-frame>
-                <img src="assets/stays/stay-zhuji.jpg" alt="上海竹迹别墅公共区" loading="lazy" decoding="async">
-                <div class="dialog-stay-body">
-                  <div class="dialog-stay-title-row">
-                    <h4>上海竹迹别墅</h4>
-                    <span>携程4.9</span>
-                  </div>
-                  <p class="dialog-stay-rating">美团近名店4.6/16，地址在鹿达路迪士尼商圈，未确认同店</p>
-                  <div class="stay-amenities stay-amenities--dialog"><span>KTV</span><span>棋牌</span><span>游戏室</span><span>烧烤</span><span>泳池待确认</span></div>
-                  <p class="dialog-stay-review"><strong>一句话口碑</strong>整栋轰趴空间大，适合晚上不出门；但泳池是否开放两平台说法冲突。</p>
-                  <p class="dialog-stay-fit">4间房适配：美团近名店，主体/4房待核</p>
-                  <p class="dialog-stay-confirm"><strong>订前先问</strong>美团只命中竹迹民宿（鹿达路分店），地址在迪士尼商圈，与携程主体及海昌路线的位置关系待核；美团未证实为同一店。泳池、整栋房间数及4房方案向房东确认。</p>
-                  <a href="https://hotels.ctrip.com/hotels/18435041.html" target="_blank" rel="noreferrer">携程房源页 ↗</a>
-                </div>
-              </article>
-              <article class="dialog-stay-card" id="dialog-stay-p01-sangu"
-                data-stay-id="sangu" data-image-frame>
-                <img src="assets/stays/stay-sangu.jpg" alt="三顾茅庐民宿(上海临港滴水湖店) · 酒店外部" loading="lazy" decoding="async">
-                <div class="dialog-stay-body">
-                  <div class="dialog-stay-title-row">
-                    <h4>三顾茅庐民宿(上海临港滴水湖店)</h4>
-                    <span>4.9</span>
-                  </div>
-                  <p class="dialog-stay-rating">携程97条 / 美团5条（未返回评分）</p>
-                  <div class="stay-amenities stay-amenities--dialog"><span>独栋</span><span>KTV</span><span>影音</span></div>
-                  <p class="dialog-stay-review"><strong>一句话口碑</strong>去年新装修，影音和 KTV 齐全；离滴水湖岸边约 4 公里。</p>
-                  <p class="dialog-stay-fit">4间房适配：5间客房，4房组合待确认</p>
-                  <p class="dialog-stay-confirm"><strong>订前先问</strong>美团页面列5间客房、仅返回5条评价未给评分；能否整栋只开4房需问。</p>
-                  <a href="https://hotels.ctrip.com/hotels/108600250.html" target="_blank" rel="noreferrer">携程房源页 ↗</a>
-                </div>
-              </article>
-          </div>
-        </section>
-        <section class="route-detail" aria-labelledby="itinerary-title-p01">
-          <h3 class="route-detail-heading" id="itinerary-title-p01">两天行程</h3>
-          <div class="days-grid">
-            <section>
-              <h4>周六 · 10月31日</h4>
-              <ol class="timeline">
-    <li>
-      <time>08:30–09:50</time>
-      <span>陆家嘴出发到海昌</span>
-    </li>
-    <li>
-      <time>10:00–12:00</time>
-      <span>先看最想看的馆和演出</span>
-    </li>
-    <li>
-      <time>12:00–13:00</time>
-      <span>园内午饭</span>
-    </li>
-    <li>
-      <time>13:00–18:00</time>
-      <span>游乐设施和剧场组合</span>
-    </li>
-    <li>
-      <time>18:30以后</time>
-      <span>回竹迹或临港别墅，KTV/棋牌/烧烤先确认</span>
-    </li></ol>
-            </section>
-            <section>
-              <h4>周日 · 11月1日</h4>
-              <ol class="timeline">
-    <li>
-      <time>09:00–10:00</time>
-      <span>早餐</span>
-    </li>
-    <li>
-      <time>10:00–12:00</time>
-      <span>滴水湖或航海博物馆二选一</span>
-    </li>
-    <li>
-      <time>12:00以后</time>
-      <span>午饭后返沪</span>
-    </li></ol>
-            </section>
-          </div>
-        </section>
-      </div>
-    </dialog>
     <dialog class="route-dialog" id="route-dialog-s04"
       aria-labelledby="route-dialog-title-s04">
       <div class="dialog-bar">
-        <span>总榜第 6 · 苏州</span>
+        <span>总榜第 4 · 苏州</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -4956,7 +4486,7 @@
     <dialog class="route-dialog" id="route-dialog-05"
       aria-labelledby="route-dialog-title-05">
       <div class="dialog-bar">
-        <span>总榜第 7 · 金山</span>
+        <span>总榜第 5 · 金山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5139,7 +4669,7 @@
     <dialog class="route-dialog" id="route-dialog-s02"
       aria-labelledby="route-dialog-title-s02">
       <div class="dialog-bar">
-        <span>总榜第 8 · 昆山</span>
+        <span>总榜第 6 · 昆山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5277,7 +4807,7 @@
     <dialog class="route-dialog" id="route-dialog-r02"
       aria-labelledby="route-dialog-title-r02">
       <div class="dialog-bar">
-        <span>总榜第 9 · 嘉定</span>
+        <span>总榜第 7 · 嘉定</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5447,7 +4977,7 @@
     <dialog class="route-dialog" id="route-dialog-04"
       aria-labelledby="route-dialog-title-04">
       <div class="dialog-bar">
-        <span>总榜第 10 · 金山</span>
+        <span>总榜第 8 · 金山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5618,7 +5148,7 @@
     <dialog class="route-dialog" id="route-dialog-f01"
       aria-labelledby="route-dialog-title-f01">
       <div class="dialog-bar">
-        <span>总榜第 11 · 奉贤</span>
+        <span>总榜第 9 · 奉贤</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5779,7 +5309,7 @@
     <dialog class="route-dialog" id="route-dialog-12"
       aria-labelledby="route-dialog-title-12">
       <div class="dialog-bar">
-        <span>总榜第 12 · 奉贤</span>
+        <span>总榜第 10 · 奉贤</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -5962,7 +5492,7 @@
     <dialog class="route-dialog" id="route-dialog-s01"
       aria-labelledby="route-dialog-title-s01">
       <div class="dialog-bar">
-        <span>总榜第 13 · 昆山</span>
+        <span>总榜第 11 · 昆山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -6104,7 +5634,7 @@
     <dialog class="route-dialog" id="route-dialog-02"
       aria-labelledby="route-dialog-title-02">
       <div class="dialog-bar">
-        <span>总榜第 14 · 青浦</span>
+        <span>总榜第 12 · 青浦</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -6275,7 +5805,7 @@
     <dialog class="route-dialog" id="route-dialog-s03"
       aria-labelledby="route-dialog-title-s03">
       <div class="dialog-bar">
-        <span>总榜第 15 · 苏州</span>
+        <span>总榜第 13 · 苏州</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -6437,7 +5967,7 @@
     <dialog class="route-dialog" id="route-dialog-16"
       aria-labelledby="route-dialog-title-16">
       <div class="dialog-bar">
-        <span>总榜第 16 · 青浦</span>
+        <span>总榜第 14 · 青浦</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -6619,6 +6149,7 @@
       <p>资料复核：携程问道、美团旅行 CLI、高德 MCP。车程均从陆家嘴出发，按本次高德路线规划记录；票价、开放时间、船班和现场收费会变，出发前再查官方渠道。</p>
     </div>
   </footer>
+  <script src="assets/vendor/leaflet.js"></script>
   <script>
     (() => {
       const galleryTimers = new WeakMap();
@@ -6664,31 +6195,95 @@
         galleryTimers.set(gallery, timer);
       };
 
+      const routeMaps = new WeakMap();
       const layoutMapMarkers = () => {
-        document.querySelectorAll("[data-amap-overlay]").forEach((overlay) => {
-          const frame = overlay.closest(".map-frame");
-          const image = frame?.querySelector("img.region-map-photo");
-          if (!frame || !image?.naturalWidth || !frame.clientWidth) return;
-          const worldSize = 256 * (2 ** Number(overlay.dataset.zoom || 8));
-          const project = (location) => {
-            const [longitude, latitude] = location.split(",").map(Number);
-            const sinLatitude = Math.sin(Math.max(-85, Math.min(85, latitude)) * Math.PI / 180);
-            return {
-              x: (longitude + 180) / 360 * worldSize,
-              y: (0.5 - Math.log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * Math.PI)) * worldSize
-            };
-          };
-          const center = project(overlay.dataset.center || "121.08,31.00");
-          const scale = Math.max(frame.clientWidth / image.naturalWidth, frame.clientHeight / image.naturalHeight);
-          const offsetX = (frame.clientWidth - image.naturalWidth * scale) / 2;
-          const offsetY = (frame.clientHeight - image.naturalHeight * scale) / 2;
-          overlay.querySelectorAll("[data-map-stop]").forEach((marker) => {
-            const point = project(marker.dataset.location);
-            const x = image.naturalWidth / 2 + point.x - center.x;
-            const y = image.naturalHeight / 2 + point.y - center.y;
-            marker.style.left = (offsetX + x * scale) + "px";
-            marker.style.top = (offsetY + y * scale) + "px";
-          });
+        document.querySelectorAll("[data-amap-overlay]").forEach((frame) => {
+          if (!frame.clientWidth || !frame.clientHeight || !window.L) return;
+          const image = frame.querySelector("img.region-map-photo");
+          if (!image?.naturalWidth) return;
+          let state = routeMaps.get(frame);
+          if (!state) {
+            const width = Number(frame.dataset.mapWidth);
+            const height = Number(frame.dataset.mapHeight);
+            const canvas = frame.querySelector("[data-route-map]");
+            const bounds = L.latLngBounds([[0, 0], [height, width]]);
+            const map = L.map(canvas, {
+              crs: L.CRS.Simple, attributionControl: false, zoomControl: false,
+              zoomSnap: 0, zoomDelta: 0.75, minZoom: -4, maxZoom: 2,
+              fadeAnimation: false, zoomAnimation: false,
+              scrollWheelZoom: false, maxBounds: bounds, maxBoundsViscosity: 1
+            });
+            L.control.zoom({zoomInTitle: "放大地图", zoomOutTitle: "缩小地图"}).addTo(map);
+            map.fitBounds(bounds, {padding: [12, 12], animate: false});
+            const raster = L.imageOverlay(image.getAttribute("src"), bounds, {
+              className: "route-basemap image-loaded", alt: image.alt, interactive: false
+            }).addTo(map);
+            raster.getElement().decoding = "async";
+            const toLatLng = (element) => [height - Number(element.dataset.mapY), Number(element.dataset.mapX)];
+            const stops = [...frame.querySelectorAll("[data-map-stop]")].map((element) => ({
+              element,
+              layer: L.marker(toLatLng(element), {
+                icon: L.divIcon({html: element, className: "map-route-icon", iconSize: [22, 22], iconAnchor: [11, 11]}),
+                keyboard: false
+              }).addTo(map)
+            }));
+            const origin = frame.querySelector("[data-map-origin]");
+            L.marker(toLatLng(origin), {
+              icon: L.divIcon({html: origin, className: "map-route-icon", iconSize: [22, 22], iconAnchor: [11, 11]}),
+              interactive: false, keyboard: false
+            }).addTo(map);
+            for (const stop of stops) {
+              const tooltip = document.createElement("span");
+              tooltip.textContent = stop.element.title;
+              stop.layer.bindTooltip(tooltip, {direction: "top", offset: [0, -10]});
+              stop.element.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const center = map.latLngToContainerPoint(stop.layer.getLatLng());
+                const nearby = stops.filter((candidate) =>
+                  center.distanceTo(map.latLngToContainerPoint(candidate.layer.getLatLng())) < 22
+                );
+                frame.querySelector("[data-map-picker]")?.remove();
+                if (nearby.length === 1) {
+                  openRouteDialog(stop.element.dataset.routeId);
+                  return;
+                }
+                const picker = document.createElement("div");
+                picker.className = "map-picker";
+                picker.dataset.mapPicker = "";
+                const close = document.createElement("button");
+                close.type = "button";
+                close.className = "map-picker-close";
+                close.setAttribute("aria-label", "关闭路线选择");
+                close.textContent = "×";
+                close.addEventListener("click", () => picker.remove());
+                const choices = document.createElement("div");
+                choices.className = "map-choice-list";
+                for (const candidate of nearby) {
+                  const button = document.createElement("button");
+                  button.type = "button";
+                  button.dataset.mapChoice = candidate.element.dataset.routeId;
+                  button.textContent = candidate.element.textContent + " · " + candidate.element.dataset.mapTitle +
+                    " · " + candidate.element.dataset.mapKm + " km";
+                  button.addEventListener("click", () => {
+                    picker.remove();
+                    openRouteDialog(candidate.element.dataset.routeId);
+                  });
+                  choices.append(button);
+                }
+                picker.append(close, choices);
+                frame.append(picker);
+              });
+            }
+            state = {map, bounds};
+            routeMaps.set(frame, state);
+            frame.classList.add("map-ready");
+          }
+          frame.querySelector("[data-map-picker]")?.remove();
+          state.map.stop();
+          state.map.invalidateSize({pan: false});
+          state.map.setMinZoom(state.map.getBoundsZoom(state.bounds, false, [24, 24]));
+          state.map.fitBounds(state.bounds, {padding: [12, 12], animate: false});
         });
       };
 

@@ -130,7 +130,7 @@ const groups = [
     id: "pudong",
     eyebrow: "乐园 · 古镇 · 湖岸",
     title: "浦东",
-    intro: "迪士尼、海昌、新场、川沙方向多；住别墅或古镇里，转场最顺。"
+    intro: "新场古镇逛吃、茶馆和小店都集中；住宿选古镇附近，晚上继续慢逛。"
   },
   {
     id: "suzhou",
@@ -200,7 +200,7 @@ const activeRouteIds = new Set([
   "02", "03", "16",
   "04", "05",
   "f01", "12",
-  "14", "p01", "17",
+  "14",
   "s01", "s02", "s03", "s04",
   "r01", "r02"
 ]);
@@ -1145,6 +1145,10 @@ const allRoutes = [
     travel: amapTravel(route.id) || route.travel,
     score: route.rating.total
   }));
+const routeDistanceKm = (route) => Number(amapRouteById.get(route.id)?.km ?? Infinity);
+const sortRoutesByDistance = (routes) => [...routes]
+  .sort((left, right) => routeDistanceKm(left) - routeDistanceKm(right));
+const distanceSortedRoutes = sortRoutesByDistance(allRoutes);
 const rankedRoutes = [...allRoutes]
   .sort((left, right) => right.score - left.score)
   .map((route, index) => ({ ...route, rank: index + 1 }));
@@ -1161,7 +1165,7 @@ const activeGroups = groups
     return { ...group, averageKm };
   })
   .filter((group) => allRoutes.some((route) => route.group === group.id))
-  .sort((left, right) => right.averageKm - left.averageKm);
+  .sort((left, right) => left.averageKm - right.averageKm);
 const eligibleStayIds = new Set(
   allRoutes.flatMap((route) => routeStayIds[route.id] || [])
 );
@@ -1498,73 +1502,74 @@ function renderStay(stay) {
     </article>`;
 }
 
+function mapPixel(location) {
+  const metadata = amapRouteData.map;
+  const worldSize = metadata.worldSize;
+  const project = (coordinates) => {
+    const [longitude, latitude] = coordinates.split(",").map(Number);
+    const radians = latitude * Math.PI / 180;
+    return [
+      longitude / 360 * worldSize,
+      -Math.log(Math.tan(Math.PI / 4 + radians / 2)) / (2 * Math.PI) * worldSize
+    ];
+  };
+  const center = project(metadata.center);
+  const point = project(location);
+  return { x: metadata.width / 2 + point[0] - center[0], y: metadata.height / 2 + point[1] - center[1] };
+}
+
 function renderRegionMap() {
-  const hasNearbyMap = fs.existsSync(path.join(publishRoot, "assets/amap-nearby-route-map-v1.png"));
-  const nearbyMarkers = nearbyMapPlaces.map((place) => `
+  const metadata = amapRouteData.map;
+  const originPixel = mapPixel(amapRouteData.origin.location);
+  const routeMarkers = distanceSortedRoutes.map((route) => {
+    const place = amapRouteById.get(route.id);
+    if (!place) return "";
+    const pixel = mapPixel(place.location);
+    return `
     <a class="map-extra-stop" data-map-stop data-location="${escapeHtml(place.location)}"
-      data-route-id="${escapeHtml(place.id)}" href="#route-${escapeHtml(place.id)}"
-      aria-label="${escapeHtml(place.name)}，距陆家嘴约${escapeHtml(place.km)}公里">${escapeHtml(place.label)}</a>`).join("");
-  const routeIndex = activeGroups
-    .map((group) => {
-      const routes = rankedRoutes.filter((route) => route.group === group.id);
-      return `
-        <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--${escapeHtml(group.id)}"></i>${escapeHtml(group.title)}<small>平均${Math.round(group.averageKm)} km</small></p>
-          ${routes.map((route) => `
-            <a href="#route-${escapeHtml(route.id)}" data-route-id="${escapeHtml(route.id)}">
-              <strong>${escapeHtml(amapLabelById.get(route.id) || route.id.replace(/^0/, ""))}</strong>
-              <span>${escapeHtml(route.title)}<small>${escapeHtml(route.travel)}</small></span>
-            </a>`).join("")}
-        </div>`;
-    }).join("");
+      data-route-id="${escapeHtml(route.id)}" data-route-group="${escapeHtml(route.group)}"
+      data-map-x="${pixel.x.toFixed(4)}" data-map-y="${pixel.y.toFixed(4)}"
+      data-map-title="${escapeHtml(place.name)}" data-map-km="${place.km}"
+      title="${escapeHtml(place.name)} · ${place.km} km"
+      href="#route-${escapeHtml(route.id)}"
+      aria-label="${escapeHtml(route.title)}，距陆家嘴约${escapeHtml(place.km)}公里，点击查看路线">${escapeHtml(amapLabelById.get(route.id) || route.id)}</a>`;
+  }).join("");
+  const routeIndex = distanceSortedRoutes.map((route) => `
+    <a class="map-index-route" href="#route-${escapeHtml(route.id)}" data-route-id="${escapeHtml(route.id)}">
+      <strong>${escapeHtml(amapLabelById.get(route.id) || route.id.replace(/^0/, ""))}</strong>
+      <span>${escapeHtml(route.title)}<small>${escapeHtml(routeRegionLabel(route))} · ${escapeHtml(route.travel)}</small></span>
+    </a>`).join("");
 
   return `
-    <section class="map-section" id="map" aria-labelledby="map-title">
-      <header class="map-heading">
-        <div>
-          <p class="section-eyebrow">高德真实底图 · 陆家嘴出发</p>
-          <h2 id="map-title">先看位置，再选路线</h2>
-        </div>
-        <p>底图和点位来自高德 POI/静态地图；各区按陆家嘴至主游玩地的平均驾车公里数由远到近排列，出发时以实时导航为准。</p>
-      </header>
-      <div class="map-frame" data-image-frame>
-        <img class="region-map region-map-photo" src="assets/amap-route-map-v5.png"
+    <section class="map-section" id="map" aria-label="路线位置图">
+      <div class="map-frame" data-image-frame data-amap-overlay
+        data-map-width="${metadata.width}" data-map-height="${metadata.height}">
+        <img class="region-map region-map-photo" src="${metadata.path}"
           alt="高德实际地图底图：陆家嘴 S 为起点，周边区域路线位置图" loading="lazy" decoding="async">
-        <div class="map-extra-stops" data-amap-overlay data-center="121.08,31.00" data-zoom="8" aria-label="新增近郊路线位置">
-          ${nearbyMarkers}
+        <div class="map-canvas" data-route-map role="region" aria-label="可缩放的路线地图"></div>
+        <div data-map-source hidden>
+          <span class="map-origin-marker" data-map-origin
+            data-map-x="${originPixel.x.toFixed(4)}" data-map-y="${originPixel.y.toFixed(4)}" title="陆家嘴 · 出发点">S</span>
+          ${routeMarkers}
         </div>
       </div>
-      ${hasNearbyMap ? `<details class="nearby-map-details">
-        <summary>查看松江 / 嘉定近郊放大图</summary>
-        <div class="map-frame nearby-map-frame" data-image-frame>
-          <img class="region-map region-map-photo" src="assets/amap-nearby-route-map-v1.png"
-            alt="高德上海近郊放大地图：陆家嘴S、松江广富林O、嘉定菊园百果园P" loading="lazy" decoding="async">
-        </div>
-      </details>` : ""}
       <div class="map-route-index" aria-label="路线地图索引">${routeIndex}</div>
       <div class="map-legend" aria-label="地图图例">
         <span><i class="legend-dot"></i>陆家嘴 S · 出发点</span>
-        <span>点位字母对应下方分区路线索引</span>
-        <span>O/P为新增近郊路线位置标记</span>
+        <span>地图字母对应下方路线；点击标记打开详情</span>
       </div>
     </section>`;
 }
 
 const rankingBoard = `
-  <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
-    <header class="ranking-heading">
-      <div>
-        <h2 id="ranking-title">周末路线总榜</h2>
-      </div>
-      <p>白天体验 45 · 内容组合 25 · 省心程度 20 · 证据质量 10。住宿不参与加分。</p>
-    </header>
+  <section class="ranking-section" id="ranking" aria-label="周末路线总榜">
     <ol class="rank-board">
       ${rankedRoutes.map(renderRankRow).join("")}
     </ol>
   </section>`;
 
 const routeSections = activeGroups.map((group) => {
-  const routes = rankedRoutes.filter((route) => route.group === group.id);
+  const routes = sortRoutesByDistance(allRoutes.filter((route) => route.group === group.id));
   return `
     <section class="region-section" id="region-${group.id}" aria-labelledby="region-title-${group.id}">
       <header class="region-heading">
@@ -1609,6 +1614,7 @@ const html = `<!doctype html>
   <meta name="description" content="6位成人、4间房的周末玩法攻略。先选去哪玩，再看晚上住哪。">
   <meta name="theme-color" content="#f6f2e9">
   <title>周末去哪玩 · 10月31日两天一夜</title>
+  <link rel="stylesheet" href="assets/vendor/leaflet.css">
   <style>
     :root {
       --ink: #202d27;
@@ -1701,14 +1707,14 @@ const html = `<!doctype html>
     .trip-tab-shell {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding-bottom: 10px;
+      padding-bottom: 4px;
     }
 
     .trip-tabs {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 7px;
-      padding: 6px;
+      gap: 4px;
+      padding: 4px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface);
@@ -1717,7 +1723,7 @@ const html = `<!doctype html>
 
     .trip-tab {
       min-width: 0;
-      min-height: 52px;
+      min-height: 46px;
       padding: 8px 10px;
       border: 1px solid transparent;
       border-radius: 6px;
@@ -1748,7 +1754,7 @@ const html = `<!doctype html>
     .region-nav {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 0;
       padding-bottom: 2px;
       overflow-x: auto;
       overscroll-behavior-inline: contain;
@@ -1780,13 +1786,7 @@ const html = `<!doctype html>
     .region-panel-nav {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 34px 0 4px;
-    }
-
-    .region-panel-nav > p {
-      color: var(--rust);
-      font-size: 16px;
-      font-weight: 900;
+      padding: 10px 0 4px;
     }
 
     main { overflow: clip; }
@@ -1797,7 +1797,7 @@ const html = `<!doctype html>
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 28px 0 22px;
+      padding: 12px 0 8px;
     }
 
     .intro-label {
@@ -1865,33 +1865,11 @@ const html = `<!doctype html>
 
     .map-section,
     .ranking-section {
-      padding: 44px max(14px, calc((100% - 1180px) / 2)) 56px;
+      padding: 14px max(14px, calc((100% - 1180px) / 2)) 32px;
       border-top: 1px solid var(--line);
     }
 
     .map-section { background: rgba(255, 253, 248, .52); }
-
-    .map-heading,
-    .ranking-heading {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .map-heading h2,
-    .ranking-heading h2 {
-      margin-top: 3px;
-      font-size: 38px;
-      font-weight: 900;
-    }
-
-    .map-heading > p,
-    .ranking-heading > p {
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.65;
-    }
 
     .map-frame {
       overflow: hidden;
@@ -1903,17 +1881,70 @@ const html = `<!doctype html>
     }
 
     .region-map {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      min-width: 620px;
       height: 100%;
-      margin-left: 50%;
-      transform: translateX(-50%);
-      object-fit: cover;
-      object-position: center 50%;
+      object-fit: contain;
     }
 
-    .map-frame { height: clamp(260px, 30vw, 420px); }
+    .map-frame {
+      width: min(100%, 840px);
+      height: clamp(220px, 30vw, 420px);
+      margin-inline: auto;
+    }
+    .map-canvas { position: absolute; inset: 0; z-index: 2; background: #edf1ec; }
+    .map-ready > .region-map { visibility: hidden; }
+    .map-route-icon { background: none; border: 0; }
+    .map-origin-marker {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--rust);
+      color: white;
+      font: 900 11px system-ui, sans-serif;
+    }
+    .map-canvas .leaflet-control-zoom a { color: var(--ink); }
+    .map-canvas .leaflet-tooltip { font-family: inherit; font-size: 12px; }
+    .map-picker {
+      position: absolute;
+      z-index: 600;
+      right: 8px;
+      bottom: 8px;
+      width: min(320px, calc(100% - 16px));
+      padding: 26px 10px 4px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      box-shadow: 0 3px 14px #202d2730;
+    }
+    .map-picker-close {
+      position: absolute;
+      top: 0;
+      right: 2px;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .map-choice-list { display: grid; max-height: 136px; overflow-y: auto; }
+    .map-choice-list button {
+      padding: 9px 4px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      text-align: left;
+      font: 600 13px/1.4 "Microsoft YaHei", sans-serif;
+      cursor: pointer;
+    }
+    .map-choice-list button:last-child { border-bottom: 0; }
     .nearby-map-details { margin-top: 14px; }
     .nearby-map-details summary {
       width: fit-content;
@@ -1930,22 +1961,24 @@ const html = `<!doctype html>
     .nearby-map-frame { height: clamp(220px, 25vw, 330px); margin-top: 10px; }
     .map-extra-stops { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
     .map-extra-stop {
-      position: absolute;
       display: grid;
-      width: 30px;
-      height: 30px;
+      width: 22px;
+      height: 22px;
       place-items: center;
-      transform: translate(-50%, -50%);
       border: 2px solid white;
       border-radius: 50%;
-      background: var(--rust);
+      background: var(--green);
       box-shadow: 0 2px 8px #202d2750;
       color: white;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 900;
       text-decoration: none;
       pointer-events: auto;
+      touch-action: manipulation;
     }
+    .map-extra-stop:hover { filter: brightness(1.15); }
+    .map-canvas .map-extra-stop { color: white; }
+    .map-extra-stop[data-route-id="r01"] { background: var(--rust); }
     .map-extra-stop[data-route-id="r02"] { background: var(--blue); }
     .map-extra-stop:focus-visible { outline: 3px solid white; outline-offset: 2px; }
 
@@ -2010,6 +2043,31 @@ const html = `<!doctype html>
       gap: 12px;
       margin-top: 14px;
     }
+    .map-index-route {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      align-items: center;
+      gap: 9px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.4;
+      text-decoration: none;
+    }
+    .map-index-route > strong {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 15px;
+    }
+    .map-index-route small { display: block; margin-top: 4px; color: var(--blue); font-size: 13px; }
+    .map-index-route:focus-visible { outline: 3px solid #89ad98; outline-offset: 2px; }
     .map-index-group {
       padding: 13px 14px 10px;
       border: 1px solid var(--line);
@@ -3241,11 +3299,10 @@ const html = `<!doctype html>
       body { font-size: 20px; }
       html { scroll-padding-top: 140px; }
       .region-nav a { font-size: 18px; }
-      .trip-tab-shell { width: min(1180px, calc(100% - 48px)); padding-bottom: 16px; }
-      .trip-tab { min-height: 58px; font-size: 20px; }
-      .region-panel-nav { width: min(1180px, calc(100% - 48px)); padding-top: 44px; }
-      .region-panel-nav > p { font-size: 17px; }
-      .intro { width: min(1180px, calc(100% - 48px)); padding: 34px 0 24px; }
+      .trip-tab-shell { width: min(1180px, calc(100% - 48px)); padding-bottom: 8px; }
+      .trip-tab { min-height: 48px; font-size: 20px; }
+      .region-panel-nav { width: min(1180px, calc(100% - 48px)); padding-top: 16px; }
+      .intro { width: min(1180px, calc(100% - 48px)); padding: 12px 0 8px; }
       .intro h1 { font-size: 30px; }
       .overview { width: min(1180px, calc(100% - 48px)); padding: 26px; margin-bottom: 60px; }
       .overview h2 { font-size: 30px; }
@@ -3285,13 +3342,7 @@ const html = `<!doctype html>
     @media (min-width: 720px) {
       body { font-size: 21px; }
       .map-section,
-      .ranking-section { padding-top: 58px; padding-bottom: 70px; }
-      .map-heading,
-      .ranking-heading { grid-template-columns: 1fr 1fr; align-items: end; gap: 28px; }
-      .map-heading h2,
-      .ranking-heading h2 { font-size: 48px; }
-      .map-heading > p,
-      .ranking-heading > p { font-size: 19px; }
+      .ranking-section { padding-top: 20px; padding-bottom: 40px; }
       .section-eyebrow { font-size: 17px; }
       .region-map { min-width: 0; }
       .map-route-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3366,7 +3417,7 @@ const html = `<!doctype html>
     @media (max-width: 719px) {
       .nearby-map-details summary { min-height: 40px; font-size: 14px; }
       .nearby-map-frame { height: 220px; }
-      .map-extra-stop { width: 27px; height: 27px; }
+      .map-extra-stop { width: 22px; height: 22px; }
       .map-index-group > p small { font-size: 11px; }
       .region-distance { font-size: 12px; }
       .region-extension { font-size: 13px; }
@@ -3378,15 +3429,11 @@ const html = `<!doctype html>
       .dialog-place-source { width: auto; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid var(--line); }
       .dialog-place-source .source-note { max-width: none; }
       .route-detail-heading { font-size: 18px; }
-      .intro { gap: 10px; padding: 22px 0 18px; }
+      .intro { gap: 10px; padding: 10px 0 6px; }
       .intro-label { min-height: 30px; padding: 3px 9px; font-size: 13px; }
       .intro h1 { font-size: 22px; }
       .trip-tab { font-size: 19px; }
-      .map-heading h2,
-      .ranking-heading h2,
       .region-heading h2 { font-size: 36px; }
-      .map-heading > p,
-      .ranking-heading > p,
       .region-intro { font-size: 18px; }
       .map-frame { margin-right: -1px; }
       .rank-row {
@@ -3480,7 +3527,6 @@ const html = `<!doctype html>
     <section class="tab-panel" id="panel-regions" role="tabpanel"
       aria-labelledby="tab-regions" tabindex="0" hidden>
       <div class="region-panel-nav">
-        <p>按区域看路线</p>
         <nav class="region-nav" aria-label="路线地区">
           ${regionLinks}
         </nav>
@@ -3502,6 +3548,7 @@ const html = `<!doctype html>
       <p>资料复核：携程问道、美团旅行 CLI、高德 MCP。车程均从陆家嘴出发，按本次高德路线规划记录；票价、开放时间、船班和现场收费会变，出发前再查官方渠道。</p>
     </div>
   </footer>
+  <script src="assets/vendor/leaflet.js"></script>
   <script>
     (() => {
       const galleryTimers = new WeakMap();
@@ -3547,31 +3594,95 @@ const html = `<!doctype html>
         galleryTimers.set(gallery, timer);
       };
 
+      const routeMaps = new WeakMap();
       const layoutMapMarkers = () => {
-        document.querySelectorAll("[data-amap-overlay]").forEach((overlay) => {
-          const frame = overlay.closest(".map-frame");
-          const image = frame?.querySelector("img.region-map-photo");
-          if (!frame || !image?.naturalWidth || !frame.clientWidth) return;
-          const worldSize = 256 * (2 ** Number(overlay.dataset.zoom || 8));
-          const project = (location) => {
-            const [longitude, latitude] = location.split(",").map(Number);
-            const sinLatitude = Math.sin(Math.max(-85, Math.min(85, latitude)) * Math.PI / 180);
-            return {
-              x: (longitude + 180) / 360 * worldSize,
-              y: (0.5 - Math.log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * Math.PI)) * worldSize
-            };
-          };
-          const center = project(overlay.dataset.center || "121.08,31.00");
-          const scale = Math.max(frame.clientWidth / image.naturalWidth, frame.clientHeight / image.naturalHeight);
-          const offsetX = (frame.clientWidth - image.naturalWidth * scale) / 2;
-          const offsetY = (frame.clientHeight - image.naturalHeight * scale) / 2;
-          overlay.querySelectorAll("[data-map-stop]").forEach((marker) => {
-            const point = project(marker.dataset.location);
-            const x = image.naturalWidth / 2 + point.x - center.x;
-            const y = image.naturalHeight / 2 + point.y - center.y;
-            marker.style.left = (offsetX + x * scale) + "px";
-            marker.style.top = (offsetY + y * scale) + "px";
-          });
+        document.querySelectorAll("[data-amap-overlay]").forEach((frame) => {
+          if (!frame.clientWidth || !frame.clientHeight || !window.L) return;
+          const image = frame.querySelector("img.region-map-photo");
+          if (!image?.naturalWidth) return;
+          let state = routeMaps.get(frame);
+          if (!state) {
+            const width = Number(frame.dataset.mapWidth);
+            const height = Number(frame.dataset.mapHeight);
+            const canvas = frame.querySelector("[data-route-map]");
+            const bounds = L.latLngBounds([[0, 0], [height, width]]);
+            const map = L.map(canvas, {
+              crs: L.CRS.Simple, attributionControl: false, zoomControl: false,
+              zoomSnap: 0, zoomDelta: 0.75, minZoom: -4, maxZoom: 2,
+              fadeAnimation: false, zoomAnimation: false,
+              scrollWheelZoom: false, maxBounds: bounds, maxBoundsViscosity: 1
+            });
+            L.control.zoom({zoomInTitle: "放大地图", zoomOutTitle: "缩小地图"}).addTo(map);
+            map.fitBounds(bounds, {padding: [12, 12], animate: false});
+            const raster = L.imageOverlay(image.getAttribute("src"), bounds, {
+              className: "route-basemap image-loaded", alt: image.alt, interactive: false
+            }).addTo(map);
+            raster.getElement().decoding = "async";
+            const toLatLng = (element) => [height - Number(element.dataset.mapY), Number(element.dataset.mapX)];
+            const stops = [...frame.querySelectorAll("[data-map-stop]")].map((element) => ({
+              element,
+              layer: L.marker(toLatLng(element), {
+                icon: L.divIcon({html: element, className: "map-route-icon", iconSize: [22, 22], iconAnchor: [11, 11]}),
+                keyboard: false
+              }).addTo(map)
+            }));
+            const origin = frame.querySelector("[data-map-origin]");
+            L.marker(toLatLng(origin), {
+              icon: L.divIcon({html: origin, className: "map-route-icon", iconSize: [22, 22], iconAnchor: [11, 11]}),
+              interactive: false, keyboard: false
+            }).addTo(map);
+            for (const stop of stops) {
+              const tooltip = document.createElement("span");
+              tooltip.textContent = stop.element.title;
+              stop.layer.bindTooltip(tooltip, {direction: "top", offset: [0, -10]});
+              stop.element.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const center = map.latLngToContainerPoint(stop.layer.getLatLng());
+                const nearby = stops.filter((candidate) =>
+                  center.distanceTo(map.latLngToContainerPoint(candidate.layer.getLatLng())) < 22
+                );
+                frame.querySelector("[data-map-picker]")?.remove();
+                if (nearby.length === 1) {
+                  openRouteDialog(stop.element.dataset.routeId);
+                  return;
+                }
+                const picker = document.createElement("div");
+                picker.className = "map-picker";
+                picker.dataset.mapPicker = "";
+                const close = document.createElement("button");
+                close.type = "button";
+                close.className = "map-picker-close";
+                close.setAttribute("aria-label", "关闭路线选择");
+                close.textContent = "×";
+                close.addEventListener("click", () => picker.remove());
+                const choices = document.createElement("div");
+                choices.className = "map-choice-list";
+                for (const candidate of nearby) {
+                  const button = document.createElement("button");
+                  button.type = "button";
+                  button.dataset.mapChoice = candidate.element.dataset.routeId;
+                  button.textContent = candidate.element.textContent + " · " + candidate.element.dataset.mapTitle +
+                    " · " + candidate.element.dataset.mapKm + " km";
+                  button.addEventListener("click", () => {
+                    picker.remove();
+                    openRouteDialog(candidate.element.dataset.routeId);
+                  });
+                  choices.append(button);
+                }
+                picker.append(close, choices);
+                frame.append(picker);
+              });
+            }
+            state = {map, bounds};
+            routeMaps.set(frame, state);
+            frame.classList.add("map-ready");
+          }
+          frame.querySelector("[data-map-picker]")?.remove();
+          state.map.stop();
+          state.map.invalidateSize({pan: false});
+          state.map.setMinZoom(state.map.getBoundsZoom(state.bounds, false, [24, 24]));
+          state.map.fitBounds(state.bounds, {padding: [12, 12], animate: false});
         });
       };
 

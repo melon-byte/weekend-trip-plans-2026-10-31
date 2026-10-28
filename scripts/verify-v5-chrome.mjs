@@ -138,7 +138,7 @@ const htmlSource = fs.readFileSync(htmlPath, "utf8");
 const referencedImagePaths = [...new Set(
   [...htmlSource.matchAll(/src="(assets\/[^"]+)"/g)].map((match) => decodeURIComponent(match[1]))
 )];
-const imageFileStats = referencedImagePaths.map((assetPath) => {
+const imageFileStats = referencedImagePaths.filter((assetPath) => /\.(png|jpe?g|webp)$/.test(assetPath)).map((assetPath) => {
   const stats = fs.statSync(path.join(root, assetPath));
   return { assetPath, bytes: stats.size };
 });
@@ -193,6 +193,21 @@ async function inspectAt(send, width, height, mobile, prefix) {
     const rankingSectionRect = rankingSection?.getBoundingClientRect();
     const rankingSectionStyle = rankingSection ? getComputedStyle(rankingSection) : null;
     const rankBoardStyle = rankBoard ? getComputedStyle(rankBoard) : null;
+    const intro = document.querySelector(".intro");
+    const introStyle = intro ? getComputedStyle(intro) : null;
+    const tabShell = document.querySelector(".trip-tab-shell");
+    const regionSections = [...document.querySelectorAll("#panel-regions .region-section")];
+    const regionRouteDistances = Object.fromEntries(regionSections.map((section) => [
+      section.id,
+      [...section.querySelectorAll(".route-card")].map((card) =>
+        Number(card.querySelector(".route-kicker span:last-child")?.textContent.match(/([\\d.]+) km/)?.[1])
+      )
+    ]));
+    const mapRouteDistances = [
+      [...document.querySelectorAll("#map .map-route-index a")].map((link) =>
+        Number(link.querySelector("small")?.textContent.match(/([\\d.]+) km/)?.[1])
+      )
+    ];
     const docWidth = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth);
     const overflowElements = [...document.querySelectorAll("main *")]
       .filter((element) => !element.closest(".region-nav"))
@@ -261,6 +276,14 @@ async function inspectAt(send, width, height, mobile, prefix) {
       selectedTab: tabs.find((tab) => tab.getAttribute("aria-selected") === "true")?.textContent.trim() || "",
       initialVisiblePanels: tabPanels.filter((panel) => !panel.hidden).map((panel) => panel.id),
       initialHiddenPanels: tabPanels.filter((panel) => panel.hidden).map((panel) => panel.id),
+      rankingHeaderVisible: Boolean(document.querySelector("#panel-ranking .ranking-heading")),
+      rankingScoringCopyVisible: document.querySelector("#panel-ranking")?.textContent.includes("白天体验 45") || false,
+      regionNavHeadingVisible: Boolean(document.querySelector("#panel-regions .region-panel-nav > p")),
+      mapHeadingVisible: Boolean(document.querySelector("#panel-map .map-heading")),
+      introPaddingTop: introStyle ? parseFloat(introStyle.paddingTop) : null,
+      introPaddingBottom: introStyle ? parseFloat(introStyle.paddingBottom) : null,
+      tabShellPaddingBottom: tabShell ? parseFloat(getComputedStyle(tabShell).paddingBottom) : null,
+      tabHeight: document.querySelector(".trip-tab")?.getBoundingClientRect().height || 0,
       regionNavCount: document.querySelectorAll(".region-nav").length,
       regionNavInsideRegions:
         document.querySelectorAll("#panel-regions .region-nav").length === 1 &&
@@ -320,6 +343,8 @@ async function inspectAt(send, width, height, mobile, prefix) {
       rankTitles: rankRows.map((row) => row.querySelector(".row-main > strong").textContent.trim()),
       routeTitles: routeCards.map((card) => card.querySelector(".route-title").textContent.trim()),
       regionRouteScores,
+      regionRouteDistances,
+      mapRouteDistances,
       routeTravel,
       travelMinutes,
       staySectionPresent: Boolean(staySection),
@@ -332,6 +357,9 @@ async function inspectAt(send, width, height, mobile, prefix) {
       mapImageNaturalWidth: mapImage?.naturalWidth || 0,
       mapImageNaturalHeight: mapImage?.naturalHeight || 0,
       mapFrameHeight: mapFrameRect ? Math.round(mapFrameRect.height) : 0,
+      mapMarkerCount: document.querySelectorAll("#map .map-extra-stop").length,
+      mapMarkerRouteIds: [...document.querySelectorAll("#map .map-extra-stop")]
+        .map((marker) => marker.dataset.routeId).sort(),
       mapIndexRoutes: document.querySelectorAll("#map .map-route-index a").length,
       mapIndexLabels: [...document.querySelectorAll("#map .map-route-index a strong")]
         .map((element) => element.textContent.trim())
@@ -357,15 +385,16 @@ async function inspectAt(send, width, height, mobile, prefix) {
   })()`);
 
   const expectedRouteIds = [
-    "02", "03", "04", "05", "12", "14", "16", "17", "f01",
-    "p01", "r01", "r02", "s01", "s02", "s03", "s04"
+    "02", "03", "04", "05", "12", "14", "16", "f01",
+    "r01", "r02", "s01", "s02", "s03", "s04"
   ].sort();
+  const expectedRouteCount = expectedRouteIds.length;
   const expectedMapLabels = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"
+    "A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "O", "P"
   ];
 
   assert(initial.topbars === 0 && initial.tripFacts === 0, `${prefix}: unused top header still renders`);
-  assert(initial.rankRows === 16, `${prefix}: expected 16 ranking rows, got ${initial.rankRows}`);
+  assert(initial.rankRows === expectedRouteCount, `${prefix}: expected ${expectedRouteCount} ranking rows, got ${initial.rankRows}`);
   assert(
     initial.rankBoardPaddingLeft === 0 &&
       Math.abs(initial.firstRankRowLeft - initial.rankingContentLeft) <= 2,
@@ -375,14 +404,22 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.rankRowHeights.every((height) => height <= (mobile ? 420 : 400)),
     `${prefix}: ranking cards are too tall: ${initial.rankRowHeights.join(",")}`
   );
-  assert(initial.routeCards === 16, `${prefix}: expected 16 route cards, got ${initial.routeCards}`);
-  assert(initial.routeDialogs === 16, `${prefix}: expected 16 dialogs, got ${initial.routeDialogs}`);
+  assert(initial.routeCards === expectedRouteCount, `${prefix}: expected ${expectedRouteCount} route cards, got ${initial.routeCards}`);
+  assert(initial.routeDialogs === expectedRouteCount, `${prefix}: expected ${expectedRouteCount} dialogs, got ${initial.routeDialogs}`);
   assert(initial.pageTitle === "出行计划", `${prefix}: page title should be 出行计划`);
   assert(
     initial.tabLabels.join(",") === "总榜,分区域,路线图",
     `${prefix}: unexpected tabs: ${initial.tabLabels.join(",")}`
   );
   assert(initial.selectedTab === "总榜", `${prefix}: 总榜 must be selected initially`);
+  assert(!initial.rankingHeaderVisible && !initial.rankingScoringCopyVisible,
+    `${prefix}: ranking heading and scoring explanation should be removed`);
+  assert(!initial.regionNavHeadingVisible, `${prefix}: region navigation heading should be removed`);
+  assert(!initial.mapHeadingVisible, `${prefix}: map heading should be removed`);
+  assert(initial.introPaddingTop <= 12 && initial.introPaddingBottom <= 8,
+    `${prefix}: page title spacing is not compact`);
+  assert(initial.tabShellPaddingBottom <= 8 && initial.tabHeight <= 50,
+    `${prefix}: tab bar spacing is not compact`);
   assert(
     initial.initialVisiblePanels.join(",") === "panel-ranking",
     `${prefix}: only the ranking panel should be visible initially`
@@ -394,7 +431,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.regionNavCount === 1, `${prefix}: region navigation must render exactly once`);
   assert(initial.regionNavInsideRegions, `${prefix}: region navigation must live only inside 分区域`);
   assert(
-    initial.regionNavLabels.join(",") === "苏州,金山,青浦,浦东,奉贤,近郊体验",
+    initial.regionNavLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州",
     `${prefix}: unexpected region navigation: ${initial.regionNavLabels.join(",")}`
   );
   assert(
@@ -412,23 +449,23 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.routeIds.join(",") === expectedRouteIds.join(","),
     `${prefix}: unexpected route ids: ${initial.routeIds.join(",")}`
   );
-  assert(initial.routeReviewCards === 16, `${prefix}: every route card needs a one-line review`);
-  assert(initial.routeFeeCards === 16, `${prefix}: every route card needs a fee warning`);
-  assert(initial.routePlaceReviews === 16, `${prefix}: every route card needs a source place review`);
-  assert(initial.rankPlaceReviews === 16, `${prefix}: every ranking row needs a source place review`);
-  assert(initial.dialogPlaceReviews === 16, `${prefix}: every dialog needs a source place review`);
-  assert(initial.dialogReviewBlocks === 16, `${prefix}: every dialog needs a one-line review`);
-  assert(initial.routeStayReferences === 16, `${prefix}: every route card needs a stay reference`);
-  assert(initial.rankStayReferences === 16, `${prefix}: every ranking row needs a stay reference`);
-  assert(initial.routeStayReferenceItems === 16, `${prefix}: route cards should show one primary stay each`);
-  assert(initial.rankStayReferenceItems === 31, `${prefix}: ranking rows should show all linked stay candidates`);
+  assert(initial.routeReviewCards === expectedRouteCount, `${prefix}: every route card needs a one-line review`);
+  assert(initial.routeFeeCards === expectedRouteCount, `${prefix}: every route card needs a fee warning`);
+  assert(initial.routePlaceReviews === expectedRouteCount, `${prefix}: every route card needs a source place review`);
+  assert(initial.rankPlaceReviews === expectedRouteCount, `${prefix}: every ranking row needs a source place review`);
+  assert(initial.dialogPlaceReviews === expectedRouteCount, `${prefix}: every dialog needs a source place review`);
+  assert(initial.dialogReviewBlocks === expectedRouteCount, `${prefix}: every dialog needs a one-line review`);
+  assert(initial.routeStayReferences === expectedRouteCount, `${prefix}: every route card needs a stay reference`);
+  assert(initial.rankStayReferences === expectedRouteCount, `${prefix}: every ranking row needs a stay reference`);
+  assert(initial.routeStayReferenceItems === expectedRouteCount, `${prefix}: route cards should show one primary stay each`);
+  assert(initial.rankStayReferenceItems === 27, `${prefix}: ranking rows should show all linked stay candidates`);
   assert(!mobile || initial.overflowingStayCarousels > 0, `${prefix}: mobile stay cards should scroll horizontally`);
-  assert(initial.dialogStayCards === 31, `${prefix}: expected 31 full stay candidates, got ${initial.dialogStayCards}`);
-  assert(initial.dialogStaySections === 16, `${prefix}: each dialog needs a stay section`);
-  assert(initial.routeAmenityTags >= 16, `${prefix}: route cards are missing amenity tags`);
+  assert(initial.dialogStayCards === 27, `${prefix}: expected 27 full stay candidates, got ${initial.dialogStayCards}`);
+  assert(initial.dialogStaySections === expectedRouteCount, `${prefix}: each dialog needs a stay section`);
+  assert(initial.routeAmenityTags >= expectedRouteCount, `${prefix}: route cards are missing amenity tags`);
   assert(initial.dialogAmenityTags >= 50, `${prefix}: dialog stay cards are missing amenity tags`);
   assert(
-    initial.rankTagCounts.length === 16 && initial.rankTagCounts.every((count) => count >= 1),
+    initial.rankTagCounts.length === expectedRouteCount && initial.rankTagCounts.every((count) => count >= 1),
     `${prefix}: ranking rows are missing tags`
   );
   assert(initial.dialogueStayText.includes("订前先问"), `${prefix}: stay cards need booking checks`);
@@ -437,9 +474,12 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.dialogSupported, `${prefix}: native dialog support is required`);
   assert(!initial.legacyMapVisible, `${prefix}: legacy map markup must not render`);
   assert(initial.mapImagePresent && initial.mapImageLoaded, `${prefix}: real Amap image is missing`);
-  assert(initial.mapImageSrc === "assets/amap-route-map-v5.png", `${prefix}: wrong map image source`);
+  assert(initial.mapImageSrc === "assets/amap-route-basemap-v6.png", `${prefix}: old pins must not remain in the basemap`);
   assert(initial.mapImageAlt.includes("高德实际地图底图"), `${prefix}: map image needs a real-map description`);
-  assert(initial.mapIndexRoutes === 16, `${prefix}: expected 16 active routes in the map index`);
+  assert(initial.mapIndexRoutes === expectedRouteCount, `${prefix}: expected ${expectedRouteCount} active routes in the map index`);
+  assert(initial.mapMarkerCount === expectedRouteCount, `${prefix}: every route must have an image marker`);
+  assert(initial.mapMarkerRouteIds.join(",") === expectedRouteIds.join(","),
+    `${prefix}: clickable map markers do not cover the active routes`);
   assert(initial.mapImageNaturalWidth === 1000, `${prefix}: map should stay a high-density real image`);
   assert(initial.mapImageNaturalHeight <= 520, `${prefix}: map image is not cropped tightly enough`);
   assert(
@@ -451,18 +491,25 @@ async function inspectAt(send, width, height, mobile, prefix) {
     `${prefix}: unexpected map labels: ${initial.mapIndexLabels.join(",")}`
   );
   assert(initial.mapText.includes("陆家嘴 S · 出发点"), `${prefix}: map must identify the S origin`);
-  assert(initial.mapText.includes("点位字母对应下方分区路线索引"), `${prefix}: map marker legend is missing`);
+  assert(initial.mapText.includes("地图字母对应下方路线；点击标记打开详情"), `${prefix}: map marker legend is missing`);
   assert(initial.mapText.includes("高德驾车"), `${prefix}: map index must show Amap drive times`);
   assert(
-    initial.activeRegionLabels.join(",") === "苏州,金山,青浦,浦东,奉贤,近郊体验",
+    initial.activeRegionLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州",
     `${prefix}: unexpected in-panel navigation: ${initial.activeRegionLabels.join(",")}`
   );
   assert(initial.introText.includes("玩优先"), `${prefix}: intro must keep the trip focused on activities`);
   assert(!initial.introText.includes("住宿放在最后"), `${prefix}: intro still de-emphasizes stays`);
   assert(!initial.introText.includes("90 分钟内"), `${prefix}: stale 90-minute limit remains`);
-  assert(initial.travelMinutes.length === 16, `${prefix}: expected 16 drive-time labels`);
+  assert(initial.travelMinutes.length === expectedRouteCount, `${prefix}: expected ${expectedRouteCount} drive-time labels`);
   assert(initial.travelMinutes.some((minutes) => minutes >= 120), `${prefix}: longest routes were removed`);
   assert(initial.travelMinutes.some((minutes) => minutes > 90), `${prefix}: route times are still capped at 90 minutes`);
+  const ascending = (distances) => distances.every((distance, index) =>
+    Number.isFinite(distance) && (index === 0 || distances[index - 1] <= distance)
+  );
+  assert(Object.values(initial.regionRouteDistances).every(ascending),
+    `${prefix}: routes within each region are not sorted nearest-first`);
+  assert(initial.mapRouteDistances.every(ascending),
+    `${prefix}: map routes are not globally sorted nearest-first`);
   assert(!initial.horizontalOverflow, `${prefix}: horizontal page overflow detected`);
   assert(
     initial.overflowElements.length === 0,
@@ -480,7 +527,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
     `${prefix}: fee reminders are incomplete: ${initial.feeReminderTerms.join(",")}`
   );
   assert(
-    initial.rankScenicImageSrcs.length === 16 &&
+    initial.rankScenicImageSrcs.length === expectedRouteCount &&
       initial.rankScenicImageSrcs.every((src) =>
         src.includes("assets/routes/") && !src.includes("assets/stays/")
       ),
@@ -501,13 +548,11 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.routeTitles.some((title) => title.includes("太湖东山")) &&
       !initial.routeTitles.some((title) => title.includes("东平森林公园")) &&
       initial.routeTitles.some((title) => title.includes("碧海金沙")),
-    `${prefix}: route list does not match the current 16-route scope`
+    `${prefix}: route list does not match the current ${expectedRouteCount}-route scope`
   );
   assert(
-    Object.values(initial.regionRouteScores).every((scores) =>
-      scores.every((score, index) => index === 0 || scores[index - 1] >= score)
-    ),
-    `${prefix}: region routes are not sorted by score: ${JSON.stringify(initial.regionRouteScores)}`
+    Object.values(initial.regionRouteScores).flat().length === expectedRouteCount,
+    `${prefix}: region route list does not cover all ${expectedRouteCount} routes`
   );
 
   const tabClickState = await evaluate(send, `(() => {
@@ -535,11 +580,31 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(tabClickState.map.selected === "路线图", `${prefix}: clicking 路线图 did not select it`);
   assert(tabClickState.map.visiblePanels.join(",") === "panel-map", `${prefix}: 路线图 exposed the wrong panels`);
 
-  const mapVisibleState = await evaluate(send, `(() => {
+  const mapVisibleState = await evaluate(send, `(async () => {
     document.getElementById("tab-map").click();
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const raster = document.querySelector("#map .route-basemap");
+    if (!raster) return {mapMissing: true};
+    await raster.decode();
     const frame = document.querySelector("#map .map-frame").getBoundingClientRect();
-    const image = document.querySelector("#map .region-map-photo").getBoundingClientRect();
-    const imageStyle = getComputedStyle(document.querySelector("#map .region-map-photo"));
+    const image = raster.getBoundingClientRect();
+    const overlay = document.querySelector("#map [data-amap-overlay]");
+    const markerElements = [...overlay.querySelectorAll("[data-map-stop]")];
+    const markers = markerElements.map((marker) => {
+      const rect = marker.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const expectedX = image.left + Number(marker.dataset.mapX) / raster.naturalWidth * image.width;
+      const expectedY = image.top + Number(marker.dataset.mapY) / raster.naturalHeight * image.height;
+      return {
+        routeId: marker.dataset.routeId,
+        left: rect.left - frame.left,
+        top: rect.top - frame.top,
+        right: rect.right - frame.left,
+        bottom: rect.bottom - frame.top,
+        error: Math.hypot(centerX - expectedX, centerY - expectedY)
+      };
+    });
     return {
       frameLeft: Math.round(frame.left),
       frameRight: Math.round(frame.right),
@@ -547,23 +612,117 @@ async function inspectAt(send, width, height, mobile, prefix) {
       imageLeft: Math.round(image.left),
       imageRight: Math.round(image.right),
       imageHeight: Math.round(image.height),
-      cssWidth: imageStyle.width,
-      cssMinWidth: imageStyle.minWidth,
-      cssMaxWidth: imageStyle.maxWidth,
-      cssObjectFit: imageStyle.objectFit,
-      cssTransform: imageStyle.transform
+      imageTop: Math.round(image.top),
+      imageBottom: Math.round(image.bottom),
+      frameTop: Math.round(frame.top),
+      frameBottom: Math.round(frame.bottom),
+      markerCount: markers.length,
+      markerRouteIds: markers.map((marker) => marker.routeId).sort(),
+      markerPositionsInsideImage: markers.every((marker) =>
+        marker.left >= 0 && marker.top >= 0 && marker.right <= frame.width && marker.bottom <= frame.height
+      ),
+      maximumCoordinateError: Math.max(...markers.map((marker) => marker.error)),
+      taihuMarkersPresent: ["s03", "s04"].every((id) => markers.some((marker) => marker.routeId === id)),
+      leaderLineCount: overlay.querySelectorAll("[data-map-leaders] line").length,
+      markers
     };
   })()`);
+  assert(!mapVisibleState.mapMissing, `${prefix}: interactive map did not initialize`);
   assert(
-    mapVisibleState.imageLeft <= mapVisibleState.frameLeft + 1 &&
-      mapVisibleState.imageRight >= mapVisibleState.frameRight - 1,
-    `${prefix}: cropped map image does not fill its frame: ${JSON.stringify(mapVisibleState)}`
+    mapVisibleState.imageLeft >= mapVisibleState.frameLeft &&
+      mapVisibleState.imageRight <= mapVisibleState.frameRight &&
+      mapVisibleState.imageTop >= mapVisibleState.frameTop &&
+      mapVisibleState.imageBottom <= mapVisibleState.frameBottom,
+    `${prefix}: the complete map must be visible without clipping: ${JSON.stringify(mapVisibleState)}`
   );
   assert(
-    mapVisibleState.frameHeight >= (mobile ? 230 : 320) &&
+    mapVisibleState.frameHeight >= (mobile ? 210 : 320) &&
       mapVisibleState.frameHeight <= (mobile ? 320 : 430),
     `${prefix}: map frame has an unexpected height: ${mapVisibleState.frameHeight}px`
   );
+  assert(mapVisibleState.markerCount === expectedRouteCount, `${prefix}: all map stops need clickable markers`);
+  assert(mapVisibleState.markerRouteIds.join(",") === expectedRouteIds.join(","),
+    `${prefix}: map marker route ids are incomplete`);
+  assert(mapVisibleState.markerPositionsInsideImage,
+    `${prefix}: a map marker is outside the image frame`);
+  assert(mapVisibleState.maximumCoordinateError < 1.6,
+    `${prefix}: map marker coordinates differ from the basemap (${mapVisibleState.maximumCoordinateError}px)`);
+  assert(mapVisibleState.taihuMarkersPresent, `${prefix}: both Taihu routes must remain visible`);
+  assert(mapVisibleState.leaderLineCount === 0,
+    `${prefix}: map markers must stay at their actual locations`);
+  {
+    const mapMarkerClickState = await evaluate(send, `(async () => {
+      const outcomes = [];
+      for (const marker of document.querySelectorAll("#map [data-map-stop]")) {
+        const routeId = marker.dataset.routeId;
+        marker.click();
+        document.querySelector('[data-map-choice="' + routeId + '"]')?.click();
+        const dialog = document.getElementById("route-dialog-" + routeId);
+        const opened = Boolean(dialog?.open);
+        if (opened) dialog.querySelector("[data-close-dialog]").click();
+        outcomes.push({ routeId, opened, closed: !dialog?.open });
+      }
+      return outcomes;
+    })()`);
+    assert(mapMarkerClickState.length === expectedRouteCount && mapMarkerClickState.every((result) => result.opened && result.closed),
+      `${prefix}: some map markers do not open their own route dialog: ${JSON.stringify(mapMarkerClickState)}`);
+  }
+
+  for (const routeId of expectedRouteIds) {
+    const target = await evaluate(send, `(async () => {
+      document.getElementById("tab-map").click();
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const frame = document.querySelector("#map .map-frame");
+      scrollTo(0, Math.max(0, frame.getBoundingClientRect().top + scrollY - 100));
+      const marker = [...frame.querySelectorAll("[data-map-stop]")]
+        .find((element) => element.dataset.routeId === ${JSON.stringify(routeId)});
+      const rect = marker.getBoundingClientRect();
+      return {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2};
+    })()`);
+    await send("Input.dispatchMouseEvent", {type: "mouseMoved", ...target});
+    await send("Input.dispatchMouseEvent", {type: "mousePressed", button: "left", clickCount: 1, ...target});
+    await send("Input.dispatchMouseEvent", {type: "mouseReleased", button: "left", clickCount: 1, ...target});
+    const clicked = await evaluate(send, `(() => {
+      document.querySelector('[data-map-choice="${routeId}"]')?.click();
+      const dialog = document.getElementById("route-dialog-${routeId}");
+      const open = Boolean(dialog?.open);
+      if (open) dialog.querySelector("[data-close-dialog]").click();
+      return {
+        open,
+        target: ${JSON.stringify(target)},
+        currentMarker: (() => {
+          const rect = document.querySelector('#map [data-route-id="${routeId}"]')?.getBoundingClientRect();
+          return rect ? {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2} : null;
+        })(),
+        otherDialog: document.querySelector("dialog[open]")?.id,
+        choices: [...document.querySelectorAll("[data-map-choice]")].map((button) => button.dataset.mapChoice),
+        hit: document.elementFromPoint(${target.x}, ${target.y})?.outerHTML.slice(0, 300)
+      };
+    })()`);
+    if (!clicked.open) await capture(send, `${prefix}-map-pointer-error.png`);
+    assert(clicked.open, `${prefix}: pointer click could not select map route ${routeId}: ${JSON.stringify(clicked)}`);
+  }
+
+  const zoomState = await evaluate(send, `(async () => {
+    document.getElementById("tab-map").click();
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const raster = document.querySelector("#map .route-basemap");
+    const before = raster.getBoundingClientRect().width;
+    document.querySelector("#map .leaflet-control-zoom-in").click();
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    const image = raster.getBoundingClientRect();
+    const errors = [...document.querySelectorAll("#map [data-map-stop]")].map((marker) => {
+      const rect = marker.getBoundingClientRect();
+      return Math.hypot(
+        rect.left + rect.width / 2 - image.left - Number(marker.dataset.mapX) / raster.naturalWidth * image.width,
+        rect.top + rect.height / 2 - image.top - Number(marker.dataset.mapY) / raster.naturalHeight * image.height
+      );
+    });
+    document.querySelector("#map .leaflet-control-zoom-out").click();
+    return {before, after: image.width, maximumCoordinateError: Math.max(...errors)};
+  })()`);
+  assert(zoomState.after > zoomState.before * 1.4, `${prefix}: map zoom control did not magnify the map`);
+  assert(zoomState.maximumCoordinateError < 1.6, `${prefix}: map coordinates drifted after zoom`);
   assert(tabClickState.ranking.selected === "总榜", `${prefix}: clicking 总榜 did not select it`);
   assert(
     tabClickState.ranking.visiblePanels.join(",") === "panel-ranking",
@@ -705,6 +864,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
 
   await evaluate(send, `document.getElementById("tab-ranking").click()`);
   await evaluate(send, "scrollTo(0, 0)");
+  await evaluate(send, "document.activeElement?.blur()");
   console.error(`Capturing ${prefix} screenshots...`);
   await sleep(150);
   await capture(send, `${prefix}-top.png`);
@@ -736,7 +896,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
 
   await evaluate(send, `(() => {
     document.getElementById("tab-ranking").click();
-    const button = document.querySelector(".rank-row");
+    const button = document.querySelector(".rank-row-open");
     button.click();
   })()`);
   await sleep(180);
