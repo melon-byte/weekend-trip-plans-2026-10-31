@@ -820,12 +820,19 @@
       cursor: pointer;
     }
     .stay-reference-item:first-child { border-top: 0; padding-top: 4px; }
-    .stay-reference-item img {
+    .stay-reference-thumb {
+      display: block;
       width: 64px;
       height: 64px;
       border-radius: 6px;
-      object-fit: cover;
+      overflow: hidden;
       background: #d8e1db;
+    }
+    .stay-reference-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .stay-reference-copy {
       display: grid;
@@ -904,7 +911,7 @@
     .stay-reference--row .stay-reference-item:hover { border-color: #8fac98; background: #fcfefc; box-shadow: 0 3px 10px rgba(33, 50, 41, .08); }
     .stay-reference--row .stay-reference-item:focus-visible { outline: 3px solid #89ad98; outline-offset: 1px; }
     .stay-reference--row[data-stay-count="1"] .stay-reference-item { flex-basis: 100%; }
-    .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
+    .stay-reference--row .stay-reference-thumb { width: 64px; height: 64px; }
     .stay-reference--row .stay-reference-copy { gap: 2px; }
     .stay-reference--row .stay-reference-copy > strong { font-size: 15px; line-height: 1.32; }
     .stay-reference--row .stay-reference-score,
@@ -1089,7 +1096,7 @@
       transition: border-color .2s, box-shadow .2s;
     }
     .dialog-stay-card.is-target { border-color: var(--green); box-shadow: 0 0 0 3px #78a48766; }
-    .dialog-stay-card > img {
+    .dialog-stay-photo > img {
       display: block;
       width: 100%;
       aspect-ratio: 16 / 6.8;
@@ -1600,7 +1607,7 @@
       background: var(--surface-strong);
     }
 
-    .stay-card > img {
+    .stay-card-photo > img {
       width: 100%;
       aspect-ratio: 3 / 2;
       object-fit: cover;
@@ -1777,7 +1784,7 @@
         grid-template-columns: 72px minmax(0, 1fr);
         gap: 10px;
       }
-      .stay-reference--row .stay-reference-item img { width: 72px; height: 72px; }
+      .stay-reference--row .stay-reference-thumb { width: 72px; height: 72px; }
       .route-title { font-size: 32px; }
       .review-line,
       .fee-line { font-size: 19px; }
@@ -1870,7 +1877,7 @@
         padding-bottom: 6px;
         padding-left: 11px;
       }
-      .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
+      .stay-reference--row .stay-reference-thumb { width: 64px; height: 64px; }
       .stay-reference--row .stay-reference-copy > strong { font-size: 15px; }
       .stay-reference--row .stay-reference-score,
       .stay-reference--row .stay-reference-fit,
@@ -1966,8 +1973,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="new_nongshe" data-route-id="14" aria-label="打开路线并定位到住宿：上海浓舍民宿" data-image-frame>
-      <img src="assets/stays/stay-new_nongshe.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="new_nongshe" data-route-id="14" aria-label="打开路线并定位到住宿：上海浓舍民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_nongshe.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海浓舍民宿</strong>
         <span class="stay-reference-score">4.6 / 4.2 · 携程18条 / 美团74条</span>
@@ -1975,8 +1982,8 @@
         <span class="stay-reference-fit">4间房适配：美团确认3卧，不满足4房</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="new_xianshe" data-route-id="14" aria-label="打开路线并定位到住宿：上海闲舍shinehouse独栋别墅" data-image-frame>
-      <img src="assets/stays/stay-new_xianshe.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="new_xianshe" data-route-id="14" aria-label="打开路线并定位到住宿：上海闲舍shinehouse独栋别墅">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_xianshe.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海闲舍shinehouse独栋别墅</strong>
         <span class="stay-reference-score">携程4.9 / 美团4.6 · 携程190条 / 美团本轮41条；旧记录22条</span>
@@ -2029,8 +2036,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin" data-route-id="r01" aria-label="打开路线并定位到住宿：上海松江广富林宰相府酒店" data-image-frame>
-      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin" data-route-id="r01" aria-label="打开路线并定位到住宿：上海松江广富林宰相府酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林宰相府酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
@@ -2038,8 +2045,8 @@
         <span class="stay-reference-fit">4间房适配：多种客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_grand" data-route-id="r01" aria-label="打开路线并定位到住宿：上海广富林大酒店（松江大学城店）" data-image-frame>
-      <img src="assets/stays/song-guangfulin-grand.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_grand" data-route-id="r01" aria-label="打开路线并定位到住宿：上海广富林大酒店（松江大学城店）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin-grand.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海广富林大酒店（松江大学城店）</strong>
         <span class="stay-reference-score">携程4.6 / 美团4.6 · 美团860条 / 携程评价数未返回</span>
@@ -2047,8 +2054,8 @@
         <span class="stay-reference-fit">4间房适配：酒店型客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_hilton" data-route-id="r01" aria-label="打开路线并定位到住宿：上海松江广富林希尔顿酒店" data-image-frame>
-      <img src="assets/stays/song-guangfulin-hilton.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_hilton" data-route-id="r01" aria-label="打开路线并定位到住宿：上海松江广富林希尔顿酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin-hilton.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林希尔顿酒店</strong>
         <span class="stay-reference-score">携程4.7 / 美团4.4 · 美团2727条 / 携程评价数未返回</span>
@@ -2101,8 +2108,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="03" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿" data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="03" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -2110,8 +2117,8 @@
         <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="shaoguang" data-route-id="03" aria-label="打开路线并定位到住宿：韶光度假别墅（朱家角）" data-image-frame>
-      <img src="assets/stays/stay-shaoguang.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="shaoguang" data-route-id="03" aria-label="打开路线并定位到住宿：韶光度假别墅（朱家角）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-shaoguang.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>韶光度假别墅（朱家角）</strong>
         <span class="stay-reference-score">4.7 · 携程6条 / 美团约4.7，评价数未返回</span>
@@ -2164,8 +2171,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="shuyun" data-route-id="s04" aria-label="打开路线并定位到住宿：墅之韵太湖庄园别墅（东山）" data-image-frame>
-      <img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="shuyun" data-route-id="s04" aria-label="打开路线并定位到住宿：墅之韵太湖庄园别墅（东山）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>墅之韵太湖庄园别墅（东山）</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.3 · 携程高分 / 美团105条</span>
@@ -2218,8 +2225,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="05" aria-label="打开路线并定位到住宿：上海涵七民宿" data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="05" aria-label="打开路线并定位到住宿：上海涵七民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -2227,8 +2234,8 @@
         <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="05" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）" data-image-frame>
-      <img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="05" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花筑·清风拾光（枫泾）</strong>
         <span class="stay-reference-score">4.8 · 携程252条 / 美团暂无评分与评价数</span>
@@ -2281,8 +2288,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="miyi" data-route-id="s02" aria-label="打开路线并定位到住宿：觅家·一夜花香（周庄）" data-image-frame>
-      <img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="miyi" data-route-id="s02" aria-label="打开路线并定位到住宿：觅家·一夜花香（周庄）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>觅家·一夜花香（周庄）</strong>
         <span class="stay-reference-score">5.0 · 携程截图8条 / 美团未命中同店</span>
@@ -2335,8 +2342,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_atour" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定菊园智慧中心亚朵酒店" data-image-frame>
-      <img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_atour" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定菊园智慧中心亚朵酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定菊园智慧中心亚朵酒店</strong>
         <span class="stay-reference-score">携程4.9 / 美团4.1 · 美团93条 / 携程评价数未返回</span>
@@ -2344,8 +2351,8 @@
         <span class="stay-reference-fit">4间房适配：酒店型客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_yunju" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定别墅云居花园酒店" data-image-frame>
-      <img src="assets/stays/jiading-yunju.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_yunju" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定别墅云居花园酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-yunju.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定别墅云居花园酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.5 · 美团评价数未返回 / 携程评价数未返回</span>
@@ -2353,8 +2360,8 @@
         <span class="stay-reference-fit">4间房适配：约50间客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_hilton" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定希尔顿花园酒店" data-image-frame>
-      <img src="assets/stays/jiading-hilton.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_hilton" data-route-id="r02" aria-label="打开路线并定位到住宿：上海嘉定希尔顿花园酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-hilton.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定希尔顿花园酒店</strong>
         <span class="stay-reference-score">携程4.7 / 美团4.6 · 美团155条 / 携程评价数未返回</span>
@@ -2407,8 +2414,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="huguang" data-route-id="j01" aria-label="打开路线并定位到住宿：湖光山居度假酒店（南北湖景区内）" data-image-frame>
-      <img src="assets/stays/stay-huguang.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="huguang" data-route-id="j01" aria-label="打开路线并定位到住宿：湖光山居度假酒店（南北湖景区内）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-huguang.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>湖光山居度假酒店（南北湖景区内）</strong>
         <span class="stay-reference-score">待核 · 问道报价约246元/间 · 2026-10-29</span>
@@ -2416,8 +2423,8 @@
         <span class="stay-reference-fit">4间房适配：酒店型独立客房，4间可按间订</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="muxinju" data-route-id="j01" aria-label="打开路线并定位到住宿：海盐木心居客栈（南北湖弈仙城）" data-image-frame>
-      <img src="assets/stays/stay-muxinju.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="muxinju" data-route-id="j01" aria-label="打开路线并定位到住宿：海盐木心居客栈（南北湖弈仙城）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-muxinju.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>海盐木心居客栈（南北湖弈仙城）</strong>
         <span class="stay-reference-score">待核 · 问道报价约330元/间 · 2026-10-29</span>
@@ -2470,8 +2477,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin" data-route-id="r03" aria-label="打开路线并定位到住宿：上海松江广富林宰相府酒店" data-image-frame>
-      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin" data-route-id="r03" aria-label="打开路线并定位到住宿：上海松江广富林宰相府酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林宰相府酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
@@ -2479,8 +2486,8 @@
         <span class="stay-reference-fit">4间房适配：多种客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_grand" data-route-id="r03" aria-label="打开路线并定位到住宿：上海广富林大酒店（松江大学城店）" data-image-frame>
-      <img src="assets/stays/song-guangfulin-grand.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_grand" data-route-id="r03" aria-label="打开路线并定位到住宿：上海广富林大酒店（松江大学城店）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin-grand.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海广富林大酒店（松江大学城店）</strong>
         <span class="stay-reference-score">携程4.6 / 美团4.6 · 美团860条 / 携程评价数未返回</span>
@@ -2488,8 +2495,8 @@
         <span class="stay-reference-fit">4间房适配：酒店型客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_hilton" data-route-id="r03" aria-label="打开路线并定位到住宿：上海松江广富林希尔顿酒店" data-image-frame>
-      <img src="assets/stays/song-guangfulin-hilton.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="song_guangfulin_hilton" data-route-id="r03" aria-label="打开路线并定位到住宿：上海松江广富林希尔顿酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin-hilton.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林希尔顿酒店</strong>
         <span class="stay-reference-score">携程4.7 / 美团4.4 · 美团2727条 / 携程评价数未返回</span>
@@ -2542,8 +2549,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="11" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿" data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="11" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -2551,8 +2558,8 @@
         <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="new_fusheng" data-route-id="11" aria-label="打开路线并定位到住宿：上海浮生民宿(青西郊野公园店)" data-image-frame>
-      <img src="assets/stays/stay-new_fusheng.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="new_fusheng" data-route-id="11" aria-label="打开路线并定位到住宿：上海浮生民宿(青西郊野公园店)">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_fusheng.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海浮生民宿(青西郊野公园店)</strong>
         <span class="stay-reference-score">4.9 · 46条评价</span>
@@ -2605,8 +2612,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="niulu" data-route-id="f02" aria-label="打开路线并定位到住宿：牛路野营营地（海湾国家森林公园内）" data-image-frame>
-      <img src="assets/stays/stay-niulu.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="niulu" data-route-id="f02" aria-label="打开路线并定位到住宿：牛路野营营地（海湾国家森林公园内）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-niulu.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>牛路野营营地（海湾国家森林公园内）</strong>
         <span class="stay-reference-score">高德4.0 · 高德4.0 · 露营体验型住宿</span>
@@ -2659,8 +2666,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="xishan" data-route-id="s05" aria-label="打开路线并定位到住宿：太湖西山 · 小白房" data-image-frame>
-      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="xishan" data-route-id="s05" aria-label="打开路线并定位到住宿：太湖西山 · 小白房">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>太湖西山 · 小白房</strong>
         <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
@@ -2668,8 +2675,8 @@
         <span class="stay-reference-fit">4间房适配：美团4卧8人；床型与携程记录有差异</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="sanjo" data-route-id="s05" aria-label="打开路线并定位到住宿：Sanjo三江·湖景民宿（西山）" data-image-frame>
-      <img src="assets/stays/stay-sanjo.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="sanjo" data-route-id="s05" aria-label="打开路线并定位到住宿：Sanjo三江·湖景民宿（西山）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-sanjo.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>Sanjo三江·湖景民宿（西山）</strong>
         <span class="stay-reference-score">4.9 / 4.6 · 携程716条 / 美团17间客房；评价数未返回</span>
@@ -2685,13 +2692,67 @@
     </li>
     <li>
       <article class="rank-row">
+        <button class="rank-row-open" type="button" data-route-id="f03"
+        aria-haspopup="dialog" aria-controls="route-dialog-f03">
+          <span class="row-head">
+            <span class="row-visual" data-image-frame>
+              <img class="row-photo" src="assets/routes/route-f03.jpg" alt="李窑村无忧闲院与稻田"
+                loading="lazy" fetchpriority="auto" decoding="async">
+              <span class="row-rank">13</span>
+            </span>
+            <span class="row-main">
+              <span class="row-meta">
+                <span class="row-region">奉贤</span>
+                <span class="row-score">
+                  <span><b>79</b><small>分</small></span>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+                </span>
+              </span>
+              <strong>李窑村 · 金黄稻田＋田园咖啡</strong>
+            </span>
+            <span class="row-arrow" aria-hidden="true">›</span>
+          </span>
+          <span class="row-review">真稻田真村子，不是仿古镇；但11月初正值收割窗口，部分田块可能已收，出发前看近期实拍。</span>
+
+    <span class="place-review-meta place-review-meta--row" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">高德<strong>4.7</strong><small>无忧闲院</small></span>
+
+    </span>
+        </button>
+
+    <span class="stay-reference stay-reference--row" data-stay-count="1">
+
+      <span class="stay-reference-list">
+
+    <button class="stay-reference-item" type="button" data-open-stay="fanghua" data-route-id="f03" aria-label="打开路线并定位到住宿：青普这厢·芳华李窑民宿（李窑村内）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-fanghua.jpg" alt="" loading="lazy" decoding="async"></span>
+      <span class="stay-reference-copy">
+        <strong>青普这厢·芳华李窑民宿（李窑村内）</strong>
+        <span class="stay-reference-score">高德4.6 · 高德4.6 · 就在李窑村内</span>
+        <span class="stay-amenities"><span>村内</span><span>庭院</span><span>手作活动</span></span>
+        <span class="stay-reference-fit">4间房适配：民宿房型可按间订，4间库存待确认</span>
+      </span>
+    </button>
+      </span>
+
+    </span>
+        <span class="row-tags"><span>金黄稻田</span><span>田园咖啡</span><span>住村里</span></span>
+      </article>
+    </li>
+    <li>
+      <article class="rank-row">
         <button class="rank-row-open" type="button" data-route-id="04"
         aria-haspopup="dialog" aria-controls="route-dialog-04">
           <span class="row-head">
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-04.jpg" alt="金山城市沙滩、海滨与亲水活动"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">13</span>
+              <span class="row-rank">14</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2722,8 +2783,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="04" aria-label="打开路线并定位到住宿：上海涵七民宿" data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="04" aria-label="打开路线并定位到住宿：上海涵七民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -2731,8 +2792,8 @@
         <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="04" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）" data-image-frame>
-      <img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="04" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花筑·清风拾光（枫泾）</strong>
         <span class="stay-reference-score">4.8 · 携程252条 / 美团暂无评分与评价数</span>
@@ -2754,7 +2815,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-f01.jpg" alt="碧海金沙海边与沙滩"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">14</span>
+              <span class="row-rank">15</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2785,8 +2846,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="duoyun" data-route-id="f01" aria-label="打开路线并定位到住宿：上海朵云闲居民宿（吴房村）" data-image-frame>
-      <img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="duoyun" data-route-id="f01" aria-label="打开路线并定位到住宿：上海朵云闲居民宿（吴房村）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海朵云闲居民宿（吴房村）</strong>
         <span class="stay-reference-score">携程5.0 / 美团暂无评分 · 携程3条 / 美团37条；3.9为热度分</span>
@@ -2794,8 +2855,8 @@
         <span class="stay-reference-fit">4间房适配：携程有4室4卫，待复核</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="banxia" data-route-id="f01" aria-label="打开路线并定位到住宿：花开半夏·田园美墅度假村" data-image-frame>
-      <img src="assets/stays/stay-banxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="banxia" data-route-id="f01" aria-label="打开路线并定位到住宿：花开半夏·田园美墅度假村">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-banxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花开半夏·田园美墅度假村</strong>
         <span class="stay-reference-score">4.9 / 4.1 · 携程43条 / 美团评价数未返回</span>
@@ -2817,7 +2878,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-r04.jpg" alt="炮台湾湿地木栈道与江景"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">15</span>
+              <span class="row-rank">16</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2848,8 +2909,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="cordis" data-route-id="r04" aria-label="打开路线并定位到住宿：上海伊敦康得思酒店（吴淞口邮轮港）" data-image-frame>
-      <img src="assets/stays/stay-cordis.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="cordis" data-route-id="r04" aria-label="打开路线并定位到住宿：上海伊敦康得思酒店（吴淞口邮轮港）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-cordis.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海伊敦康得思酒店（吴淞口邮轮港）</strong>
         <span class="stay-reference-score">高德4.7 · 高德4.7 · 邮轮港旁</span>
@@ -2871,7 +2932,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-12.jpg" alt="花开半夏活动园区的院子、草坪与泳池"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">16</span>
+              <span class="row-rank">17</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2902,8 +2963,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="new_daojia" data-route-id="12" aria-label="打开路线并定位到住宿：花筑·到家民宿(上海青溪老街店)" data-image-frame>
-      <img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="new_daojia" data-route-id="12" aria-label="打开路线并定位到住宿：花筑·到家民宿(上海青溪老街店)">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花筑·到家民宿(上海青溪老街店)</strong>
         <span class="stay-reference-score">4.5 · 携程137条 / 美团未命中；近名半移堂非同店</span>
@@ -2911,8 +2972,8 @@
         <span class="stay-reference-fit">4间房适配：携程页面有房型；美团未命中同店</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="banxia" data-route-id="12" aria-label="打开路线并定位到住宿：花开半夏·田园美墅度假村" data-image-frame>
-      <img src="assets/stays/stay-banxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="banxia" data-route-id="12" aria-label="打开路线并定位到住宿：花开半夏·田园美墅度假村">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-banxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花开半夏·田园美墅度假村</strong>
         <span class="stay-reference-score">4.9 / 4.1 · 携程43条 / 美团评价数未返回</span>
@@ -2934,7 +2995,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s01.jpg" alt="锦溪古镇河巷、石桥与游船"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">17</span>
+              <span class="row-rank">18</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -2965,8 +3026,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="chengyu" data-route-id="s01" aria-label="打开路线并定位到住宿：橙屿民宿（锦溪·计家墩）" data-image-frame>
-      <img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="chengyu" data-route-id="s01" aria-label="打开路线并定位到住宿：橙屿民宿（锦溪·计家墩）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>橙屿民宿（锦溪·计家墩）</strong>
         <span class="stay-reference-score">5.0 · 携程截图3条 / 美团未命中同店</span>
@@ -2988,7 +3049,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-02.jpg" alt="上海美帆游艇俱乐部 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">18</span>
+              <span class="row-rank">19</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -3019,8 +3080,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="02" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿" data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="02" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -3028,8 +3089,8 @@
         <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="sun" data-route-id="02" aria-label="打开路线并定位到住宿：太阳岛 · 俱乐部别墅三房一厅" data-image-frame>
-      <img src="assets/stays/stay-sun.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="sun" data-route-id="02" aria-label="打开路线并定位到住宿：太阳岛 · 俱乐部别墅三房一厅">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-sun.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>太阳岛 · 俱乐部别墅三房一厅</strong>
         <span class="stay-reference-score">携程4.7 / 美团4.4 · 携程3635条 / 美团6449条</span>
@@ -3051,7 +3112,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-s03.jpg" alt="太湖缥缈峰山顶眺望湖面与群山"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">19</span>
+              <span class="row-rank">20</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -3082,8 +3143,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="xishan" data-route-id="s03" aria-label="打开路线并定位到住宿：太湖西山 · 小白房" data-image-frame>
-      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="xishan" data-route-id="s03" aria-label="打开路线并定位到住宿：太湖西山 · 小白房">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>太湖西山 · 小白房</strong>
         <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
@@ -3091,8 +3152,8 @@
         <span class="stay-reference-fit">4间房适配：美团4卧8人；床型与携程记录有差异</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="sanjo" data-route-id="s03" aria-label="打开路线并定位到住宿：Sanjo三江·湖景民宿（西山）" data-image-frame>
-      <img src="assets/stays/stay-sanjo.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="sanjo" data-route-id="s03" aria-label="打开路线并定位到住宿：Sanjo三江·湖景民宿（西山）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-sanjo.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>Sanjo三江·湖景民宿（西山）</strong>
         <span class="stay-reference-score">4.9 / 4.6 · 携程716条 / 美团17间客房；评价数未返回</span>
@@ -3114,7 +3175,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-r05.jpg" alt="嘉北郊野公园田园景观"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">20</span>
+              <span class="row-rank">21</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -3145,8 +3206,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_atour" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定菊园智慧中心亚朵酒店" data-image-frame>
-      <img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_atour" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定菊园智慧中心亚朵酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定菊园智慧中心亚朵酒店</strong>
         <span class="stay-reference-score">携程4.9 / 美团4.1 · 美团93条 / 携程评价数未返回</span>
@@ -3154,8 +3215,8 @@
         <span class="stay-reference-fit">4间房适配：酒店型客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_yunju" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定别墅云居花园酒店" data-image-frame>
-      <img src="assets/stays/jiading-yunju.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_yunju" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定别墅云居花园酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-yunju.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定别墅云居花园酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.5 · 美团评价数未返回 / 携程评价数未返回</span>
@@ -3163,8 +3224,8 @@
         <span class="stay-reference-fit">4间房适配：约50间客房；四间同晚库存未确认</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="jiading_hilton" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定希尔顿花园酒店" data-image-frame>
-      <img src="assets/stays/jiading-hilton.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="jiading_hilton" data-route-id="r05" aria-label="打开路线并定位到住宿：上海嘉定希尔顿花园酒店">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-hilton.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定希尔顿花园酒店</strong>
         <span class="stay-reference-score">携程4.7 / 美团4.6 · 美团155条 / 携程评价数未返回</span>
@@ -3186,7 +3247,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-06.jpg" alt="枫叶岛 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">21</span>
+              <span class="row-rank">22</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -3217,8 +3278,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="06" aria-label="打开路线并定位到住宿：上海涵七民宿" data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="hanqi" data-route-id="06" aria-label="打开路线并定位到住宿：上海涵七民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -3226,8 +3287,8 @@
         <span class="stay-reference-fit">4间房适配：有4室包栋候选</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="06" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）" data-image-frame>
-      <img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="qingfeng" data-route-id="06" aria-label="打开路线并定位到住宿：花筑·清风拾光（枫泾）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花筑·清风拾光（枫泾）</strong>
         <span class="stay-reference-score">4.8 · 携程252条 / 美团暂无评分与评价数</span>
@@ -3249,7 +3310,7 @@
             <span class="row-visual" data-image-frame>
               <img class="row-photo" src="assets/routes/route-16.jpg" alt="东方绿舟景区 · 景点照片 1"
                 loading="lazy" fetchpriority="auto" decoding="async">
-              <span class="row-rank">22</span>
+              <span class="row-rank">23</span>
             </span>
             <span class="row-main">
               <span class="row-meta">
@@ -3280,8 +3341,8 @@
 
       <span class="stay-reference-list">
 
-    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="16" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿" data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="liuxia" data-route-id="16" aria-label="打开路线并定位到住宿：淀山湖·留夏拾光民宿">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -3289,8 +3350,8 @@
         <span class="stay-reference-fit">4间房适配：5/6室套房可覆盖4房</span>
       </span>
     </button>
-    <button class="stay-reference-item" type="button" data-open-stay="shaoguang" data-route-id="16" aria-label="打开路线并定位到住宿：韶光度假别墅（朱家角）" data-image-frame>
-      <img src="assets/stays/stay-shaoguang.jpg" alt="" loading="lazy" decoding="async">
+    <button class="stay-reference-item" type="button" data-open-stay="shaoguang" data-route-id="16" aria-label="打开路线并定位到住宿：韶光度假别墅（朱家角）">
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-shaoguang.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>韶光度假别墅（朱家角）</strong>
         <span class="stay-reference-score">4.7 · 携程6条 / 美团约4.7，评价数未返回</span>
@@ -3364,8 +3425,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-new_nongshe.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_nongshe.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海浓舍民宿</strong>
         <span class="stay-reference-score">4.6 / 4.2 · 携程18条 / 美团74条</span>
@@ -3409,7 +3470,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 15</span>
+            <span>总榜第 16</span>
             <span>高德驾车 24 km · 约 48 分钟</span>
           </span>
           <span class="route-title">长江口 · 炮台湾湿地＋滨江森林公园</span>
@@ -3429,8 +3490,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-cordis.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-cordis.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海伊敦康得思酒店（吴淞口邮轮港）</strong>
         <span class="stay-reference-score">高德4.7 · 高德4.7 · 邮轮港旁</span>
@@ -3480,8 +3541,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林宰相府酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
@@ -3531,8 +3592,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定菊园智慧中心亚朵酒店</strong>
         <span class="stay-reference-score">携程4.9 / 美团4.1 · 美团93条 / 携程评价数未返回</span>
@@ -3582,8 +3643,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海松江广富林宰相府酒店</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.9 · 美团5268条 / 携程评价数未返回</span>
@@ -3613,7 +3674,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 20</span>
+            <span>总榜第 21</span>
             <span>高德驾车 46 km · 约 63 分钟</span>
           </span>
           <span class="route-title">嘉北郊野公园 · 稻田花海＋湿地慢走</span>
@@ -3633,8 +3694,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海嘉定菊园智慧中心亚朵酒店</strong>
         <span class="stay-reference-score">携程4.9 / 美团4.1 · 美团93条 / 携程评价数未返回</span>
@@ -3661,8 +3722,8 @@
       <header class="region-heading">
         <div>
           <p>海边 · 手作 · 庭院</p>
-          <h2 id="region-title-fengxian">奉贤 <span>3 条</span></h2>
-          <small class="region-distance">陆家嘴出发 · 主玩地平均约 48.7 km</small>
+          <h2 id="region-title-fengxian">奉贤 <span>4 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 46.8 km</small>
         </div>
         <p class="region-intro">海边和庭院住宿能放在一条线里；适合白天少跑、晚上一起玩。</p>
       </header>
@@ -3678,7 +3739,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 16</span>
+            <span>总榜第 17</span>
             <span>高德驾车 35 km · 约 58 分钟</span>
           </span>
           <span class="route-title">花开半夏 · 成人手作＋乡村体验</span>
@@ -3698,8 +3759,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-new_daojia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>花筑·到家民宿(上海青溪老街店)</strong>
         <span class="stay-reference-score">4.5 · 携程137条 / 美团未命中；近名半移堂非同店</span>
@@ -3719,6 +3780,57 @@
         </span>
       </button>
     </article>
+    <article class="route-card" id="route-f03">
+      <button class="route-launcher" type="button" data-route-id="f03"
+        aria-haspopup="dialog" aria-controls="route-dialog-f03">
+        <span class="route-photo" data-image-frame>
+          <img src="assets/routes/route-f03.jpg" alt="李窑村无忧闲院与稻田" loading="lazy" decoding="async">
+          <span class="region-pill">奉贤</span>
+          <span class="card-score">79<small>分</small></span>
+        </span>
+        <span class="route-summary">
+          <span class="route-kicker">
+            <span>总榜第 13</span>
+            <span>高德驾车 40.9 km · 约 69 分钟</span>
+          </span>
+          <span class="route-title">李窑村 · 金黄稻田＋田园咖啡</span>
+
+    <span class="place-review-meta place-review-meta--card" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">高德<strong>4.7</strong><small>无忧闲院</small></span>
+      <span class="place-review-note">村庄开放无门票；稻田是生产农田，收割窗口期景观以现场为准</span>
+    </span>
+          <span class="review-line"><strong>一句话口碑</strong>真稻田真村子，不是仿古镇；但11月初正值收割窗口，部分田块可能已收，出发前看近期实拍。</span>
+
+    <span class="stay-reference stay-reference--card" data-stay-count="1">
+
+        <span class="stay-reference-heading">
+          <strong>主推住宿</strong>
+          <small>4 房适配单列</small>
+        </span>
+      <span class="stay-reference-list">
+
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-fanghua.jpg" alt="" loading="lazy" decoding="async"></span>
+      <span class="stay-reference-copy">
+        <strong>青普这厢·芳华李窑民宿（李窑村内）</strong>
+        <span class="stay-reference-score">高德4.6 · 高德4.6 · 就在李窑村内</span>
+        <span class="stay-amenities"><span>村内</span><span>庭院</span><span>手作活动</span><span>公共空间</span></span>
+        <span class="stay-reference-fit">4间房适配：民宿房型可按间订，4间库存待确认</span>
+      </span>
+    </span>
+      </span>
+
+    </span>
+          <span class="fee-line"><strong>费用提醒</strong>村子免费进出；陶艺、采摘、烧烤按店收费；村口有停车场。</span>
+          <span class="route-tags"><span>金黄稻田</span><span>田园咖啡</span><span>住村里</span></span>
+          <span class="open-label">
+            看评分和两天行程
+            <span class="open-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </button>
+    </article>
     <article class="route-card" id="route-f01">
       <button class="route-launcher" type="button" data-route-id="f01"
         aria-haspopup="dialog" aria-controls="route-dialog-f01">
@@ -3729,7 +3841,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 14</span>
+            <span>总榜第 15</span>
             <span>高德驾车 52.5 km · 约 80 分钟</span>
           </span>
           <span class="route-title">碧海金沙 · 海边散步＋吴房村住一晚</span>
@@ -3749,8 +3861,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-duoyun.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海朵云闲居民宿（吴房村）</strong>
         <span class="stay-reference-score">携程5.0 / 美团暂无评分 · 携程3条 / 美团37条；3.9为热度分</span>
@@ -3800,8 +3912,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-niulu.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-niulu.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>牛路野营营地（海湾国家森林公园内）</strong>
         <span class="stay-reference-score">高德4.0 · 高德4.0 · 露营体验型住宿</span>
@@ -3865,8 +3977,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -3896,7 +4008,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 22</span>
+            <span>总榜第 23</span>
             <span>高德驾车 53.4 km · 约 72 分钟</span>
           </span>
           <span class="route-title">东方绿舟 · 航母＋草地＋淀山湖住宿</span>
@@ -3916,8 +4028,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -3947,7 +4059,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 18</span>
+            <span>总榜第 19</span>
             <span>高德驾车 57 km · 约 77 分钟</span>
           </span>
           <span class="route-title">淀山湖 · 湖岸骑行＋金泽古镇</span>
@@ -3967,8 +4079,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -4018,8 +4130,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>淀山湖·留夏拾光民宿</strong>
         <span class="stay-reference-score">4.6 / 4.7 · 携程83条 / 美团49条</span>
@@ -4083,8 +4195,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -4114,7 +4226,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 13</span>
+            <span>总榜第 14</span>
             <span>高德驾车 77.3 km · 约 90 分钟</span>
           </span>
           <span class="route-title">金山城市沙滩 · 海边＋金山嘴海鲜</span>
@@ -4134,8 +4246,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -4165,7 +4277,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 21</span>
+            <span>总榜第 22</span>
             <span>高德驾车 89.1 km · 约 103 分钟</span>
           </span>
           <span class="route-title">廊下 · 枫叶岛＋山塘乡野</span>
@@ -4185,8 +4297,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>上海涵七民宿</strong>
         <span class="stay-reference-score">4.9 · 携程15条 / 美团暂无评分与评价数</span>
@@ -4230,7 +4342,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 17</span>
+            <span>总榜第 18</span>
             <span>高德驾车 67.3 km · 约 83 分钟</span>
           </span>
           <span class="route-title">锦溪古镇 · 水乡慢逛＋计家墩理想村</span>
@@ -4250,8 +4362,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/chengyu-card.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>橙屿民宿（锦溪·计家墩）</strong>
         <span class="stay-reference-score">5.0 · 携程截图3条 / 美团未命中同店</span>
@@ -4301,8 +4413,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/miyi-card.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>觅家·一夜花香（周庄）</strong>
         <span class="stay-reference-score">5.0 · 携程截图8条 / 美团未命中同店</span>
@@ -4352,8 +4464,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>太湖西山 · 小白房</strong>
         <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
@@ -4403,8 +4515,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-shuyun.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>墅之韵太湖庄园别墅（东山）</strong>
         <span class="stay-reference-score">携程4.8 / 美团4.3 · 携程高分 / 美团105条</span>
@@ -4434,7 +4546,7 @@
         </span>
         <span class="route-summary">
           <span class="route-kicker">
-            <span>总榜第 19</span>
+            <span>总榜第 20</span>
             <span>高德驾车 140.4 km · 约 134 分钟</span>
           </span>
           <span class="route-title">太湖西山 · 雕花楼＋缥缈峰＋院子</span>
@@ -4454,8 +4566,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>太湖西山 · 小白房</strong>
         <span class="stay-reference-score">5.0 / 4.4 · 携程11条 / 美团1条</span>
@@ -4519,8 +4631,8 @@
         </span>
       <span class="stay-reference-list">
 
-    <span class="stay-reference-item"  data-image-frame>
-      <img src="assets/stays/stay-huguang.jpg" alt="" loading="lazy" decoding="async">
+    <span class="stay-reference-item" >
+      <span class="stay-reference-thumb" data-image-frame><img src="assets/stays/stay-huguang.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>湖光山居度假酒店（南北湖景区内）</strong>
         <span class="stay-reference-score">待核 · 问道报价约246元/间 · 2026-10-29</span>
@@ -4579,6 +4691,13 @@
       title="花开半夏 · 35 km"
       href="#route-12"
       aria-label="花开半夏 · 成人手作＋乡村体验，距陆家嘴约35公里，点击查看路线">G</a>
+    <a class="map-extra-stop" data-map-stop data-location="121.587998,30.918525"
+      data-route-id="f03" data-route-group="fengxian"
+      data-map-x="684.9564" data-map-y="292.1388"
+      data-map-title="李窑村" data-map-km="40.9"
+      title="李窑村 · 40.9 km"
+      href="#route-f03"
+      aria-label="李窑村 · 金黄稻田＋田园咖啡，距陆家嘴约40.9公里，点击查看路线">Y</a>
     <a class="map-extra-stop" data-map-stop data-location="121.196565,31.094440"
       data-route-id="r03" data-route-group="nearby"
       data-map-x="542.4400" data-map-y="217.4123"
@@ -4726,6 +4845,10 @@
     <a class="map-index-route" href="#route-12" data-route-id="12">
       <strong>G</strong>
       <span>花开半夏 · 成人手作＋乡村体验<small>奉贤 · 高德驾车 35 km · 约 58 分钟</small></span>
+    </a>
+    <a class="map-index-route" href="#route-f03" data-route-id="f03">
+      <strong>Y</strong>
+      <span>李窑村 · 金黄稻田＋田园咖啡<small>奉贤 · 高德驾车 40.9 km · 约 69 分钟</small></span>
     </a>
     <a class="map-index-route" href="#route-r03" data-route-id="r03">
       <strong>V</strong>
@@ -4900,8 +5023,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-14-new_nongshe"
-                data-stay-id="new_nongshe" data-image-frame>
-                <img src="assets/stays/stay-new_nongshe.jpg" alt="上海浓舍民宿 · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="new_nongshe">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-new_nongshe.jpg" alt="上海浓舍民宿 · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海浓舍民宿</h4>
@@ -4916,8 +5039,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-14-new_xianshe"
-                data-stay-id="new_xianshe" data-image-frame>
-                <img src="assets/stays/stay-new_xianshe.jpg" alt="上海闲舍shinehouse独栋别墅 · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="new_xianshe">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-new_xianshe.jpg" alt="上海闲舍shinehouse独栋别墅 · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海闲舍shinehouse独栋别墅</h4>
@@ -5070,8 +5193,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-r01-song_guangfulin"
-                data-stay-id="song_guangfulin" data-image-frame>
-                <img src="assets/stays/song-guangfulin.jpg" alt="上海松江广富林宰相府酒店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="上海松江广富林宰相府酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海松江广富林宰相府酒店</h4>
@@ -5086,8 +5209,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r01-song_guangfulin_grand"
-                data-stay-id="song_guangfulin_grand" data-image-frame>
-                <img src="assets/stays/song-guangfulin-grand.jpg" alt="上海广富林大酒店松江大学城店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin_grand">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin-grand.jpg" alt="上海广富林大酒店松江大学城店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海广富林大酒店（松江大学城店）</h4>
@@ -5102,8 +5225,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r01-song_guangfulin_hilton"
-                data-stay-id="song_guangfulin_hilton" data-image-frame>
-                <img src="assets/stays/song-guangfulin-hilton.jpg" alt="上海松江广富林希尔顿酒店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin_hilton">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin-hilton.jpg" alt="上海松江广富林希尔顿酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海松江广富林希尔顿酒店</h4>
@@ -5257,8 +5380,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-03-liuxia"
-                data-stay-id="liuxia" data-image-frame>
-                <img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="liuxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>淀山湖·留夏拾光民宿</h4>
@@ -5273,8 +5396,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-03-shaoguang"
-                data-stay-id="shaoguang" data-image-frame>
-                <img src="assets/stays/stay-shaoguang.jpg" alt="韶光度假别墅庭院" loading="lazy" decoding="async">
+                data-stay-id="shaoguang">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-shaoguang.jpg" alt="韶光度假别墅庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>韶光度假别墅（朱家角）</h4>
@@ -5430,8 +5553,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-s04-shuyun"
-                data-stay-id="shuyun" data-image-frame>
-                <img src="assets/stays/stay-shuyun.jpg" alt="墅之韵太湖庄园别墅" loading="lazy" decoding="async">
+                data-stay-id="shuyun">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-shuyun.jpg" alt="墅之韵太湖庄园别墅" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>墅之韵太湖庄园别墅（东山）</h4>
@@ -5585,8 +5708,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-05-hanqi"
-                data-stay-id="hanqi" data-image-frame>
-                <img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="hanqi">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海涵七民宿</h4>
@@ -5601,8 +5724,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-05-qingfeng"
-                data-stay-id="qingfeng" data-image-frame>
-                <img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="qingfeng">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花筑·清风拾光（枫泾）</h4>
@@ -5755,8 +5878,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-s02-miyi"
-                data-stay-id="miyi" data-image-frame>
-                <img src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼和院子" loading="lazy" decoding="async">
+                data-stay-id="miyi">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/miyi-card.jpg" alt="觅家·一夜花香白色小楼和院子" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>觅家·一夜花香（周庄）</h4>
@@ -5893,8 +6016,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-r02-jiading_atour"
-                data-stay-id="jiading_atour" data-image-frame>
-                <img src="assets/stays/jiading-atour.jpg" alt="上海嘉定菊园智慧中心亚朵酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_atour">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="上海嘉定菊园智慧中心亚朵酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定菊园智慧中心亚朵酒店</h4>
@@ -5909,8 +6032,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r02-jiading_yunju"
-                data-stay-id="jiading_yunju" data-image-frame>
-                <img src="assets/stays/jiading-yunju.jpg" alt="上海嘉定别墅云居花园酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_yunju">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-yunju.jpg" alt="上海嘉定别墅云居花园酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定别墅云居花园酒店</h4>
@@ -5925,8 +6048,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r02-jiading_hilton"
-                data-stay-id="jiading_hilton" data-image-frame>
-                <img src="assets/stays/jiading-hilton.jpg" alt="上海嘉定希尔顿花园酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_hilton">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-hilton.jpg" alt="上海嘉定希尔顿花园酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定希尔顿花园酒店</h4>
@@ -6066,8 +6189,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-j01-huguang"
-                data-stay-id="huguang" data-image-frame>
-                <img src="assets/stays/stay-huguang.jpg" alt="湖光山居度假酒店外观" loading="lazy" decoding="async">
+                data-stay-id="huguang">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-huguang.jpg" alt="湖光山居度假酒店外观" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>湖光山居度假酒店（南北湖景区内）</h4>
@@ -6082,8 +6205,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-j01-muxinju"
-                data-stay-id="muxinju" data-image-frame>
-                <img src="assets/stays/stay-muxinju.jpg" alt="海盐木心居客栈外观" loading="lazy" decoding="async">
+                data-stay-id="muxinju">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-muxinju.jpg" alt="海盐木心居客栈外观" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>海盐木心居客栈（南北湖弈仙城）</h4>
@@ -6227,8 +6350,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-r03-song_guangfulin"
-                data-stay-id="song_guangfulin" data-image-frame>
-                <img src="assets/stays/song-guangfulin.jpg" alt="上海松江广富林宰相府酒店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin.jpg" alt="上海松江广富林宰相府酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海松江广富林宰相府酒店</h4>
@@ -6243,8 +6366,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r03-song_guangfulin_grand"
-                data-stay-id="song_guangfulin_grand" data-image-frame>
-                <img src="assets/stays/song-guangfulin-grand.jpg" alt="上海广富林大酒店松江大学城店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin_grand">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin-grand.jpg" alt="上海广富林大酒店松江大学城店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海广富林大酒店（松江大学城店）</h4>
@@ -6259,8 +6382,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r03-song_guangfulin_hilton"
-                data-stay-id="song_guangfulin_hilton" data-image-frame>
-                <img src="assets/stays/song-guangfulin-hilton.jpg" alt="上海松江广富林希尔顿酒店" loading="lazy" decoding="async">
+                data-stay-id="song_guangfulin_hilton">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/song-guangfulin-hilton.jpg" alt="上海松江广富林希尔顿酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海松江广富林希尔顿酒店</h4>
@@ -6414,8 +6537,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-11-liuxia"
-                data-stay-id="liuxia" data-image-frame>
-                <img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="liuxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>淀山湖·留夏拾光民宿</h4>
@@ -6430,8 +6553,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-11-new_fusheng"
-                data-stay-id="new_fusheng" data-image-frame>
-                <img src="assets/stays/stay-new_fusheng.jpg" alt="上海浮生民宿(青西郊野公园店) · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="new_fusheng">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-new_fusheng.jpg" alt="上海浮生民宿(青西郊野公园店) · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海浮生民宿(青西郊野公园店)</h4>
@@ -6587,8 +6710,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-f02-niulu"
-                data-stay-id="niulu" data-image-frame>
-                <img src="assets/stays/stay-niulu.jpg" alt="牛路野营海湾森林营地帐篷" loading="lazy" decoding="async">
+                data-stay-id="niulu">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-niulu.jpg" alt="牛路野营海湾森林营地帐篷" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>牛路野营营地（海湾国家森林公园内）</h4>
@@ -6732,8 +6855,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-s05-xishan"
-                data-stay-id="xishan" data-image-frame>
-                <img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑与门楣招牌" loading="lazy" decoding="async">
+                data-stay-id="xishan">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑与门楣招牌" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>太湖西山 · 小白房</h4>
@@ -6748,8 +6871,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-s05-sanjo"
-                data-stay-id="sanjo" data-image-frame>
-                <img src="assets/stays/stay-sanjo.jpg" alt="Sanjo三江湖景民宿外观" loading="lazy" decoding="async">
+                data-stay-id="sanjo">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-sanjo.jpg" alt="Sanjo三江湖景民宿外观" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>Sanjo三江·湖景民宿（西山）</h4>
@@ -6812,10 +6935,155 @@
         </section>
       </div>
     </dialog>
+    <dialog class="route-dialog" id="route-dialog-f03"
+      aria-labelledby="route-dialog-title-f03">
+      <div class="dialog-bar">
+        <span>总榜第 13 · 奉贤</span>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
+      </div>
+      <div class="route-dialog-body">
+        <div class="dialog-hero">
+          <div class="dialog-hero-gallery" data-photo-carousel data-current-index="0">
+
+    <figure class="dialog-hero-slide is-active"
+      data-image-frame data-gallery-slide data-caption="李窑村无忧闲院稻田（5月拍摄，11月为金黄）｜来源：高德 POI 相册"
+      aria-hidden="false">
+      <img src="assets/routes/route-f03.jpg" alt="李窑村无忧闲院与稻田" loading="lazy" decoding="async">
+    </figure>
+
+          </div>
+          <div class="dialog-hero-copy">
+            <p class="dialog-region">奉贤</p>
+            <h2 id="route-dialog-title-f03">李窑村 · 金黄稻田＋田园咖啡</h2>
+            <p class="dialog-travel">高德驾车 40.9 km · 约 69 分钟</p>
+          </div>
+        </div>
+        <p class="dialog-photo-caption" data-gallery-caption>李窑村无忧闲院稻田（5月拍摄，11月为金黄）｜来源：高德 POI 相册</p>
+        <section class="score-panel" aria-label="路线评分">
+          <div class="score-heading">
+            <div>
+              <strong>79</strong><span>分</span>
+            </div>
+
+    <span class="stars" aria-label="4星">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="stars-fill" style="width:80%" aria-hidden="true">★★★★★</span>
+    </span>
+          </div>
+          <div class="score-parts">
+            <span><b>35</b><small>白天体验 / 45</small></span>
+            <span><b>21</b><small>内容组合 / 25</small></span>
+            <span><b>17</b><small>省心程度 / 20</small></span>
+            <span><b>6</b><small>证据质量 / 10</small></span>
+          </div>
+          <p class="score-reason">真稻田真村落，田园风光不是仿古镇；69分钟车程在1.5小时圈内，住宿就在村里。</p>
+          <p class="score-concern"><strong>主要扣分点</strong>稻田正值收割窗口，可能遇到已收田块；网红村周末下午人多；村内体验分散在各店，消费按店另计。</p>
+        </section>
+        <section class="dialog-place-info" aria-label="景点评价和出行提醒">
+          <div class="dialog-info-grid">
+            <div class="dialog-info-card dialog-info-rating">
+
+    <span class="place-review-meta place-review-meta--dialog" aria-label="景点平台评价">
+      <span class="place-review-label">景点评价</span>
+      <span class="place-review-chip">高德<strong>4.7</strong><small>无忧闲院</small></span>
+      <span class="place-review-note">村庄开放无门票；稻田是生产农田，收割窗口期景观以现场为准</span>
+    </span>
+              <div class="dialog-place-source">
+    <a class="source-link" href="https://www.amap.com/detail/B0JKBUQEWF" target="_blank" rel="noreferrer">
+      查看出行来源 <span aria-hidden="true">↗</span>
+    </a></div>
+            </div>
+            <div class="dialog-info-card dialog-info-review">
+              <p class="review-line dialog-review"><strong>一句话口碑</strong>真稻田真村子，不是仿古镇；但11月初正值收割窗口，部分田块可能已收，出发前看近期实拍。</p>
+            </div>
+            <div class="dialog-info-card dialog-info-fee">
+              <p class="fee-line"><strong>费用提醒</strong>村子免费进出；陶艺、采摘、烧烤按店收费；村口有停车场。</p>
+            </div>
+          </div>
+          <div class="activity-line">
+            <span>千亩稻田田埂慢走</span><span>无忧闲院稻田咖啡</span><span>陶艺手作或莳下窑烤披萨</span>
+          </div>
+        </section>
+        <section class="dialog-stay-section" aria-labelledby="dialog-stay-title-f03">
+          <div class="dialog-stay-heading">
+            <h3 id="dialog-stay-title-f03">住宿参考</h3>
+            <p>1 处就近候选；路线分只比玩法，住宿单独按多人设施和 4 房适配比较。</p>
+          </div>
+          <div class="dialog-stay-grid">
+
+              <article class="dialog-stay-card" id="dialog-stay-f03-fanghua"
+                data-stay-id="fanghua">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-fanghua.jpg" alt="青普这厢·芳华李窑民宿外观" loading="lazy" decoding="async"></div>
+                <div class="dialog-stay-body">
+                  <div class="dialog-stay-title-row">
+                    <h4>青普这厢·芳华李窑民宿（李窑村内）</h4>
+                    <span>高德4.6</span>
+                  </div>
+                  <p class="dialog-stay-rating">高德4.6 · 就在李窑村内</p>
+                  <div class="stay-amenities stay-amenities--dialog"><span>村内</span><span>庭院</span><span>手作活动</span><span>公共空间</span></div>
+                  <p class="dialog-stay-review"><strong>一句话口碑</strong>新中式庭院民宿，就在李窑村623号，稻田和无忧闲院步行可达；可配香牌、漆扇、植物染等手作。</p>
+                  <p class="dialog-stay-fit">4间房适配：民宿房型可按间订，4间库存待确认</p>
+                  <p class="dialog-stay-confirm"><strong>订前先问</strong>4间当晚库存、手作活动收费和停车位先电话确认；周末网红村人多，建议早订。</p>
+                  <a href="https://www.amap.com/detail/B0K63KPSL9" target="_blank" rel="noreferrer">高德 POI ↗</a>
+                </div>
+              </article>
+          </div>
+        </section>
+        <section class="route-detail" aria-labelledby="itinerary-title-f03">
+          <h3 class="route-detail-heading" id="itinerary-title-f03">两天行程</h3>
+          <div class="days-grid">
+            <section>
+              <h4>周六 · 10月31日</h4>
+              <ol class="timeline">
+    <li>
+      <time>09:00–10:10</time>
+      <span>陆家嘴出发到李窑村</span>
+    </li>
+    <li>
+      <time>10:30–12:00</time>
+      <span>稻田田埂慢走拍照</span>
+    </li>
+    <li>
+      <time>12:00–13:30</time>
+      <span>莳下田园餐厅午饭，窑烤披萨或土菜</span>
+    </li>
+    <li>
+      <time>14:00–16:00</time>
+      <span>无忧闲院稻田咖啡，或有空野陶手作</span>
+    </li>
+    <li>
+      <time>16:30以后</time>
+      <span>青普这厢入住，院子晚饭和桌游</span>
+    </li></ol>
+            </section>
+            <section>
+              <h4>周日 · 11月1日</h4>
+              <ol class="timeline">
+    <li>
+      <time>08:30–09:30</time>
+      <span>早餐</span>
+    </li>
+    <li>
+      <time>09:30–11:00</time>
+      <span>村子晨走或香水莲花基地</span>
+    </li>
+    <li>
+      <time>11:00–11:30</time>
+      <span>退房</span>
+    </li>
+    <li>
+      <time>12:00以后</time>
+      <span>午饭后返沪</span>
+    </li></ol>
+            </section>
+          </div>
+        </section>
+      </div>
+    </dialog>
     <dialog class="route-dialog" id="route-dialog-04"
       aria-labelledby="route-dialog-title-04">
       <div class="dialog-bar">
-        <span>总榜第 13 · 金山</span>
+        <span>总榜第 14 · 金山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -6899,8 +7167,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-04-hanqi"
-                data-stay-id="hanqi" data-image-frame>
-                <img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="hanqi">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海涵七民宿</h4>
@@ -6915,8 +7183,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-04-qingfeng"
-                data-stay-id="qingfeng" data-image-frame>
-                <img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="qingfeng">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花筑·清风拾光（枫泾）</h4>
@@ -6986,7 +7254,7 @@
     <dialog class="route-dialog" id="route-dialog-f01"
       aria-labelledby="route-dialog-title-f01">
       <div class="dialog-bar">
-        <span>总榜第 14 · 奉贤</span>
+        <span>总榜第 15 · 奉贤</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7060,8 +7328,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-f01-duoyun"
-                data-stay-id="duoyun" data-image-frame>
-                <img src="assets/stays/stay-duoyun.jpg" alt="朵云闲居民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="duoyun">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-duoyun.jpg" alt="朵云闲居民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海朵云闲居民宿（吴房村）</h4>
@@ -7076,8 +7344,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-f01-banxia"
-                data-stay-id="banxia" data-image-frame>
-                <img src="assets/stays/stay-banxia.jpg" alt="花开半夏·田园美墅度假村 · 公共区域" loading="lazy" decoding="async">
+                data-stay-id="banxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-banxia.jpg" alt="花开半夏·田园美墅度假村 · 公共区域" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花开半夏·田园美墅度假村</h4>
@@ -7147,7 +7415,7 @@
     <dialog class="route-dialog" id="route-dialog-r04"
       aria-labelledby="route-dialog-title-r04">
       <div class="dialog-bar">
-        <span>总榜第 15 · 宝山 / 浦东</span>
+        <span>总榜第 16 · 宝山 / 浦东</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7221,8 +7489,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-r04-cordis"
-                data-stay-id="cordis" data-image-frame>
-                <img src="assets/stays/stay-cordis.jpg" alt="上海伊敦康得思酒店外观" loading="lazy" decoding="async">
+                data-stay-id="cordis">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-cordis.jpg" alt="上海伊敦康得思酒店外观" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海伊敦康得思酒店（吴淞口邮轮港）</h4>
@@ -7292,7 +7560,7 @@
     <dialog class="route-dialog" id="route-dialog-12"
       aria-labelledby="route-dialog-title-12">
       <div class="dialog-bar">
-        <span>总榜第 16 · 奉贤</span>
+        <span>总榜第 17 · 奉贤</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7376,8 +7644,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-12-new_daojia"
-                data-stay-id="new_daojia" data-image-frame>
-                <img src="assets/stays/stay-new_daojia.jpg" alt="花筑·到家民宿(上海青溪老街店) · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="new_daojia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-new_daojia.jpg" alt="花筑·到家民宿(上海青溪老街店) · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花筑·到家民宿(上海青溪老街店)</h4>
@@ -7392,8 +7660,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-12-banxia"
-                data-stay-id="banxia" data-image-frame>
-                <img src="assets/stays/stay-banxia.jpg" alt="花开半夏·田园美墅度假村 · 公共区域" loading="lazy" decoding="async">
+                data-stay-id="banxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-banxia.jpg" alt="花开半夏·田园美墅度假村 · 公共区域" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花开半夏·田园美墅度假村</h4>
@@ -7475,7 +7743,7 @@
     <dialog class="route-dialog" id="route-dialog-s01"
       aria-labelledby="route-dialog-title-s01">
       <div class="dialog-bar">
-        <span>总榜第 17 · 昆山</span>
+        <span>总榜第 18 · 昆山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7546,8 +7814,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-s01-chengyu"
-                data-stay-id="chengyu" data-image-frame>
-                <img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="chengyu">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/chengyu-card.jpg" alt="橙屿民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>橙屿民宿（锦溪·计家墩）</h4>
@@ -7617,7 +7885,7 @@
     <dialog class="route-dialog" id="route-dialog-02"
       aria-labelledby="route-dialog-title-02">
       <div class="dialog-bar">
-        <span>总榜第 18 · 青浦</span>
+        <span>总榜第 19 · 青浦</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7701,8 +7969,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-02-liuxia"
-                data-stay-id="liuxia" data-image-frame>
-                <img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="liuxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>淀山湖·留夏拾光民宿</h4>
@@ -7717,8 +7985,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-02-sun"
-                data-stay-id="sun" data-image-frame>
-                <img src="assets/stays/stay-sun.jpg" alt="上海太阳岛度假酒店 · 俱乐部别墅三房一厅" loading="lazy" decoding="async">
+                data-stay-id="sun">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-sun.jpg" alt="上海太阳岛度假酒店 · 俱乐部别墅三房一厅" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>太阳岛 · 俱乐部别墅三房一厅</h4>
@@ -7788,7 +8056,7 @@
     <dialog class="route-dialog" id="route-dialog-s03"
       aria-labelledby="route-dialog-title-s03">
       <div class="dialog-bar">
-        <span>总榜第 19 · 苏州</span>
+        <span>总榜第 20 · 苏州</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -7859,8 +8127,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-s03-xishan"
-                data-stay-id="xishan" data-image-frame>
-                <img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑与门楣招牌" loading="lazy" decoding="async">
+                data-stay-id="xishan">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/xibaifang-hero.jpg" alt="小白房建筑与门楣招牌" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>太湖西山 · 小白房</h4>
@@ -7875,8 +8143,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-s03-sanjo"
-                data-stay-id="sanjo" data-image-frame>
-                <img src="assets/stays/stay-sanjo.jpg" alt="Sanjo三江湖景民宿外观" loading="lazy" decoding="async">
+                data-stay-id="sanjo">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-sanjo.jpg" alt="Sanjo三江湖景民宿外观" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>Sanjo三江·湖景民宿（西山）</h4>
@@ -7950,7 +8218,7 @@
     <dialog class="route-dialog" id="route-dialog-r05"
       aria-labelledby="route-dialog-title-r05">
       <div class="dialog-bar">
-        <span>总榜第 20 · 嘉定</span>
+        <span>总榜第 21 · 嘉定</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -8024,8 +8292,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-r05-jiading_atour"
-                data-stay-id="jiading_atour" data-image-frame>
-                <img src="assets/stays/jiading-atour.jpg" alt="上海嘉定菊园智慧中心亚朵酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_atour">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-atour.jpg" alt="上海嘉定菊园智慧中心亚朵酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定菊园智慧中心亚朵酒店</h4>
@@ -8040,8 +8308,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r05-jiading_yunju"
-                data-stay-id="jiading_yunju" data-image-frame>
-                <img src="assets/stays/jiading-yunju.jpg" alt="上海嘉定别墅云居花园酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_yunju">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-yunju.jpg" alt="上海嘉定别墅云居花园酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定别墅云居花园酒店</h4>
@@ -8056,8 +8324,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-r05-jiading_hilton"
-                data-stay-id="jiading_hilton" data-image-frame>
-                <img src="assets/stays/jiading-hilton.jpg" alt="上海嘉定希尔顿花园酒店" loading="lazy" decoding="async">
+                data-stay-id="jiading_hilton">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/jiading-hilton.jpg" alt="上海嘉定希尔顿花园酒店" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海嘉定希尔顿花园酒店</h4>
@@ -8127,7 +8395,7 @@
     <dialog class="route-dialog" id="route-dialog-06"
       aria-labelledby="route-dialog-title-06">
       <div class="dialog-bar">
-        <span>总榜第 21 · 金山</span>
+        <span>总榜第 22 · 金山</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -8211,8 +8479,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-06-hanqi"
-                data-stay-id="hanqi" data-image-frame>
-                <img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async">
+                data-stay-id="hanqi">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-hanqi.jpg" alt="上海涵七民宿 · 酒店外部" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>上海涵七民宿</h4>
@@ -8227,8 +8495,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-06-qingfeng"
-                data-stay-id="qingfeng" data-image-frame>
-                <img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="qingfeng">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-qingfeng.jpg" alt="花筑清风拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>花筑·清风拾光（枫泾）</h4>
@@ -8310,7 +8578,7 @@
     <dialog class="route-dialog" id="route-dialog-16"
       aria-labelledby="route-dialog-title-16">
       <div class="dialog-bar">
-        <span>总榜第 22 · 青浦</span>
+        <span>总榜第 23 · 青浦</span>
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
@@ -8394,8 +8662,8 @@
           <div class="dialog-stay-grid">
 
               <article class="dialog-stay-card" id="dialog-stay-16-liuxia"
-                data-stay-id="liuxia" data-image-frame>
-                <img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async">
+                data-stay-id="liuxia">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-liuxia.jpg" alt="淀山湖留夏拾光民宿庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>淀山湖·留夏拾光民宿</h4>
@@ -8410,8 +8678,8 @@
                 </div>
               </article>
               <article class="dialog-stay-card" id="dialog-stay-16-shaoguang"
-                data-stay-id="shaoguang" data-image-frame>
-                <img src="assets/stays/stay-shaoguang.jpg" alt="韶光度假别墅庭院" loading="lazy" decoding="async">
+                data-stay-id="shaoguang">
+                <div class="dialog-stay-photo" data-image-frame><img src="assets/stays/stay-shaoguang.jpg" alt="韶光度假别墅庭院" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>韶光度假别墅（朱家角）</h4>

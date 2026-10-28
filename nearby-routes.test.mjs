@@ -88,7 +88,7 @@ test("region routes and map index are ordered by driving distance, nearest first
   const mapIndex = html.slice(indexStart, indexEnd);
   const distances = [...mapIndex.matchAll(/<a class="map-index-route"[^>]+>([\s\S]*?)<\/a>/g)]
     .map(([, item]) => Number(item.match(/高德驾车 ([\d.]+) km/)?.[1]));
-  assert.equal(distances.length, 22, "map index should contain every remaining route");
+  assert.equal(distances.length, 23, "map index should contain every remaining route");
   assert.ok(distances.every((distance, index) => index === 0 || distances[index - 1] <= distance),
     `map routes are not globally distance-sorted: ${distances.join(", ")}`);
 });

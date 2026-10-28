@@ -156,6 +156,16 @@ const targets = [
     output: "assets/stays/stay-cordis.jpg",
     url: "https://www.amap.com/detail/B0K3HU31S4",
     imageUrl: "https://aos-comment.amap.com/comment/20260316-f6608083d4795f11aab96192-2fjOq26ZyWc8gpZ0PWUohh.jpg"
+  },
+  {
+    output: "assets/routes/route-f03.jpg",
+    url: "https://www.amap.com/detail/B0JKBUQEWF",
+    imageUrl: "https://aos-comment.amap.com/B0JKBUQEWF/comment/A5E01D18_FE8F_4207_91EB_34BD0F9E1E5E_L0_001_1536_204_1746148115590_94592494.jpg"
+  },
+  {
+    output: "assets/stays/stay-fanghua.jpg",
+    url: "https://www.amap.com/detail/B0K63KPSL9",
+    imageUrl: "https://store.is.autonavi.com/showpic/1341ee2bcea9d7d8a77008201845d640"
   }
 ];
 

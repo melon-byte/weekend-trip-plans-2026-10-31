@@ -38,7 +38,8 @@ const places = [
   { id: "f02", label: "U", name: "海湾国家森林公园", location: "121.690609,30.861518", km: 58.7, minutes: 70 },
   { id: "r03", label: "V", name: "佘山国家森林公园", location: "121.196565,31.094440", km: 41.6, minutes: 77 },
   { id: "r04", label: "W", name: "炮台湾湿地", location: "121.509028,31.396662", km: 24.0, minutes: 48 },
-  { id: "r05", label: "X", name: "嘉北郊野公园", location: "121.196831,31.357432", km: 46.0, minutes: 63 }
+  { id: "r05", label: "X", name: "嘉北郊野公园", location: "121.196831,31.357432", km: 46.0, minutes: 63 },
+  { id: "f03", label: "Y", name: "李窑村", location: "121.587998,30.918525", km: 40.9, minutes: 69 }
 ];
 
 const nearbyPlaces = [

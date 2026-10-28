@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T06:25:27.314Z",
+  "fetchedAt": "2026-10-28T08:01:06.362Z",
   "provider": "高德地图 POI / 距离测量 / 静态地图",
   "origin": {
     "id": "origin",
@@ -199,6 +199,14 @@
       "location": "121.196831,31.357432",
       "km": 46,
       "minutes": 63
+    },
+    {
+      "id": "f03",
+      "label": "Y",
+      "name": "李窑村",
+      "location": "121.587998,30.918525",
+      "km": 40.9,
+      "minutes": 69
     }
   ],
   "nearbyPlaces": [

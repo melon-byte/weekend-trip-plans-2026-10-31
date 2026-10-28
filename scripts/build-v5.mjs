@@ -162,6 +162,7 @@ const routeStayIds = {
   "11": ["new_fusheng", "liuxia"],
   f01: ["duoyun", "banxia"],
   f02: ["niulu"],
+  f03: ["fanghua"],
   "12": ["banxia", "new_daojia"],
   "14": ["new_nongshe", "new_xianshe"],
   p01: ["zhuji", "sangu"],
@@ -213,7 +214,7 @@ const routeMapPoints = [
 const activeRouteIds = new Set([
   "02", "03", "16", "11",
   "04", "05", "06",
-  "f01", "f02", "12",
+  "f01", "f02", "f03", "12",
   "14",
   "s01", "s02", "s03", "s04", "s05",
   "j01",
@@ -960,6 +961,54 @@ const cityNatureRoutes = [
   }
 ];
 
+const liyaoRoute = [
+  {
+    id: "f03",
+    group: "fengxian",
+    area: "奉贤 · 青村李窑村",
+    title: "李窑村 · 金黄稻田＋田园咖啡",
+    blurb: "上午进村沿田埂看千亩稻田，下午稻田咖啡馆慢坐或陶艺手作；晚上就住村里的院子。",
+    review: "真稻田真村子，不是仿古镇；但11月初正值收割窗口，部分田块可能已收，出发前看近期实拍。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7", detail: "无忧闲院" }
+      ],
+      note: "村庄开放无门票；稻田是生产农田，收割窗口期景观以现场为准"
+    },
+    rating: {
+      name: "李窑村 · 金黄稻田＋田园咖啡",
+      parts: [35, 21, 17, 6],
+      total: 79,
+      stars: 4,
+      confidence: "中偏低",
+      reason: "真稻田真村落，田园风光不是仿古镇；69分钟车程在1.5小时圈内，住宿就在村里。",
+      deductions: "稻田正值收割窗口，可能遇到已收田块；网红村周末下午人多；村内体验分散在各店，消费按店另计。",
+      evidence: "高德实测车程40.9km/69分钟；无忧闲院、青普这厢民宿高德POI；携程问道村内业态口径。"
+    },
+    tags: ["金黄稻田", "田园咖啡", "住村里"],
+    fee: "村子免费进出；陶艺、采摘、烧烤按店收费；村口有停车场。",
+    travel: "高德驾车 40.9 km · 约 69 分钟",
+    photo: "assets/routes/route-f03.jpg",
+    photoAlt: "李窑村无忧闲院与稻田",
+    photoCaption: "李窑村无忧闲院稻田（5月拍摄，11月为金黄）｜来源：高德 POI 相册",
+    activities: ["千亩稻田田埂慢走", "无忧闲院稻田咖啡", "陶艺手作或莳下窑烤披萨"],
+    day1: [
+      ["09:00–10:10", "陆家嘴出发到李窑村"],
+      ["10:30–12:00", "稻田田埂慢走拍照"],
+      ["12:00–13:30", "莳下田园餐厅午饭，窑烤披萨或土菜"],
+      ["14:00–16:00", "无忧闲院稻田咖啡，或有空野陶手作"],
+      ["16:30以后", "青普这厢入住，院子晚饭和桌游"]
+    ],
+    day2: [
+      ["08:30–09:30", "早餐"],
+      ["09:30–11:00", "村子晨走或香水莲花基地"],
+      ["11:00–11:30", "退房"],
+      ["12:00以后", "午饭后返沪"]
+    ],
+    source: "https://www.amap.com/detail/B0JKBUQEWF"
+  }
+];
+
 const newStays = [
   {
     id: "chengyu",
@@ -1275,6 +1324,21 @@ const newStays = [
     photoAlt: "上海伊敦康得思酒店外观",
     source: "https://www.amap.com/detail/B0K3HU31S4",
     sourceLabel: "高德 POI"
+  },
+  {
+    id: "fanghua",
+    name: "青普这厢·芳华李窑民宿（李窑村内）",
+    group: "fengxian",
+    rating: "高德4.6",
+    ratingLabel: "高德4.6 · 就在李窑村内",
+    amenities: ["村内", "庭院", "手作活动", "公共空间"],
+    review: "新中式庭院民宿，就在李窑村623号，稻田和无忧闲院步行可达；可配香牌、漆扇、植物染等手作。",
+    confirm: "4间当晚库存、手作活动收费和停车位先电话确认；周末网红村人多，建议早订。",
+    fit: "民宿房型可按间订，4间库存待确认",
+    photo: "assets/stays/stay-fanghua.jpg",
+    photoAlt: "青普这厢·芳华李窑民宿外观",
+    source: "https://www.amap.com/detail/B0K63KPSL9",
+    sourceLabel: "高德 POI"
   }
 ];
 
@@ -1493,7 +1557,8 @@ const allRoutes = [
   ...oldRoutes.map((route) => ({ ...route, ...(v5RouteOverrides[route.id] || {}) })),
   ...newRoutes,
   ...natureRoutes,
-  ...cityNatureRoutes
+  ...cityNatureRoutes,
+  ...liyaoRoute
 ]
   .filter((route) => activeRouteIds.has(route.id))
   .map((route) => ({
@@ -1575,8 +1640,8 @@ function renderStayReference(route, mode) {
   const remaining = stays.length - visibleStays.length;
   const itemTag = isRow ? "button" : "span";
   const renderStayItem = (stay) => `
-    <${itemTag} class="stay-reference-item" ${isRow ? `type="button" data-open-stay="${escapeHtml(stay.id)}" data-route-id="${escapeHtml(route.id)}" aria-label="打开路线并定位到住宿：${escapeHtml(stay.name)}"` : ""} data-image-frame>
-      <img src="${escapeHtml(stay.photo)}" alt="" loading="lazy" decoding="async">
+    <${itemTag} class="stay-reference-item" ${isRow ? `type="button" data-open-stay="${escapeHtml(stay.id)}" data-route-id="${escapeHtml(route.id)}" aria-label="打开路线并定位到住宿：${escapeHtml(stay.name)}"` : ""}>
+      <span class="stay-reference-thumb" data-image-frame><img src="${escapeHtml(stay.photo)}" alt="" loading="lazy" decoding="async"></span>
       <span class="stay-reference-copy">
         <strong>${escapeHtml(stay.name)}</strong>
         <span class="stay-reference-score">${escapeHtml(stay.rating)} · ${escapeHtml(stay.ratingLabel)}</span>
@@ -1805,8 +1870,8 @@ function renderRouteDialog(route) {
           <div class="dialog-stay-grid">
             ${getRouteStays(route).map((stay) => `
               <article class="dialog-stay-card" id="dialog-stay-${escapeHtml(route.id)}-${escapeHtml(stay.id)}"
-                data-stay-id="${escapeHtml(stay.id)}" data-image-frame>
-                <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async">
+                data-stay-id="${escapeHtml(stay.id)}">
+                <div class="dialog-stay-photo" data-image-frame><img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async"></div>
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
                     <h4>${escapeHtml(stay.name)}</h4>
@@ -1841,8 +1906,8 @@ function renderRouteDialog(route) {
 
 function renderStay(stay) {
   return `
-    <article class="stay-card" data-image-frame>
-      <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async">
+    <article class="stay-card">
+      <div class="stay-card-photo" data-image-frame><img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async"></div>
       <div class="stay-body">
         <div class="stay-heading">
           <h4>${escapeHtml(stay.name)}</h4>
@@ -2784,12 +2849,19 @@ const html = `<!doctype html>
       cursor: pointer;
     }
     .stay-reference-item:first-child { border-top: 0; padding-top: 4px; }
-    .stay-reference-item img {
+    .stay-reference-thumb {
+      display: block;
       width: 64px;
       height: 64px;
       border-radius: 6px;
-      object-fit: cover;
+      overflow: hidden;
       background: #d8e1db;
+    }
+    .stay-reference-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .stay-reference-copy {
       display: grid;
@@ -2868,7 +2940,7 @@ const html = `<!doctype html>
     .stay-reference--row .stay-reference-item:hover { border-color: #8fac98; background: #fcfefc; box-shadow: 0 3px 10px rgba(33, 50, 41, .08); }
     .stay-reference--row .stay-reference-item:focus-visible { outline: 3px solid #89ad98; outline-offset: 1px; }
     .stay-reference--row[data-stay-count="1"] .stay-reference-item { flex-basis: 100%; }
-    .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
+    .stay-reference--row .stay-reference-thumb { width: 64px; height: 64px; }
     .stay-reference--row .stay-reference-copy { gap: 2px; }
     .stay-reference--row .stay-reference-copy > strong { font-size: 15px; line-height: 1.32; }
     .stay-reference--row .stay-reference-score,
@@ -3053,7 +3125,7 @@ const html = `<!doctype html>
       transition: border-color .2s, box-shadow .2s;
     }
     .dialog-stay-card.is-target { border-color: var(--green); box-shadow: 0 0 0 3px #78a48766; }
-    .dialog-stay-card > img {
+    .dialog-stay-photo > img {
       display: block;
       width: 100%;
       aspect-ratio: 16 / 6.8;
@@ -3564,7 +3636,7 @@ const html = `<!doctype html>
       background: var(--surface-strong);
     }
 
-    .stay-card > img {
+    .stay-card-photo > img {
       width: 100%;
       aspect-ratio: 3 / 2;
       object-fit: cover;
@@ -3741,7 +3813,7 @@ const html = `<!doctype html>
         grid-template-columns: 72px minmax(0, 1fr);
         gap: 10px;
       }
-      .stay-reference--row .stay-reference-item img { width: 72px; height: 72px; }
+      .stay-reference--row .stay-reference-thumb { width: 72px; height: 72px; }
       .route-title { font-size: 32px; }
       .review-line,
       .fee-line { font-size: 19px; }
@@ -3834,7 +3906,7 @@ const html = `<!doctype html>
         padding-bottom: 6px;
         padding-left: 11px;
       }
-      .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
+      .stay-reference--row .stay-reference-thumb { width: 64px; height: 64px; }
       .stay-reference--row .stay-reference-copy > strong { font-size: 15px; }
       .stay-reference--row .stay-reference-score,
       .stay-reference--row .stay-reference-fit,
