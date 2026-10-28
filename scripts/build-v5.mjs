@@ -158,7 +158,10 @@ const routeStayIds = {
   "16": ["liuxia", "shaoguang"],
   "04": ["qingfeng", "hanqi"],
   "05": ["qingfeng", "hanqi"],
+  "06": ["hanqi", "qingfeng"],
+  "11": ["new_fusheng", "liuxia"],
   f01: ["duoyun", "banxia"],
+  f02: ["niulu"],
   "12": ["banxia", "new_daojia"],
   "14": ["new_nongshe", "new_xianshe"],
   p01: ["zhuji", "sangu"],
@@ -170,7 +173,10 @@ const routeStayIds = {
   s05: ["sanjo", "xishan"],
   j01: ["huguang", "muxinju"],
   r01: ["song_guangfulin", "song_guangfulin_grand", "song_guangfulin_hilton"],
-  r02: ["jiading_atour", "jiading_yunju", "jiading_hilton"]
+  r02: ["jiading_atour", "jiading_yunju", "jiading_hilton"],
+  r03: ["song_guangfulin", "song_guangfulin_grand", "song_guangfulin_hilton"],
+  r04: ["cordis"],
+  r05: ["jiading_atour", "jiading_yunju", "jiading_hilton"]
 };
 
 const mapOrigin = {
@@ -205,13 +211,13 @@ const routeMapPoints = [
 ];
 
 const activeRouteIds = new Set([
-  "02", "03", "16",
-  "04", "05",
-  "f01", "12",
+  "02", "03", "16", "11",
+  "04", "05", "06",
+  "f01", "f02", "12",
   "14",
   "s01", "s02", "s03", "s04", "s05",
   "j01",
-  "r01", "r02"
+  "r01", "r02", "r03", "r04", "r05"
 ]);
 
 const stayMeta = {
@@ -769,6 +775,191 @@ const natureRoutes = [
   }
 ];
 
+const cityNatureRoutes = [
+  {
+    id: "r03",
+    group: "nearby",
+    area: "松江 · 佘山",
+    title: "佘山 · 东西佘山登高＋广富林住一晚",
+    blurb: "上海唯一的自然山林，上午西佘山、下午东佘山竹林；晚上住广富林，第二天水岸短走。",
+    review: "真山真林，西佘山还免费，77分钟就到；山是百米级矮山，当轻徒步、别当登山。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7" },
+        { source: "携程", detail: "西佘山免费" }
+      ],
+      note: "天马山园10元；天文博物馆与教堂开放单独确认"
+    },
+    rating: {
+      name: "佘山 · 东西佘山登高＋广富林住一晚",
+      parts: [37, 20, 17, 7],
+      total: 81,
+      stars: 4.5,
+      confidence: "中",
+      reason: "市内唯一成片山林，登高赏秋成本低；和广富林已核住宿组合成完整两天。",
+      deductions: "海拔百米级，强度对想真爬山的人偏低；周日傍晚回城方向易堵，建议中午前返程。",
+      evidence: "高德POI评分与驾车实测（41.6km/77分钟）；携程问道各园门票与开放口径。"
+    },
+    tags: ["真山登高", "免费", "近市区"],
+    fee: "西佘山园免费；天马山园10元；10/8–4/30 为 08:30–16:30（16:00停止入园）；天文博物馆/教堂开放先确认。",
+    travel: "高德驾车 41.6 km · 约 77 分钟",
+    photo: "assets/routes/route-r03.jpg",
+    photoAlt: "佘山国家森林公园山林",
+    photoCaption: "佘山国家森林公园｜来源：高德 POI 相册",
+    activities: ["西佘山登高看教堂", "东佘山竹林栈道", "广富林水岸短走"],
+    day1: [
+      ["08:30–09:45", "陆家嘴出发到佘山"],
+      ["10:00–12:00", "西佘山登高，看教堂和天文台外观"],
+      ["12:00–13:00", "佘山脚下午饭"],
+      ["13:30–15:30", "东佘山竹林栈道"],
+      ["16:00以后", "广富林入住，晚饭和掌灯活动看当日安排"]
+    ],
+    day2: [
+      ["09:00–10:00", "早餐、退房"],
+      ["10:00–11:30", "广富林水岸短走"],
+      ["12:00–13:00", "松江午饭"],
+      ["13:00以后", "返沪，避开周日下午高峰"]
+    ],
+    source: "https://www.amap.com/detail/B00155IWT7"
+  },
+  {
+    id: "f02",
+    group: "fengxian",
+    area: "奉贤 · 海湾",
+    title: "海湾国家森林公园 · 水杉栈道＋营地烧烤",
+    blurb: "上午进园直奔水上栈道看水杉，下午大草坪慢走；晚上住园内营地，湖边烧烤夜聊。",
+    review: "万亩生态林是市内森林感最足的一处；11月初水杉刚上妆，红透要等中下旬。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.3" },
+        { source: "携程", detail: "门票50元" }
+      ],
+      note: "园内烧烤场、跑马场等改造至2026年底；10/31–11/1周末正常开放"
+    },
+    rating: {
+      name: "海湾国家森林公园 · 水杉栈道＋营地烧烤",
+      parts: [38, 20, 15, 7],
+      total: 80,
+      stars: 4.5,
+      confidence: "中",
+      reason: "万亩森林＋千米水上栈道，景观体量在市内线里最足；营地住宿让晚上也有内容。",
+      deductions: "水杉峰值在11月中下旬，本周末为初染；门票50元；部分设施改造中，烧烤只能在营地。",
+      evidence: "高德POI评分与开放时间（10/31–11/1周末正常）；携程问道门票与设施改造口径。"
+    },
+    tags: ["万亩森林", "水上栈道", "园内营地"],
+    fee: "门票50元；08:30–16:30（15:30停止入园）；租船/电瓶车另收费；营地烧烤和住宿问牛路野营。",
+    travel: "高德驾车 58.7 km · 约 70 分钟",
+    photo: "assets/routes/route-f02.jpg",
+    photoAlt: "海湾国家森林公园水上栈道",
+    photoCaption: "海湾国家森林公园｜来源：高德 POI 相册",
+    activities: ["水上栈道水杉林", "大草坪与森林步道", "营地烧烤夜聊"],
+    day1: [
+      ["08:30–09:40", "陆家嘴出发到海湾森林公园"],
+      ["10:00–12:30", "水上栈道＋水杉林"],
+      ["12:30–13:30", "园内或附近午饭"],
+      ["14:00–16:00", "大草坪慢走或湖面租船"],
+      ["16:30以后", "营地入住，湖边烧烤"]
+    ],
+    day2: [
+      ["08:30–09:30", "营地早餐"],
+      ["09:30–11:00", "森林晨走"],
+      ["11:00–11:30", "退房"],
+      ["12:00以后", "午饭后返沪，周日早走避峰"]
+    ],
+    source: "https://www.amap.com/detail/B00155LYLB"
+  },
+  {
+    id: "r04",
+    group: "nearby",
+    area: "宝山 / 浦东 · 长江口",
+    title: "长江口 · 炮台湾湿地＋滨江森林公园",
+    blurb: "两个免费公园串一天：上午炮台湾看江口湿地候鸟，下午滨江森林水杉林和橘园采摘。",
+    review: "全线最近，单程不到50分钟，返程零压力；真滩涂湿地，但单个公园只够半天，所以两个打包。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7", detail: "两园均为4.7" }
+      ],
+      note: "两园均免费；滨江橘园采摘节至11月下旬"
+    },
+    rating: {
+      name: "长江口 · 炮台湾湿地＋滨江森林公园",
+      parts: [35, 18, 18, 7],
+      total: 78,
+      stars: 4,
+      confidence: "中",
+      reason: "最近、免费、周日返程最稳；湿地和森林两种景观一天看完。",
+      deductions: "城市公园级别，野的程度不如佘山和海湾；采摘和江边日落看天气。",
+      evidence: "高德两园评分与实测车程（24km/48分钟、22.6km/47分钟）；携程问道采摘节信息。"
+    },
+    tags: ["免费", "全线最近", "江口湿地"],
+    fee: "两园均免费；滨江橘园采摘按斤称重收费；停车另计。",
+    travel: "高德驾车 24.0 km · 约 48 分钟",
+    photo: "assets/routes/route-r04.jpg",
+    photoAlt: "炮台湾湿地木栈道与江景",
+    photoCaption: "吴淞炮台湾国家湿地公园｜来源：高德 POI 相册",
+    activities: ["炮台湾滨江湿地栈道", "矿坑花园", "滨江森林水杉林与橘园采摘"],
+    day1: [
+      ["09:00–09:50", "陆家嘴出发到炮台湾"],
+      ["10:00–12:30", "湿地栈道＋矿坑花园"],
+      ["12:30–13:30", "宝山午饭"],
+      ["14:00–16:30", "滨江森林公园水杉林＋橘园采摘"],
+      ["17:00以后", "吴淞口酒店入住，明阁或附近晚饭"]
+    ],
+    day2: [
+      ["09:00–10:00", "早餐"],
+      ["10:00–11:30", "江边短走或邮轮港看船"],
+      ["11:30", "退房"],
+      ["12:00以后", "午饭后回家，全线最近无堵车压力"]
+    ],
+    source: "https://www.amap.com/detail/B00155LGBQ"
+  },
+  {
+    id: "r05",
+    group: "nearby",
+    area: "嘉定 · 嘉北",
+    title: "嘉北郊野公园 · 稻田花海＋湿地慢走",
+    blurb: "免费郊野公园，百日菊花海到11月中，金黄稻田配景观桥；下午回嘉定城区住，第二天州桥短走。",
+    review: "田园风光轻松不累、人少好停车；花海是人工种植，追求野趣的请直接看佘山/海湾。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.5" }
+      ],
+      note: "免费需公众号预约；16:00停止入园"
+    },
+    rating: {
+      name: "嘉北郊野公园 · 稻田花海＋湿地慢走",
+      parts: [34, 18, 17, 6],
+      total: 75,
+      stars: 4,
+      confidence: "中",
+      reason: "免费、轻松、返程近；稻田湿地是真田园，住宿复用嘉定城区三家已核酒店。",
+      deductions: "花海为人工种植，自然度弱于佘山/海湾；内容偏轻量，适合当慢节奏选项。",
+      evidence: "高德评分4.5与实测车程（46km/63分钟）；携程问道花期至11月中口径。"
+    },
+    tags: ["免费", "稻田", "花海"],
+    fee: "免费需预约；园内游船、自行车另收费。",
+    travel: "高德驾车 46.0 km · 约 63 分钟",
+    photo: "assets/routes/route-r05.jpg",
+    photoAlt: "嘉北郊野公园田园景观",
+    photoCaption: "嘉北郊野公园｜来源：高德 POI 相册",
+    activities: ["百日菊花海", "稻田与景观桥", "彭门湿地"],
+    day1: [
+      ["09:00–10:05", "陆家嘴出发到嘉北"],
+      ["10:15–12:30", "花海＋稻田慢逛"],
+      ["12:30–13:30", "附近午饭"],
+      ["14:00–15:30", "彭门湿地慢走"],
+      ["16:00以后", "嘉定城区入住，晚饭"]
+    ],
+    day2: [
+      ["09:00–10:00", "早餐"],
+      ["10:00–11:30", "州桥老街短走"],
+      ["11:30", "退房"],
+      ["12:00以后", "午饭后返沪"]
+    ],
+    source: "https://www.amap.com/detail/B0FFGD82MA"
+  }
+];
+
 const newStays = [
   {
     id: "chengyu",
@@ -1054,6 +1245,36 @@ const newStays = [
     photoAlt: "海盐木心居客栈外观",
     source: "https://m.ctrip.com/webapp/hotels/detail?hotelid=21121706",
     sourceLabel: "携程问道报价，评分待核"
+  },
+  {
+    id: "niulu",
+    name: "牛路野营营地（海湾国家森林公园内）",
+    group: "fengxian",
+    rating: "高德4.0",
+    ratingLabel: "高德4.0 · 露营体验型住宿",
+    amenities: ["帐篷住宿", "湖畔烧烤", "露天音乐", "夜探森林"],
+    review: "住进森林里的帐篷，独立卫浴和空调都有，晚上湖边烧烤配露天音乐，体验感拉满。",
+    confirm: "帐篷隔音一般，舒适度别拿酒店比；4顶帐篷当晚库存、烧烤套餐和入园手续（1号门办理后电瓶车进入）先问营地。",
+    fit: "按顶订帐篷，4顶当晚库存待确认",
+    photo: "assets/stays/stay-niulu.jpg",
+    photoAlt: "牛路野营海湾森林营地帐篷",
+    source: "https://www.amap.com/detail/B0FFKLIVYZ",
+    sourceLabel: "高德 POI"
+  },
+  {
+    id: "cordis",
+    name: "上海伊敦康得思酒店（吴淞口邮轮港）",
+    group: "nearby",
+    rating: "高德4.7",
+    ratingLabel: "高德4.7 · 邮轮港旁",
+    amenities: ["品牌酒店", "明阁中餐厅", "江景"],
+    review: "邮轮港旁的国际品牌酒店，明阁中餐厅适合6人聚餐；离炮台湾车程5–10分钟。",
+    confirm: "4间当晚库存和价格按预订页为准；餐厅包房提前订。",
+    fit: "酒店型客房，4间可按间订",
+    photo: "assets/stays/stay-cordis.jpg",
+    photoAlt: "上海伊敦康得思酒店外观",
+    source: "https://www.amap.com/detail/B0K3HU31S4",
+    sourceLabel: "高德 POI"
   }
 ];
 
@@ -1271,7 +1492,8 @@ function amapTravel(routeId) {
 const allRoutes = [
   ...oldRoutes.map((route) => ({ ...route, ...(v5RouteOverrides[route.id] || {}) })),
   ...newRoutes,
-  ...natureRoutes
+  ...natureRoutes,
+  ...cityNatureRoutes
 ]
   .filter((route) => activeRouteIds.has(route.id))
   .map((route) => ({
@@ -3769,9 +3991,7 @@ const html = `<!doctype html>
               const tooltip = document.createElement("span");
               tooltip.textContent = stop.element.title;
               stop.layer.bindTooltip(tooltip, {direction: "top", offset: [0, -10]});
-              stop.element.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
+              const handleStopClick = () => {
                 const center = map.latLngToContainerPoint(stop.layer.getLatLng());
                 const nearby = stops.filter((candidate) =>
                   center.distanceTo(map.latLngToContainerPoint(candidate.layer.getLatLng())) < 22
@@ -3806,7 +4026,15 @@ const html = `<!doctype html>
                 }
                 picker.append(close, choices);
                 frame.append(picker);
+              };
+              stop.element.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                handleStopClick();
               });
+              // The square divIcon wrapper can overlap a neighbouring round marker;
+              // a Leaflet-level click keeps the picker reachable in that case.
+              stop.layer.on("click", handleStopClick);
             }
             state = {map, bounds};
             routeMaps.set(frame, state);

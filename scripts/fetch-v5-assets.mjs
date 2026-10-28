@@ -126,6 +126,36 @@ const targets = [
     output: "assets/stays/stay-muxinju.jpg",
     url: "https://www.amap.com/detail/B0FFHHL65Z",
     imageUrl: "https://store.is.autonavi.com/showpic/970641ddacf54259900fa0f125d243bb"
+  },
+  {
+    output: "assets/routes/route-f02.jpg",
+    url: "https://www.amap.com/detail/B00155LYLB",
+    imageUrl: "http://store.is.autonavi.com/showpic/9dfdfc95593b566748ef9171cf43bf28"
+  },
+  {
+    output: "assets/routes/route-r03.jpg",
+    url: "https://www.amap.com/detail/B00155IWT7",
+    imageUrl: "http://store.is.autonavi.com/showpic/438a2eb1c762b59eb94f8830a7447157"
+  },
+  {
+    output: "assets/routes/route-r04.jpg",
+    url: "https://www.amap.com/detail/B00155LGBQ",
+    imageUrl: "http://store.is.autonavi.com/showpic/e37bc6e560ac8c25bc860572db7cc21f"
+  },
+  {
+    output: "assets/routes/route-r05.jpg",
+    url: "https://www.amap.com/detail/B0FFGD82MA",
+    imageUrl: "http://store.is.autonavi.com/showpic/353abc2d35cae962e8523f2d60b3b303"
+  },
+  {
+    output: "assets/stays/stay-niulu.jpg",
+    url: "https://www.amap.com/detail/B0FFKLIVYZ",
+    imageUrl: "https://store.is.autonavi.com/showpic/5360dafa2e24eab60000000732684071?type=pic"
+  },
+  {
+    output: "assets/stays/stay-cordis.jpg",
+    url: "https://www.amap.com/detail/B0K3HU31S4",
+    imageUrl: "https://aos-comment.amap.com/comment/20260316-f6608083d4795f11aab96192-2fjOq26ZyWc8gpZ0PWUohh.jpg"
   }
 ];
 

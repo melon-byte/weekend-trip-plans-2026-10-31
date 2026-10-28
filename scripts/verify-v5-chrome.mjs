@@ -385,12 +385,13 @@ async function inspectAt(send, width, height, mobile, prefix) {
   })()`);
 
   const expectedRouteIds = [
-    "02", "03", "04", "05", "12", "14", "16", "f01",
-    "r01", "r02", "s01", "s02", "s03", "s04", "s05", "j01"
+    "02", "03", "04", "05", "06", "11", "12", "14", "16", "f01", "f02",
+    "r01", "r02", "r03", "r04", "r05", "s01", "s02", "s03", "s04", "s05", "j01"
   ].sort();
   const expectedRouteCount = expectedRouteIds.length;
   const expectedMapLabels = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "O", "P", "Q", "R"
+    "A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "O", "P", "Q", "R",
+    "S", "T", "U", "V", "W", "X"
   ];
 
   assert(initial.topbars === 0 && initial.tripFacts === 0, `${prefix}: unused top header still renders`);
@@ -458,9 +459,9 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.routeStayReferences === expectedRouteCount, `${prefix}: every route card needs a stay reference`);
   assert(initial.rankStayReferences === expectedRouteCount, `${prefix}: every ranking row needs a stay reference`);
   assert(initial.routeStayReferenceItems === expectedRouteCount, `${prefix}: route cards should show one primary stay each`);
-  assert(initial.rankStayReferenceItems === 31, `${prefix}: ranking rows should show all linked stay candidates`);
+  assert(initial.rankStayReferenceItems === 43, `${prefix}: ranking rows should show all linked stay candidates`);
   assert(!mobile || initial.overflowingStayCarousels > 0, `${prefix}: mobile stay cards should scroll horizontally`);
-  assert(initial.dialogStayCards === 31, `${prefix}: expected 31 full stay candidates, got ${initial.dialogStayCards}`);
+  assert(initial.dialogStayCards === 43, `${prefix}: expected 43 full stay candidates, got ${initial.dialogStayCards}`);
   assert(initial.dialogStaySections === expectedRouteCount, `${prefix}: each dialog needs a stay section`);
   assert(initial.routeAmenityTags >= expectedRouteCount, `${prefix}: route cards are missing amenity tags`);
   assert(initial.dialogAmenityTags >= 50, `${prefix}: dialog stay cards are missing amenity tags`);

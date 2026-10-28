@@ -32,7 +32,13 @@ const places = [
   { id: "r01", label: "O", name: "广富林文化遗址", location: "121.196269,31.062675", km: 43.8, minutes: 70 },
   { id: "r02", label: "P", name: "菊园百果园", location: "121.210974,31.370895", km: 42.5, minutes: 60 },
   { id: "s05", label: "Q", name: "天平山", location: "120.504155,31.287304", km: 120.3, minutes: 126 },
-  { id: "j01", label: "R", name: "南北湖", location: "120.847395,30.372508", km: 143.6, minutes: 141 }
+  { id: "j01", label: "R", name: "南北湖", location: "120.847395,30.372508", km: 143.6, minutes: 141 },
+  { id: "06", label: "S", name: "廊下枫叶岛", location: "121.174735,30.775134", km: 89.1, minutes: 103 },
+  { id: "11", label: "T", name: "青西郊野公园", location: "120.982773,31.064618", km: 67.3, minutes: 90 },
+  { id: "f02", label: "U", name: "海湾国家森林公园", location: "121.690609,30.861518", km: 58.7, minutes: 70 },
+  { id: "r03", label: "V", name: "佘山国家森林公园", location: "121.196565,31.094440", km: 41.6, minutes: 77 },
+  { id: "r04", label: "W", name: "炮台湾湿地", location: "121.509028,31.396662", km: 24.0, minutes: 48 },
+  { id: "r05", label: "X", name: "嘉北郊野公园", location: "121.196831,31.357432", km: 46.0, minutes: 63 }
 ];
 
 const nearbyPlaces = [
