@@ -197,6 +197,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
     const overflowElements = [...document.querySelectorAll("main *")]
       .filter((element) => !element.closest(".region-nav"))
       .filter((element) => !element.closest(".map-frame"))
+      .filter((element) => !element.closest(".stay-reference--row .stay-reference-list"))
       .filter((element) => !element.closest("dialog:not([open])"))
       .filter((element) => {
         const rect = element.getBoundingClientRect();
@@ -309,6 +310,8 @@ async function inspectAt(send, width, height, mobile, prefix) {
       rankStayReferences: document.querySelectorAll(".rank-row .stay-reference").length,
       routeStayReferenceItems: document.querySelectorAll(".route-card .stay-reference-item").length,
       rankStayReferenceItems: document.querySelectorAll(".rank-row .stay-reference-item").length,
+      overflowingStayCarousels: [...document.querySelectorAll(".rank-row .stay-reference--row .stay-reference-list")]
+        .filter((list) => list.scrollWidth > list.clientWidth + 1).length,
       dialogStayCards: document.querySelectorAll(".dialog-stay-card").length,
       dialogStaySections: document.querySelectorAll(".dialog-stay-section").length,
       routeAmenityTags: document.querySelectorAll(".route-card .stay-amenities span").length,
@@ -355,14 +358,14 @@ async function inspectAt(send, width, height, mobile, prefix) {
 
   const expectedRouteIds = [
     "02", "03", "04", "05", "12", "14", "16", "17", "f01",
-    "p01", "s01", "s02", "s03", "s04"
+    "p01", "r01", "r02", "s01", "s02", "s03", "s04"
   ].sort();
   const expectedMapLabels = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"
   ];
 
   assert(initial.topbars === 0 && initial.tripFacts === 0, `${prefix}: unused top header still renders`);
-  assert(initial.rankRows === 14, `${prefix}: expected 14 ranking rows, got ${initial.rankRows}`);
+  assert(initial.rankRows === 16, `${prefix}: expected 16 ranking rows, got ${initial.rankRows}`);
   assert(
     initial.rankBoardPaddingLeft === 0 &&
       Math.abs(initial.firstRankRowLeft - initial.rankingContentLeft) <= 2,
@@ -372,8 +375,8 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.rankRowHeights.every((height) => height <= (mobile ? 420 : 400)),
     `${prefix}: ranking cards are too tall: ${initial.rankRowHeights.join(",")}`
   );
-  assert(initial.routeCards === 14, `${prefix}: expected 14 route cards, got ${initial.routeCards}`);
-  assert(initial.routeDialogs === 14, `${prefix}: expected 14 dialogs, got ${initial.routeDialogs}`);
+  assert(initial.routeCards === 16, `${prefix}: expected 16 route cards, got ${initial.routeCards}`);
+  assert(initial.routeDialogs === 16, `${prefix}: expected 16 dialogs, got ${initial.routeDialogs}`);
   assert(initial.pageTitle === "出行计划", `${prefix}: page title should be 出行计划`);
   assert(
     initial.tabLabels.join(",") === "总榜,分区域,路线图",
@@ -391,7 +394,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.regionNavCount === 1, `${prefix}: region navigation must render exactly once`);
   assert(initial.regionNavInsideRegions, `${prefix}: region navigation must live only inside 分区域`);
   assert(
-    initial.regionNavLabels.join(",") === "青浦,金山,奉贤,浦东,苏州",
+    initial.regionNavLabels.join(",") === "苏州,金山,青浦,浦东,奉贤,近郊体验",
     `${prefix}: unexpected region navigation: ${initial.regionNavLabels.join(",")}`
   );
   assert(
@@ -409,22 +412,23 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.routeIds.join(",") === expectedRouteIds.join(","),
     `${prefix}: unexpected route ids: ${initial.routeIds.join(",")}`
   );
-  assert(initial.routeReviewCards === 14, `${prefix}: every route card needs a one-line review`);
-  assert(initial.routeFeeCards === 14, `${prefix}: every route card needs a fee warning`);
-  assert(initial.routePlaceReviews === 14, `${prefix}: every route card needs a source place review`);
-  assert(initial.rankPlaceReviews === 14, `${prefix}: every ranking row needs a source place review`);
-  assert(initial.dialogPlaceReviews === 14, `${prefix}: every dialog needs a source place review`);
-  assert(initial.dialogReviewBlocks === 14, `${prefix}: every dialog needs a one-line review`);
-  assert(initial.routeStayReferences === 14, `${prefix}: every route card needs a stay reference`);
-  assert(initial.rankStayReferences === 14, `${prefix}: every ranking row needs a stay reference`);
-  assert(initial.routeStayReferenceItems === 14, `${prefix}: route cards should show one primary stay each`);
-  assert(initial.rankStayReferenceItems === 14, `${prefix}: ranking rows should show one primary stay each`);
-  assert(initial.dialogStayCards === 25, `${prefix}: expected 25 full stay candidates, got ${initial.dialogStayCards}`);
-  assert(initial.dialogStaySections === 14, `${prefix}: each dialog needs a stay section`);
-  assert(initial.routeAmenityTags >= 14, `${prefix}: route cards are missing amenity tags`);
+  assert(initial.routeReviewCards === 16, `${prefix}: every route card needs a one-line review`);
+  assert(initial.routeFeeCards === 16, `${prefix}: every route card needs a fee warning`);
+  assert(initial.routePlaceReviews === 16, `${prefix}: every route card needs a source place review`);
+  assert(initial.rankPlaceReviews === 16, `${prefix}: every ranking row needs a source place review`);
+  assert(initial.dialogPlaceReviews === 16, `${prefix}: every dialog needs a source place review`);
+  assert(initial.dialogReviewBlocks === 16, `${prefix}: every dialog needs a one-line review`);
+  assert(initial.routeStayReferences === 16, `${prefix}: every route card needs a stay reference`);
+  assert(initial.rankStayReferences === 16, `${prefix}: every ranking row needs a stay reference`);
+  assert(initial.routeStayReferenceItems === 16, `${prefix}: route cards should show one primary stay each`);
+  assert(initial.rankStayReferenceItems === 31, `${prefix}: ranking rows should show all linked stay candidates`);
+  assert(!mobile || initial.overflowingStayCarousels > 0, `${prefix}: mobile stay cards should scroll horizontally`);
+  assert(initial.dialogStayCards === 31, `${prefix}: expected 31 full stay candidates, got ${initial.dialogStayCards}`);
+  assert(initial.dialogStaySections === 16, `${prefix}: each dialog needs a stay section`);
+  assert(initial.routeAmenityTags >= 16, `${prefix}: route cards are missing amenity tags`);
   assert(initial.dialogAmenityTags >= 50, `${prefix}: dialog stay cards are missing amenity tags`);
   assert(
-    initial.rankTagCounts.length === 14 && initial.rankTagCounts.every((count) => count >= 1),
+    initial.rankTagCounts.length === 16 && initial.rankTagCounts.every((count) => count >= 1),
     `${prefix}: ranking rows are missing tags`
   );
   assert(initial.dialogueStayText.includes("订前先问"), `${prefix}: stay cards need booking checks`);
@@ -435,7 +439,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.mapImagePresent && initial.mapImageLoaded, `${prefix}: real Amap image is missing`);
   assert(initial.mapImageSrc === "assets/amap-route-map-v5.png", `${prefix}: wrong map image source`);
   assert(initial.mapImageAlt.includes("高德实际地图底图"), `${prefix}: map image needs a real-map description`);
-  assert(initial.mapIndexRoutes === 14, `${prefix}: expected 14 active routes in the map index`);
+  assert(initial.mapIndexRoutes === 16, `${prefix}: expected 16 active routes in the map index`);
   assert(initial.mapImageNaturalWidth === 1000, `${prefix}: map should stay a high-density real image`);
   assert(initial.mapImageNaturalHeight <= 520, `${prefix}: map image is not cropped tightly enough`);
   assert(
@@ -446,18 +450,18 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.mapIndexLabels.join(",") === expectedMapLabels.join(","),
     `${prefix}: unexpected map labels: ${initial.mapIndexLabels.join(",")}`
   );
-  assert(initial.mapText.includes("红色 S 是陆家嘴"), `${prefix}: map must identify the S origin`);
-  assert(initial.mapText.includes("住宿放在对应路线里"), `${prefix}: map must connect stays to routes`);
+  assert(initial.mapText.includes("陆家嘴 S · 出发点"), `${prefix}: map must identify the S origin`);
+  assert(initial.mapText.includes("点位字母对应下方分区路线索引"), `${prefix}: map marker legend is missing`);
   assert(initial.mapText.includes("高德驾车"), `${prefix}: map index must show Amap drive times`);
   assert(
-    initial.activeRegionLabels.join(",") === "青浦,金山,奉贤,浦东,苏州",
+    initial.activeRegionLabels.join(",") === "苏州,金山,青浦,浦东,奉贤,近郊体验",
     `${prefix}: unexpected in-panel navigation: ${initial.activeRegionLabels.join(",")}`
   );
-  assert(initial.introText.includes("住宿直接跟着对应玩法走"), `${prefix}: intro must connect stays to play`);
+  assert(initial.introText.includes("玩优先"), `${prefix}: intro must keep the trip focused on activities`);
   assert(!initial.introText.includes("住宿放在最后"), `${prefix}: intro still de-emphasizes stays`);
   assert(!initial.introText.includes("90 分钟内"), `${prefix}: stale 90-minute limit remains`);
-  assert(initial.travelMinutes.length === 14, `${prefix}: expected 14 drive-time labels`);
-  assert(initial.travelMinutes.includes(131) && initial.travelMinutes.includes(123), `${prefix}: long routes were removed`);
+  assert(initial.travelMinutes.length === 16, `${prefix}: expected 16 drive-time labels`);
+  assert(initial.travelMinutes.some((minutes) => minutes >= 120), `${prefix}: longest routes were removed`);
   assert(initial.travelMinutes.some((minutes) => minutes > 90), `${prefix}: route times are still capped at 90 minutes`);
   assert(!initial.horizontalOverflow, `${prefix}: horizontal page overflow detected`);
   assert(
@@ -476,7 +480,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
     `${prefix}: fee reminders are incomplete: ${initial.feeReminderTerms.join(",")}`
   );
   assert(
-    initial.rankScenicImageSrcs.length === 14 &&
+    initial.rankScenicImageSrcs.length === 16 &&
       initial.rankScenicImageSrcs.every((src) =>
         src.includes("assets/routes/") && !src.includes("assets/stays/")
       ),
@@ -497,7 +501,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
     initial.routeTitles.some((title) => title.includes("太湖东山")) &&
       !initial.routeTitles.some((title) => title.includes("东平森林公园")) &&
       initial.routeTitles.some((title) => title.includes("碧海金沙")),
-    `${prefix}: route list does not match the current 14-route scope`
+    `${prefix}: route list does not match the current 16-route scope`
   );
   assert(
     Object.values(initial.regionRouteScores).every((scores) =>
@@ -599,9 +603,10 @@ async function inspectAt(send, width, height, mobile, prefix) {
   const openedFromRank = await evaluate(send, `(async () => {
     document.getElementById("tab-ranking").click();
     const row = document.querySelector(".rank-row");
-    row.click();
+    const opener = row.querySelector(".rank-row-open");
+    opener.click();
     await new Promise((resolve) => setTimeout(resolve, 150));
-    const dialog = document.getElementById(row.getAttribute("aria-controls"));
+    const dialog = document.getElementById(opener.getAttribute("aria-controls"));
     const textFont = (selector) => {
       const element = dialog.querySelector(selector);
       return element ? parseFloat(getComputedStyle(element).fontSize) : null;

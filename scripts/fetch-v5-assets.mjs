@@ -7,6 +7,45 @@ const publishRoot = path.resolve(here, "..");
 
 const targets = [
   {
+    output: "assets/routes/nearby-songjiang.jpg",
+    url: "https://www.amap.com/detail/B0FFF0JR9H",
+    imageUrl: "http://store.is.autonavi.com/showpic/c54535d74066e199065bf756ea8586c7"
+  },
+  {
+    output: "assets/routes/nearby-jiading.jpg",
+    url: "https://www.amap.com/detail/B0FFHPZUPJ",
+    imageUrl: "https://aos-comment.amap.com/B0FFHPZUPJ/comment/content_media_external_file_251156_ss__1773103148471_45635778.jpg"
+  },
+  {
+    output: "assets/stays/song-guangfulin.jpg",
+    url: "https://www.amap.com/detail/B0H69DJWXE",
+    imageUrl: "https://store.is.autonavi.com/showpic/c66d587e2b3d3375618864726ab5c7ac"
+  },
+  {
+    output: "assets/stays/song-guangfulin-grand.jpg",
+    url: "https://hotels.ctrip.com/hotels/1574863.html",
+    imageUrl: "http://p1.meituan.net/400.0/tdchoteldark/7bae8fb2434506adedaf83e79c395d90348321.jpg"
+  },
+  {
+    output: "assets/stays/song-guangfulin-hilton.jpg",
+    url: "https://hotels.ctrip.com/hotels/75220482.html",
+    imageUrl: "http://p0.meituan.net/400.0/tdchoteldark/84cec1e2fe12cf07de557b15a845b4b73138226.jpg"
+  },
+  {
+    output: "assets/stays/jiading-atour.jpg",
+    url: "https://hotels.ctrip.com/hotels/99046077.html",
+    imageUrl: "http://p0.meituan.net/400.0/tdchoteldark/35f5ffc2f8d0081aa8fccc7e68b354d45632200.jpg"
+  },
+  {
+    output: "assets/stays/jiading-yunju.jpg",
+    url: "https://hotels.ctrip.com/hotels/133409592.html"
+  },
+  {
+    output: "assets/stays/jiading-hilton.jpg",
+    url: "https://hotels.ctrip.com/hotels/124425428.html",
+    imageUrl: "http://p0.meituan.net/400.0/tdchoteldark/25f8a708e9270ae5665c3f4acd7612623923684.jpg"
+  },
+  {
     output: "assets/routes/route-f01.jpg",
     url: "https://www.amap.com/detail/B00155IOQD",
     imageUrl: "http://store.is.autonavi.com/showpic/04acfb003ec74cdba0fde514943a643e"

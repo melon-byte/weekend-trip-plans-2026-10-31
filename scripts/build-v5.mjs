@@ -137,6 +137,12 @@ const groups = [
     eyebrow: "古镇 · 太湖 · 岛岸",
     title: "苏州",
     intro: "锦溪、周庄和太湖东西山；车程更长，但住宿和湖景更像一次小度假。"
+  },
+  {
+    id: "nearby",
+    eyebrow: "古建 · 采摘 · 近郊过夜",
+    title: "近郊体验",
+    intro: "松江广富林和嘉定采摘各做一条，陆家嘴单程约42–44公里；活动后住在附近，不再安排市中心酒店。"
   }
 ];
 
@@ -154,7 +160,9 @@ const routeStayIds = {
   s01: ["chengyu"],
   s02: ["miyi"],
   s03: ["sanjo", "xishan"],
-  s04: ["shuyun"]
+  s04: ["shuyun"],
+  r01: ["song_guangfulin", "song_guangfulin_grand", "song_guangfulin_hilton"],
+  r02: ["jiading_atour", "jiading_yunju", "jiading_hilton"]
 };
 
 const mapOrigin = {
@@ -183,7 +191,9 @@ const routeMapPoints = [
   { id: "17", group: "pudong", short: "17b", name: "比斯特上海", lon: 121.676273, lat: 31.136416 },
   { id: "s01", group: "suzhou", short: "S1", name: "锦溪古镇", lon: 120.902516, lat: 31.177927 },
   { id: "s02", group: "suzhou", short: "S2", name: "周庄古镇", lon: 120.850910, lat: 31.114744 },
-  { id: "s03", group: "suzhou", short: "S3", name: "太湖缥缈峰", lon: 120.255924, lat: 31.116207 }
+  { id: "s03", group: "suzhou", short: "S3", name: "太湖缥缈峰", lon: 120.255924, lat: 31.116207 },
+  { id: "r01", group: "nearby", short: "O", name: "广富林文化遗址", lon: 121.196269, lat: 31.062675 },
+  { id: "r02", group: "nearby", short: "P", name: "菊园百果园", lon: 121.210974, lat: 31.370895 }
 ];
 
 const activeRouteIds = new Set([
@@ -191,7 +201,8 @@ const activeRouteIds = new Set([
   "04", "05",
   "f01", "12",
   "14", "p01", "17",
-  "s01", "s02", "s03", "s04"
+  "s01", "s02", "s03", "s04",
+  "r01", "r02"
 ]);
 
 const stayMeta = {
@@ -200,28 +211,34 @@ const stayMeta = {
     amenities: ["KTV", "棋牌", "花园"],
     review: "村里安静，KTV、棋牌和花园适合晚上自娱；白天去湖边还要开车。",
     confirm: "现有资料只有 3 间房；要满足 4 房，必须另问加房或换房型。",
-    fit: "资料仅 3 间，不匹配"
+    fit: "资料仅 3 间，不匹配",
+    rating: "携程4.9 / 美团4.4",
+    ratingLabel: "携程46条 / 美团评价6449条"
   },
   sun: {
     group: "qingpu",
     amenities: ["别墅", "岛内玩乐", "温泉待确认"],
     review: "玩乐项目集中在岛内，晚上省得再开车；温泉先确认是否开池。",
-    confirm: "俱乐部别墅资料是 3 卧；要住 4 房需另问房型组合。",
-    fit: "资料仅 3 卧，不匹配"
+    confirm: "美团确认俱乐部别墅为3卧、最多住6人，不满足4间独立卧室；4房要另选房型。",
+    fit: "美团确认3卧，不满足4房",
+    rating: "携程4.7 / 美团4.4",
+    ratingLabel: "携程3635条 / 美团6449条"
   },
   hanqi: {
     group: "jinshan",
     amenities: ["独栋", "麻将/棋牌", "K歌", "烧烤"],
     review: "就在枫叶岛内，白天看叶色，晚上回独栋烧烤唱歌；4 室包栋正合适。",
     confirm: "确认 4 室床型、10 月底房态、烧烤区和宠物清洁规则。",
-    fit: "有 4 室包栋候选"
+    fit: "有4室包栋候选",
+    ratingLabel: "携程15条 / 美团暂无评分与评价数"
   },
   sangu: {
     group: "pudong",
     amenities: ["独栋", "KTV", "影音"],
     review: "去年新装修，影音和 KTV 齐全；离滴水湖岸边约 4 公里。",
-    confirm: "整栋共 5 间客房，能否只开 4 房必须问。",
-    fit: "5 间，4 房使用待确认"
+    confirm: "美团页面列5间客房、仅返回5条评价未给评分；能否整栋只开4房需问。",
+    fit: "5间客房，4房组合待确认",
+    ratingLabel: "携程97条 / 美团5条（未返回评分）"
   },
   new_fusheng: {
     group: "qingpu",
@@ -235,21 +252,26 @@ const stayMeta = {
     amenities: ["庭院", "手作", "KTV", "草坪"],
     review: "庭院 LOFT 看星星，手作、土灶、KTV 和草坪活动都集中在园内。",
     confirm: "6 人 4 间的组合、成人手作场次、烧烤开放规则都要问。",
-    fit: "可拼 4 间，组合待确认"
+    fit: "可拼4间，具体组合待确认",
+    rating: "4.9 / 4.1",
+    ratingLabel: "携程43条 / 美团评价数未返回"
   },
   new_daojia: {
     group: "fengxian",
     amenities: ["老街内", "KTV", "棋牌室"],
     review: "就住在老街里，出门就是夜景和小吃；KTV、棋牌室齐全。",
-    confirm: "7 间房里如何挑 4 间、KTV 晚间时段、烧烤和停车先问。",
-    fit: "7 间可选 4 间，待确认"
+    confirm: "美团未命中同店，只找到地址不同的花筑·半移堂（3.0分/7条）；不可套用其评分。7间如何订4间仍需问。",
+    fit: "携程页面有房型；美团未命中同店",
+    ratingLabel: "携程137条 / 美团未命中；近名半移堂非同店"
   },
   new_nongshe: {
     group: "pudong",
     amenities: ["古镇内", "整栋", "近小吃"],
     review: "就在新场古镇大街，晚上逛完直接走回去，整栋住 6 人刚好。",
-    confirm: "整栋只有 3 间卧室，满足不了 4 房需求；只能按 3 房 6 人方案考虑。",
-    fit: "仅 3 卧，不适合 4 房"
+    confirm: "美团同名店在新场大街457号，4.2分/74条；房源描述为3卧最多住6人，只适合3房方案。",
+    fit: "美团确认3卧，不满足4房",
+    rating: "4.6 / 4.2",
+    ratingLabel: "携程18条 / 美团74条"
   },
   new_guiyuan: {
     group: "jinshan",
@@ -269,8 +291,10 @@ const stayMeta = {
     group: "pudong",
     amenities: ["独栋", "泳池", "KTV", "烧烤"],
     review: "带泳池、KTV 和烧烤的独栋，晚上不出门也能玩到散场。",
-    confirm: "整栋房数与 4 房需求的匹配、烧烤和 KTV 是否另收费先问。",
-    fit: "整栋，4 房匹配待确认"
+    confirm: "美团本轮确认单店、5间客房，4.6分/41条；旧记录为4.5分/22条，页面卡片又标暂无评分，口径冲突，评分请以美团当前商户页再核。高德门牌与美团不同，预订前用房东定位确认。",
+    fit: "5间客房；4房方案及地址待核",
+    rating: "携程4.9 / 美团4.6",
+    ratingLabel: "携程190条 / 美团本轮41条；旧记录22条"
   }
 };
 
@@ -549,6 +573,96 @@ const newRoutes = [
       ["12:00以后", "午饭后返沪"]
     ],
     source: "https://m.ctrip.com/webapp/you/gspoi/sight/11/0.html?poiId=76172"
+  },
+  {
+    id: "r01",
+    group: "nearby",
+    area: "松江 · 广富林",
+    title: "广富林遗址 · 水下展馆＋古宅掌灯",
+    blurb: "白天看水下展馆和考古遗址，傍晚住在遗址边参加古宅掌灯与讲解；活动和住宿在同一区域。",
+    review: "古建与考古内容扎实，宰相府有掌灯和讲解活动；10月31日还是古陶、木艺馆闭馆前最后一天。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7", detail: "广富林文化遗址" }
+      ],
+      note: "携程未返回遗址评分；酒店评价单独列在住宿卡片。"
+    },
+    rating: {
+      name: "广富林遗址 · 水下展馆＋古宅掌灯",
+      parts: [39, 22, 15, 8],
+      total: 84,
+      stars: 4.5,
+      confidence: "中",
+      reason: "水下展馆、考古展示和明代古宅住宿相连，掌灯仪式把夜间体验留在广富林。",
+      deductions: "特展和手作馆各自核时段；掌灯、讲解依酒店当日安排，需提前确认。10/31馆内开放信息以场馆公告为准。",
+      evidence: "携程问道酒店ID74638773及场馆信息；美团酒店同名同址；高德POI/驾车距离。"
+    },
+    tags: ["近郊", "古建讲解", "夜间掌灯"],
+    fee: "广富林展馆按单馆或联票购票；酒店掌灯/讲解以住客活动安排为准，汉服和下午茶等另确认是否收费。",
+    travel: "高德驾车 43.8 km · 约 70 分钟",
+    photo: "assets/routes/nearby-songjiang.jpg",
+    photoAlt: "广富林文化遗址水岸古建",
+    photoCaption: "上海广富林文化遗址｜来源：高德POI",
+    activities: ["水下文化展示馆", "考古遗址展示馆", "宰相府古宅掌灯/讲解"],
+    day1: [
+      ["08:30–09:45", "陆家嘴出发到松江广富林"],
+      ["10:00–12:00", "文化展示馆与考古遗址展示馆"],
+      ["12:00–13:00", "园区午饭"],
+      ["13:00–16:30", "古陶艺术馆、木艺展示馆和园区漫走；携程资料提示两馆11/1起闭馆，先核当日安排"],
+      ["17:00以后", "入住广富林宰相府或邻近酒店；按当日安排参加掌灯/古宅讲解"]
+    ],
+    day2: [
+      ["09:00–10:30", "广富林水岸与园区短走"],
+      ["10:30–11:30", "早餐、退房"],
+      ["12:00–13:00", "松江午饭"],
+      ["13:00以后", "返程"]
+    ],
+    source: "携程问道：广富林遗址及酒店；美团：宰相府酒店4.9/5268；高德：遗址POI与陆家嘴驾车距离"
+  },
+  {
+    id: "r02",
+    group: "nearby",
+    area: "嘉定 · 菊园 / 州桥",
+    title: "嘉定秋收 · 菊园百果园＋州桥古城",
+    blurb: "白天亲手砍甘蔗、刨红薯或体验收稻，傍晚住在嘉定；第二天再慢走老城。",
+    review: "秋收项目有明确季节窗口，采摘之后还能在嘉定住一晚；果蔬成熟度出发前要电话确认。",
+    placeReview: {
+      items: [
+        { source: "美团", score: "4.0", detail: "菊园百果园" },
+        { source: "高德", score: "4.4", detail: "菊园百果园" }
+      ],
+      note: "携程返回采摘/园区信息不作评分；当日可采品种需电话确认。"
+    },
+    rating: {
+      name: "嘉定秋收 · 菊园百果园＋州桥古城",
+      parts: [38, 21, 15, 7],
+      total: 81,
+      stars: 4,
+      confidence: "中",
+      reason: "甘蔗、红薯和稻谷收割可动手参与，嘉定老城作为第二天轻松收尾。",
+      deductions: "采摘受天气和成熟度影响；百果园周一闭园，园内部分项目另预约；携程未返回四间酒店当晚库存。",
+      evidence: "携程问道与美团园区信息；高德百果园POI/驾车距离。"
+    },
+    tags: ["近郊", "秋季采摘", "嘉定过夜"],
+    fee: "入园和采摘按当日票务/称重规则；甘蔗、红薯、稻谷品种与成熟情况先电话确认。",
+    travel: "高德驾车 42.5 km · 约 60 分钟",
+    photo: "assets/routes/nearby-jiading.jpg",
+    photoAlt: "菊园百果园田园采摘区",
+    photoCaption: "嘉定菊园百果园｜来源：高德POI",
+    activities: ["甘蔗砍收/红薯刨挖", "稻谷收割体验", "州桥老街与嘉定古城慢走"],
+    day1: [
+      ["08:30–09:40", "陆家嘴出发到嘉定菊园"],
+      ["09:45–12:30", "菊园百果园采摘甘蔗、红薯或当季果蔬"],
+      ["12:30–13:30", "园区或附近午饭"],
+      ["13:30–15:30", "稻谷收割/打稻体验，具体项目以当日开放为准"],
+      ["16:00以后", "到嘉定酒店入住；晚饭后可去州桥老街周边散步"]
+    ],
+    day2: [
+      ["09:30–11:30", "州桥老街和嘉定古城短走，景点开放情况当日确认"],
+      ["12:00–13:00", "嘉定午饭"],
+      ["13:00以后", "返程"]
+    ],
+    source: "携程问道：菊园百果园及酒店候选；美团：园区4.0、Atour4.1/93、云居4.5、嘉定希尔顿花园4.6/155；高德POI/驾车距离"
   }
 ];
 
@@ -558,11 +672,11 @@ const newStays = [
     name: "橙屿民宿（锦溪·计家墩）",
     group: "suzhou",
     rating: "5.0",
-    ratingLabel: "携程 3条评价",
     amenities: ["独栋", "院子", "烧烤", "桌游"],
     review: "院子安静，适合6个人烧烤、聊天、慢住。",
-    confirm: "5房整套只开4卧是否可行、早餐份数、烧烤和停车必须问。",
+    confirm: "美团未命中橙屿同店；村内其他民宿评分不能代用。5房是否能只开4卧、早餐份数、烧烤和停车仍须问。",
     fit: "5房，只开4卧待确认",
+    ratingLabel: "携程截图3条 / 美团未命中同店",
     photo: "assets/stays/chengyu-card.jpg",
     photoAlt: "橙屿民宿庭院",
     source: "https://www.ctrip.com/",
@@ -573,11 +687,11 @@ const newStays = [
     name: "觅家·一夜花香（周庄）",
     group: "suzhou",
     rating: "5.0",
-    ratingLabel: "携程截图 8条评价",
     amenities: ["独栋", "古镇内", "院子"],
     review: "晚上逛完古镇直接回独栋，位置省心。",
-    confirm: "线上三源未同名命中；预订前复核在售、4卧使用、停车和行李接送。",
+    confirm: "美团未命中同店；返回的稻花香舍是另一家，不能借用其4.9分。预订前复核在售、4卧使用、停车和行李接送。",
     fit: "5房，只开4卧待确认",
+    ratingLabel: "携程截图8条 / 美团未命中同店",
     photo: "assets/stays/miyi-card.jpg",
     photoAlt: "觅家·一夜花香白色小楼和院子",
     source: "https://www.ctrip.com/",
@@ -588,11 +702,11 @@ const newStays = [
     name: "太湖西山 · 小白房",
     group: "suzhou",
     rating: "5.0 / 4.4",
-    ratingLabel: "携程 11条 / 美团",
+    ratingLabel: "携程11条 / 美团1条",
     amenities: ["4房", "院子", "泳池", "麻将"],
-    review: "4房刚好，泳池和院子适合6个人聚会。",
-    confirm: "详细门牌、4房开放、泳池是否开放及收费、厨房烧烤规则先问；床型两平台口径不同。",
-    fit: "4房，人数匹配",
+    review: "美团确认4卧整栋、最多住8人；泳池和麻将齐，但携程床型口径不同。",
+    confirm: "美团地址为衙甪里村五丰疃里13-1号；确认与携程房源门牌一致。携程/美团床型与可住人数口径不同，预订前核实房型、泳池和厨房烧烤规则。",
+    fit: "美团4卧8人；床型与携程记录有差异",
     photo: "assets/stays/xibaifang-hero.jpg",
     photoAlt: "小白房建筑与门楣招牌",
     source: "http://dpurl.cn/my0XrrHz",
@@ -618,7 +732,7 @@ const newStays = [
     name: "韶光度假别墅（朱家角）",
     group: "qingpu",
     rating: "4.7",
-    ratingLabel: "携程 6条评价",
+    ratingLabel: "携程6条 / 美团约4.7，评价数未返回",
     amenities: ["包栋", "棋牌", "影院", "庭院", "厨房"],
     review: "离朱家角近，院子、厨房和影音空间适合小聚。",
     confirm: "携程写三居包栋，不等于4间独立卧室；床型和4房方案必须问。",
@@ -633,7 +747,7 @@ const newStays = [
     name: "花筑·清风拾光（枫泾）",
     group: "jinshan",
     rating: "4.8",
-    ratingLabel: "携程 252条评价",
+    ratingLabel: "携程252条 / 美团暂无评分与评价数",
     amenities: ["棋牌", "泳池", "烧烤", "庭院", "轰趴"],
     review: "三面环河，院子、泳池和烧烤区适合聚会；离枫泾和金山海边都顺。",
     confirm: "以单间/双床房为主，订4间会和其他客人同栋；公共烧烤和棋牌区先预约。",
@@ -647,10 +761,10 @@ const newStays = [
     id: "duoyun",
     name: "上海朵云闲居民宿（吴房村）",
     group: "fengxian",
-    rating: "5.0 / 3.9",
-    ratingLabel: "携程 / 美团37条",
+    rating: "携程5.0 / 美团暂无评分",
+    ratingLabel: "携程3条 / 美团37条；3.9为热度分",
     amenities: ["4室别墅", "KTV", "棋牌", "烧烤", "茶室"],
-    review: "携程有4室4卫别墅，正好贴6人4房；美团只确认到烧烤和37条评价。",
+    review: "美团确认吴房村914号、37条评价；3.9是热度分，不是商户评分。4室房型仍以携程房型页和当晚库存为准。",
     confirm: "房型信息两平台不一致；4室4卫是否可订、KTV和烧烤时段都要问。",
     fit: "携程有4室4卫，待复核",
     photo: "assets/stays/stay-duoyun.jpg",
@@ -662,12 +776,12 @@ const newStays = [
     id: "zhuji",
     name: "上海竹迹别墅",
     group: "pudong",
-    rating: "4.9 / 4.6",
-    ratingLabel: "携程 / 美团16条",
+    rating: "携程4.9",
+    ratingLabel: "美团近名店4.6/16，地址在鹿达路迪士尼商圈，未确认同店",
     amenities: ["KTV", "棋牌", "游戏室", "烧烤", "泳池待确认"],
     review: "整栋轰趴空间大，适合晚上不出门；但泳池是否开放两平台说法冲突。",
-    confirm: "携程写室外泳池，美团说没有泳池；10月退房10:00较早，4房和泳池都要确认。",
-    fit: "整栋10间，可覆盖4房",
+    confirm: "美团只命中竹迹民宿（鹿达路分店），地址在迪士尼商圈，与携程主体及海昌路线的位置关系待核；美团未证实为同一店。泳池、整栋房间数及4房方案向房东确认。",
+    fit: "美团近名店，主体/4房待核",
     photo: "assets/stays/stay-zhuji.jpg",
     photoAlt: "上海竹迹别墅公共区",
     source: "https://hotels.ctrip.com/hotels/18435041.html",
@@ -678,7 +792,7 @@ const newStays = [
     name: "如果拾光里别墅（迪士尼）",
     group: "pudong",
     rating: "4.7 / 4.5",
-    ratingLabel: "携程190条 / 美团22条",
+    ratingLabel: "携程190条 / 美团22条（既有核验）",
     amenities: ["泳池", "烧烤", "棋牌", "花园", "接送"],
     review: "离迪士尼近，院子泳池适合收尾；但4房包栋口径两平台不一致。",
     confirm: "携程写6/7房包栋，美团只见单间/双床房；能否4房同订和是否拼栋必须问。",
@@ -693,11 +807,11 @@ const newStays = [
     name: "Sanjo三江·湖景民宿（西山）",
     group: "suzhou",
     rating: "4.9 / 4.6",
-    ratingLabel: "携程716条 / 美团",
+    ratingLabel: "携程716条 / 美团17间客房；评价数未返回",
     amenities: ["4房小院", "泳池", "KTV", "麻将", "烧烤"],
-    review: "湖景、4房小院、泳池和KTV都明确，西山住宿里适配度最高。",
-    confirm: "KTV和烧烤收费、泳池天气开放、4房小院的实际床型先问。",
-    fit: "4房小院，匹配6人4房",
+    review: "携程有4房小院候选；美团主体列17间客房，未确认有独立4房包栋。",
+    confirm: "向携程核对4房小院是否整栋独享；美团只确认17间客房，KTV、烧烤和泳池规则另问。",
+    fit: "携程有4房小院，独享/包栋待确认",
     photo: "assets/stays/stay-sanjo.jpg",
     photoAlt: "Sanjo三江湖景民宿外观",
     source: "https://hotels.ctrip.com/hotels/126313505.html",
@@ -707,16 +821,106 @@ const newStays = [
     id: "shuyun",
     name: "墅之韵太湖庄园别墅（东山）",
     group: "suzhou",
-    rating: "4.8",
-    ratingLabel: "携程高分 / 美团3条",
+    rating: "携程4.8 / 美团4.3",
+    ratingLabel: "携程高分 / 美团105条",
     amenities: ["4室套房", "泳池", "KTV", "麻将", "烧烤", "湖景"],
-    review: "大草坪、泳池、KTV和麻将都齐，像为一个团队周末准备。",
-    confirm: "携程写四室一厅，美团只见六室/八室/包栋；4房到底怎么开必须问。",
-    fit: "四室一厅口径待复核",
+    review: "美团4.3分、105条，泳池、棋牌、KTV和烧烤齐；页面另列多种房型。",
+    confirm: "美团命中东山白沙村二组；携程四室一厅与美团六室/八室口径不一，先确认主体和实际4房方案。",
+    fit: "携程四室 / 美团多户型，4房待核",
     photo: "assets/stays/stay-shuyun.jpg",
     photoAlt: "墅之韵太湖庄园别墅",
     source: "https://hotels.ctrip.com/hotels/6007008.html",
     sourceLabel: "携程房源页"
+  },
+  {
+    id: "song_guangfulin",
+    name: "上海松江广富林宰相府酒店",
+    group: "nearby",
+    rating: "携程4.8 / 美团4.9",
+    ratingLabel: "美团5268条 / 携程评价数未返回",
+    amenities: ["广富林遗址旁", "古宅掌灯", "古建讲解", "汉服体验"],
+    review: "古宅酒店就在遗址旁，掌灯和讲解活动有地方特色。",
+    confirm: "携程未返回10/31四间独立客房库存；掌灯、讲解和汉服档期预订前向酒店确认。",
+    fit: "多种客房；四间同晚库存未确认",
+    photo: "assets/stays/song-guangfulin.jpg",
+    photoAlt: "上海松江广富林宰相府酒店",
+    source: "https://hotels.ctrip.com/hotels/74638773.html",
+    sourceLabel: "携程ID74638773；库存未返回"
+  },
+  {
+    id: "song_guangfulin_grand",
+    name: "上海广富林大酒店（松江大学城店）",
+    group: "nearby",
+    rating: "携程4.6 / 美团4.6",
+    ratingLabel: "美团860条 / 携程评价数未返回",
+    amenities: ["独立客房", "距遗址步行约12分钟", "湖景房候选"],
+    review: "靠近广富林遗址，客房量较多，可作宰相府满房时的住宿备选。",
+    confirm: "携程未返回10/31四房库存；是否能订到相邻房间需在订单页确认。",
+    fit: "酒店型客房；四间同晚库存未确认",
+    photo: "assets/stays/song-guangfulin-grand.jpg",
+    photoAlt: "上海广富林大酒店松江大学城店",
+    source: "https://hotels.ctrip.com/hotels/1574863.html",
+    sourceLabel: "携程ID1574863；库存未返回"
+  },
+  {
+    id: "song_guangfulin_hilton",
+    name: "上海松江广富林希尔顿酒店",
+    group: "nearby",
+    rating: "携程4.7 / 美团4.4",
+    ratingLabel: "美团2727条 / 携程评价数未返回",
+    amenities: ["独立客房", "水岸院居", "园区专属通道"],
+    review: "现代水岸客房，携程资料称酒店有通往广富林遗址的专属通道。",
+    confirm: "携程未返回10/31四间独立客房库存；确认园区通道开放时间和四间是否可同订。",
+    fit: "酒店型客房；四间同晚库存未确认",
+    photo: "assets/stays/song-guangfulin-hilton.jpg",
+    photoAlt: "上海松江广富林希尔顿酒店",
+    source: "https://hotels.ctrip.com/hotels/75220482.html",
+    sourceLabel: "携程ID75220482；库存未返回"
+  },
+  {
+    id: "jiading_atour",
+    name: "上海嘉定菊园智慧中心亚朵酒店",
+    group: "nearby",
+    rating: "携程4.9 / 美团4.1",
+    ratingLabel: "美团93条 / 携程评价数未返回",
+    amenities: ["独立客房", "距百果园驾车约10分钟", "酒店服务"],
+    review: "离菊园百果园近，105间客房可作采摘行程的实用过夜点。",
+    confirm: "携程未返回10/31四间库存；客房量大不代表当晚一定有四间，按日期确认。",
+    fit: "酒店型客房；四间同晚库存未确认",
+    photo: "assets/stays/jiading-atour.jpg",
+    photoAlt: "上海嘉定菊园智慧中心亚朵酒店",
+    source: "https://hotels.ctrip.com/hotels/99046077.html",
+    sourceLabel: "携程ID99046077；库存未返回"
+  },
+  {
+    id: "jiading_yunju",
+    name: "上海嘉定别墅云居花园酒店",
+    group: "nearby",
+    rating: "携程4.8 / 美团4.5",
+    ratingLabel: "美团评价数未返回 / 携程评价数未返回",
+    amenities: ["庭院客房", "民国建筑群", "州桥老街附近"],
+    review: "庭院建筑有老城氛围，适合采摘后入住、第二天慢走嘉定老街。",
+    confirm: "携程未返回10/31四间库存；确认四间是否分布在不同院落以及是否能同层安排。",
+    fit: "约50间客房；四间同晚库存未确认",
+    photo: "assets/stays/jiading-yunju.jpg",
+    photoAlt: "上海嘉定别墅云居花园酒店",
+    source: "https://hotels.ctrip.com/hotels/133409592.html",
+    sourceLabel: "携程ID133409592；库存未返回"
+  },
+  {
+    id: "jiading_hilton",
+    name: "上海嘉定希尔顿花园酒店",
+    group: "nearby",
+    rating: "携程4.7 / 美团4.6",
+    ratingLabel: "美团155条 / 携程评价数未返回",
+    amenities: ["独立客房", "135间客房", "州桥老街附近"],
+    review: "现代酒店客房量足，适合把采摘和嘉定老街安排成慢节奏一晚。",
+    confirm: "携程未返回10/31四间库存；确认双床房数量与四间能否同层安排。",
+    fit: "酒店型客房；四间同晚库存未确认",
+    photo: "assets/stays/jiading-hilton.jpg",
+    photoAlt: "上海嘉定希尔顿花园酒店",
+    source: "https://hotels.ctrip.com/hotels/124425428.html",
+    sourceLabel: "携程ID124425428；库存未返回"
   }
 ];
 
@@ -804,8 +1008,8 @@ const oldStays = baseline.villaCandidates.map((stay) => {
     id: stay.key,
     name: stay.name,
     group: meta.group,
-    rating: stay.score,
-    ratingLabel: `${stay.count}条评价`,
+    rating: meta.rating || stay.score,
+    ratingLabel: meta.ratingLabel || `${stay.count}条评价`,
     amenities: meta.amenities,
     review: meta.review,
     confirm: meta.confirm,
@@ -922,7 +1126,9 @@ const v5RouteOverrides = {
 };
 
 const amapRouteById = new Map(amapRouteData.places.map((place) => [place.id, place]));
-const amapLabelById = new Map(amapRouteData.places.map((place) => [place.id, place.label]));
+const nearbyMapPlaces = amapRouteData.nearbyPlaces || [];
+for (const place of nearbyMapPlaces) amapRouteById.set(place.id, place);
+const amapLabelById = new Map([...amapRouteData.places, ...nearbyMapPlaces].map((place) => [place.id, place.label]));
 
 function amapTravel(routeId) {
   const place = amapRouteById.get(routeId);
@@ -943,7 +1149,19 @@ const rankedRoutes = [...allRoutes]
   .sort((left, right) => right.score - left.score)
   .map((route, index) => ({ ...route, rank: index + 1 }));
 const rankedRouteById = new Map(rankedRoutes.map((route) => [route.id, route]));
-const activeGroups = groups.filter((group) => allRoutes.some((route) => route.group === group.id));
+const activeGroups = groups
+  .map((group) => {
+    const distances = allRoutes
+      .filter((route) => route.group === group.id)
+      .map((route) => Number(amapRouteById.get(route.id)?.km))
+      .filter(Number.isFinite);
+    const averageKm = distances.length
+      ? distances.reduce((sum, km) => sum + km, 0) / distances.length
+      : 0;
+    return { ...group, averageKm };
+  })
+  .filter((group) => allRoutes.some((route) => route.group === group.id))
+  .sort((left, right) => right.averageKm - left.averageKm);
 const eligibleStayIds = new Set(
   allRoutes.flatMap((route) => routeStayIds[route.id] || [])
 );
@@ -991,12 +1209,13 @@ function renderStayReference(route, mode) {
   const stays = getRouteStays(route);
   if (!stays.length) return "";
 
-  const visibleCount = mode === "dialog" ? stays.length : 1;
+  const isRow = mode === "row";
+  const visibleCount = isRow || mode === "dialog" ? stays.length : 1;
   const visibleStays = stays.slice(0, visibleCount);
   const remaining = stays.length - visibleStays.length;
-  const isRow = mode === "row";
+  const itemTag = isRow ? "button" : "span";
   const renderStayItem = (stay) => `
-    <span class="stay-reference-item" data-image-frame>
+    <${itemTag} class="stay-reference-item" ${isRow ? `type="button" data-open-stay="${escapeHtml(stay.id)}" data-route-id="${escapeHtml(route.id)}" aria-label="打开路线并定位到住宿：${escapeHtml(stay.name)}"` : ""} data-image-frame>
       <img src="${escapeHtml(stay.photo)}" alt="" loading="lazy" decoding="async">
       <span class="stay-reference-copy">
         <strong>${escapeHtml(stay.name)}</strong>
@@ -1004,9 +1223,9 @@ function renderStayReference(route, mode) {
         <span class="stay-amenities">${renderAmenityTags(stay, isRow ? 3 : 4)}</span>
         <span class="stay-reference-fit">4间房适配：${escapeHtml(stay.fit)}</span>
       </span>
-    </span>`;
+    </${itemTag}>`;
   return `
-    <span class="stay-reference stay-reference--${escapeHtml(mode)}">
+    <span class="stay-reference stay-reference--${escapeHtml(mode)}" data-stay-count="${stays.length}">
       ${isRow ? "" : `
         <span class="stay-reference-heading">
           <strong>主推住宿</strong>
@@ -1015,7 +1234,7 @@ function renderStayReference(route, mode) {
       <span class="stay-reference-list">
         ${visibleStays.map(renderStayItem).join("")}
       </span>
-      ${remaining > 0 && !isRow ? `<span class="stay-reference-more">另 ${remaining} 处候选，点开路线看完整对比</span>` : ""}
+      ${remaining > 0 && !isRow ? `<span class="stay-reference-more">另 ${remaining} 处候选</span>` : ""}
     </span>`;
 }
 
@@ -1111,51 +1330,60 @@ function renderRankRow(route) {
   const imagePriority = route.rank <= 2 ? "high" : "auto";
   return `
     <li>
-      <button class="rank-row" type="button" data-route-id="${escapeHtml(route.id)}"
+      <article class="rank-row">
+        <button class="rank-row-open" type="button" data-route-id="${escapeHtml(route.id)}"
         aria-haspopup="dialog" aria-controls="route-dialog-${escapeHtml(route.id)}">
-        <span class="row-head">
-          <span class="row-visual" data-image-frame>
-            <img class="row-photo" src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}"
-              loading="${imageLoading}" fetchpriority="${imagePriority}" decoding="async">
-            <span class="row-rank">${String(route.rank).padStart(2, "0")}</span>
-          </span>
-          <span class="row-main">
-            <span class="row-meta">
-              <span class="row-region">${escapeHtml(regionLabel)}</span>
-              <span class="row-score">
-                <span><b>${escapeHtml(route.score)}</b><small>分</small></span>
-                ${renderStars(route.rating)}
-              </span>
+          <span class="row-head">
+            <span class="row-visual" data-image-frame>
+              <img class="row-photo" src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}"
+                loading="${imageLoading}" fetchpriority="${imagePriority}" decoding="async">
+              <span class="row-rank">${String(route.rank).padStart(2, "0")}</span>
             </span>
-            <strong>${escapeHtml(route.title)}</strong>
+            <span class="row-main">
+              <span class="row-meta">
+                <span class="row-region">${escapeHtml(regionLabel)}</span>
+                <span class="row-score">
+                  <span><b>${escapeHtml(route.score)}</b><small>分</small></span>
+                  ${renderStars(route.rating)}
+                </span>
+              </span>
+              <strong>${escapeHtml(route.title)}</strong>
+            </span>
+            <span class="row-arrow" aria-hidden="true">›</span>
           </span>
-          <span class="row-arrow" aria-hidden="true">›</span>
-        </span>
-        <span class="row-review">${escapeHtml(route.review)}</span>
-        ${renderPlaceReviewMeta(route, "row")}
+          <span class="row-review">${escapeHtml(route.review)}</span>
+          ${renderPlaceReviewMeta(route, "row")}
+        </button>
         ${renderStayReference(route, "row")}
         <span class="row-tags">${renderTags(route.tags)}</span>
-      </button>
+      </article>
     </li>`;
 }
 
 function renderRouteDialog(route) {
   const rankedRoute = rankedRouteById.get(route.id);
   const rating = route.rating;
-  const secondaryPhoto = route.photo2 ? `
-    <figure class="detail-photo" data-image-frame>
-      <img src="${escapeHtml(route.photo2)}" alt="${escapeHtml(route.photo2Alt)}" loading="lazy" decoding="async">
-      <figcaption>${escapeHtml(route.photo2Caption)}</figcaption>
-    </figure>` : "";
+  const photos = [
+    { src: route.photo, alt: route.photoAlt, caption: route.photoCaption },
+    ...(route.photo2 ? [{ src: route.photo2, alt: route.photo2Alt, caption: route.photo2Caption }] : [])
+  ];
+  const photoSlides = photos.map((photo, index) => `
+    <figure class="dialog-hero-slide${index === 0 ? " is-active" : ""}"
+      data-image-frame data-gallery-slide data-caption="${escapeHtml(photo.caption)}"
+      aria-hidden="${index !== 0}">
+      <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
+    </figure>`).join("");
+  const photoControls = photos.length > 1 ? `
+    <div class="dialog-gallery-controls" aria-label="景点照片切换">
+      <button type="button" data-gallery-step="-1" aria-label="上一张景点照片">‹</button>
+      <span data-gallery-count>1 / ${photos.length}</span>
+      <button type="button" data-gallery-step="1" aria-label="下一张景点照片">›</button>
+    </div>` : "";
+  const ratingNote = cleanRatingNote(rating.deductions);
   const source = /^https?:\/\//.test(route.source) ? `
     <a class="source-link" href="${escapeHtml(route.source)}" target="_blank" rel="noreferrer">
       查看出行来源 <span aria-hidden="true">↗</span>
     </a>` : `<p class="source-note"><strong>资料复核</strong>${escapeHtml(route.source)}</p>`;
-  const ratingNote = cleanRatingNote(rating.deductions);
-  const ratingEvidence = rating.evidence
-    ? `<p><strong>证据来源</strong>${escapeHtml(rating.evidence)}</p>`
-    : `<p><strong>评价把握</strong>${escapeHtml(rating.confidence || "中偏低")}</p>`;
-
   return `
     <dialog class="route-dialog" id="route-dialog-${escapeHtml(route.id)}"
       aria-labelledby="route-dialog-title-${escapeHtml(route.id)}">
@@ -1164,14 +1392,18 @@ function renderRouteDialog(route) {
         <button class="dialog-close" type="button" data-close-dialog aria-label="关闭路线详情">关闭</button>
       </div>
       <div class="route-dialog-body">
-        <div class="dialog-hero" data-image-frame>
-          <img src="${escapeHtml(route.photo)}" alt="${escapeHtml(route.photoAlt)}" loading="lazy" decoding="async">
+        <div class="dialog-hero">
+          <div class="dialog-hero-gallery" data-photo-carousel data-current-index="0">
+            ${photoSlides}
+            ${photoControls}
+          </div>
           <div class="dialog-hero-copy">
             <p class="dialog-region">${escapeHtml(routeRegionLabel(route))}</p>
             <h2 id="route-dialog-title-${escapeHtml(route.id)}">${escapeHtml(route.title)}</h2>
             <p class="dialog-travel">${escapeHtml(route.travel)}</p>
           </div>
         </div>
+        <p class="dialog-photo-caption" data-gallery-caption>${escapeHtml(photos[0].caption)}</p>
         <section class="score-panel" aria-label="路线评分">
           <div class="score-heading">
             <div>
@@ -1186,14 +1418,24 @@ function renderRouteDialog(route) {
             <span><b>${escapeHtml(rating.parts[3])}</b><small>证据质量 / 10</small></span>
           </div>
           <p class="score-reason">${escapeHtml(rating.reason)}</p>
-          <details class="score-details">
-            <summary>看扣分点和证据</summary>
-            <div class="score-detail-copy">
-              <p><strong>扣分点</strong>${escapeHtml(ratingNote || "公开信息仍有待现场复核的部分。")}</p>
-              ${ratingEvidence}
+          ${ratingNote ? `<p class="score-concern"><strong>主要扣分点</strong>${escapeHtml(ratingNote)}</p>` : ""}
+        </section>
+        <section class="dialog-place-info" aria-label="景点评价和出行提醒">
+          <div class="dialog-info-grid">
+            <div class="dialog-info-card dialog-info-rating">
+              ${renderPlaceReviewMeta(route, "dialog")}
+              <div class="dialog-place-source">${source}</div>
             </div>
-          </details>
-          <p class="score-method">统一口径；住宿不参与路线评分。</p>
+            <div class="dialog-info-card dialog-info-review">
+              <p class="review-line dialog-review"><strong>一句话口碑</strong>${escapeHtml(route.review)}</p>
+            </div>
+            <div class="dialog-info-card dialog-info-fee">
+              <p class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</p>
+            </div>
+          </div>
+          <div class="activity-line">
+            ${route.activities.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+          </div>
         </section>
         <section class="dialog-stay-section" aria-labelledby="dialog-stay-title-${escapeHtml(route.id)}">
           <div class="dialog-stay-heading">
@@ -1202,7 +1444,8 @@ function renderRouteDialog(route) {
           </div>
           <div class="dialog-stay-grid">
             ${getRouteStays(route).map((stay) => `
-              <article class="dialog-stay-card" data-image-frame>
+              <article class="dialog-stay-card" id="dialog-stay-${escapeHtml(route.id)}-${escapeHtml(stay.id)}"
+                data-stay-id="${escapeHtml(stay.id)}" data-image-frame>
                 <img src="${escapeHtml(stay.photo)}" alt="${escapeHtml(stay.photoAlt)}" loading="lazy" decoding="async">
                 <div class="dialog-stay-body">
                   <div class="dialog-stay-title-row">
@@ -1219,13 +1462,8 @@ function renderRouteDialog(route) {
               </article>`).join("")}
           </div>
         </section>
-        ${renderPlaceReviewMeta(route, "dialog")}
-        <p class="review-line dialog-review"><strong>一句话口碑</strong>${escapeHtml(route.review)}</p>
-        <p class="fee-line"><strong>费用提醒</strong>${escapeHtml(route.fee)}</p>
-        <div class="activity-line">
-          ${route.activities.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
-        </div>
-        <div class="route-detail">
+        <section class="route-detail" aria-labelledby="itinerary-title-${escapeHtml(route.id)}">
+          <h3 class="route-detail-heading" id="itinerary-title-${escapeHtml(route.id)}">两天行程</h3>
           <div class="days-grid">
             <section>
               <h4>周六 · 10月31日</h4>
@@ -1236,12 +1474,7 @@ function renderRouteDialog(route) {
               <ol class="timeline">${renderTimeline(route.day2)}</ol>
             </section>
           </div>
-          ${secondaryPhoto}
-          <div class="detail-footer">
-            <p>${escapeHtml(route.photoCaption)}</p>
-            ${source}
-          </div>
-        </div>
+        </section>
       </div>
     </dialog>`;
 }
@@ -1266,12 +1499,17 @@ function renderStay(stay) {
 }
 
 function renderRegionMap() {
+  const hasNearbyMap = fs.existsSync(path.join(publishRoot, "assets/amap-nearby-route-map-v1.png"));
+  const nearbyMarkers = nearbyMapPlaces.map((place) => `
+    <a class="map-extra-stop" data-map-stop data-location="${escapeHtml(place.location)}"
+      data-route-id="${escapeHtml(place.id)}" href="#route-${escapeHtml(place.id)}"
+      aria-label="${escapeHtml(place.name)}，距陆家嘴约${escapeHtml(place.km)}公里">${escapeHtml(place.label)}</a>`).join("");
   const routeIndex = activeGroups
     .map((group) => {
       const routes = rankedRoutes.filter((route) => route.group === group.id);
       return `
         <div class="map-index-group">
-          <p><i class="map-group-dot map-group-dot--${escapeHtml(group.id)}"></i>${escapeHtml(group.title)}</p>
+          <p><i class="map-group-dot map-group-dot--${escapeHtml(group.id)}"></i>${escapeHtml(group.title)}<small>平均${Math.round(group.averageKm)} km</small></p>
           ${routes.map((route) => `
             <a href="#route-${escapeHtml(route.id)}" data-route-id="${escapeHtml(route.id)}">
               <strong>${escapeHtml(amapLabelById.get(route.id) || route.id.replace(/^0/, ""))}</strong>
@@ -1287,17 +1525,27 @@ function renderRegionMap() {
           <p class="section-eyebrow">高德真实底图 · 陆家嘴出发</p>
           <h2 id="map-title">先看位置，再选路线</h2>
         </div>
-        <p>底图和点位来自高德 POI/静态地图；绿色点是主游玩地，红色 S 是陆家嘴。车程来自高德距离测量，出发时仍以实时导航为准。</p>
+        <p>底图和点位来自高德 POI/静态地图；各区按陆家嘴至主游玩地的平均驾车公里数由远到近排列，出发时以实时导航为准。</p>
       </header>
       <div class="map-frame" data-image-frame>
         <img class="region-map region-map-photo" src="assets/amap-route-map-v5.png"
-          alt="高德实际地图底图：陆家嘴 S 为起点，${allRoutes.length} 个绿色点位对应下方路线索引" loading="lazy" decoding="async">
+          alt="高德实际地图底图：陆家嘴 S 为起点，周边区域路线位置图" loading="lazy" decoding="async">
+        <div class="map-extra-stops" data-amap-overlay data-center="121.08,31.00" data-zoom="8" aria-label="新增近郊路线位置">
+          ${nearbyMarkers}
+        </div>
       </div>
+      ${hasNearbyMap ? `<details class="nearby-map-details">
+        <summary>查看松江 / 嘉定近郊放大图</summary>
+        <div class="map-frame nearby-map-frame" data-image-frame>
+          <img class="region-map region-map-photo" src="assets/amap-nearby-route-map-v1.png"
+            alt="高德上海近郊放大地图：陆家嘴S、松江广富林O、嘉定菊园百果园P" loading="lazy" decoding="async">
+        </div>
+      </details>` : ""}
       <div class="map-route-index" aria-label="路线地图索引">${routeIndex}</div>
       <div class="map-legend" aria-label="地图图例">
         <span><i class="legend-dot"></i>陆家嘴 S · 出发点</span>
-        <span>绿色点是主游玩地，住宿放在对应路线里</span>
-        <span>下方 A–N 打开对应路线</span>
+        <span>点位字母对应下方分区路线索引</span>
+        <span>O/P为新增近郊路线位置标记</span>
       </div>
     </section>`;
 }
@@ -1323,12 +1571,14 @@ const routeSections = activeGroups.map((group) => {
         <div>
           <p>${escapeHtml(group.eyebrow)}</p>
           <h2 id="region-title-${group.id}">${escapeHtml(group.title)} <span>${routes.length} 条</span></h2>
+          <small class="region-distance">陆家嘴出发 · 主玩地平均约 ${group.averageKm.toFixed(1)} km</small>
         </div>
         <p class="region-intro">${escapeHtml(group.intro)}</p>
       </header>
       <div class="route-grid">
         ${routes.map(renderRouteLauncher).join("")}
       </div>
+      ${group.extension ? `<p class="region-extension"><strong>近郊加选</strong>${escapeHtml(group.extension)}</p>` : ""}
     </section>`;
 }).join("");
 
@@ -1664,6 +1914,40 @@ const html = `<!doctype html>
     }
 
     .map-frame { height: clamp(260px, 30vw, 420px); }
+    .nearby-map-details { margin-top: 14px; }
+    .nearby-map-details summary {
+      width: fit-content;
+      min-height: 42px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface-strong);
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .nearby-map-frame { height: clamp(220px, 25vw, 330px); margin-top: 10px; }
+    .map-extra-stops { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    .map-extra-stop {
+      position: absolute;
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--rust);
+      box-shadow: 0 2px 8px #202d2750;
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+      pointer-events: auto;
+    }
+    .map-extra-stop[data-route-id="r02"] { background: var(--blue); }
+    .map-extra-stop:focus-visible { outline: 3px solid white; outline-offset: 2px; }
 
     .map-background { fill: #edf2ec; }
     .map-grid path {
@@ -1740,6 +2024,7 @@ const html = `<!doctype html>
       font-size: 17px;
       font-weight: 900;
     }
+    .map-index-group > p small { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 700; white-space: nowrap; }
     .map-group-dot {
       width: 11px;
       height: 11px;
@@ -1748,6 +2033,7 @@ const html = `<!doctype html>
     }
     .map-group-dot--fengxian { background: var(--rust); }
     .map-group-dot--pudong { background: var(--green); }
+    .map-group-dot--city { background: var(--blue); }
     .map-index-group a {
       display: grid;
       grid-template-columns: 34px minmax(0, 1fr);
@@ -1816,19 +2102,26 @@ const html = `<!doctype html>
       --row-pad-x: 14px;
       display: grid;
       gap: 7px;
-      width: 100%;
       padding: 12px var(--row-pad-x) 10px;
-      border: 0;
       background: transparent;
       color: var(--ink);
+    }
+    .rank-row-open {
+      display: grid;
+      gap: 7px;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
       font: inherit;
       text-align: left;
       cursor: pointer;
       touch-action: manipulation;
     }
 
-    .rank-row:hover { background: #f8f6ef; }
-    .rank-row:focus-visible { outline: 3px solid #a9c8b6; outline-offset: -3px; }
+    .rank-row-open:hover { background: #f8f6ef; }
+    .rank-row-open:focus-visible { outline: 3px solid #a9c8b6; outline-offset: 2px; }
     .row-head {
       display: grid;
       grid-template-columns: var(--thumb-col) minmax(0, 1fr) 16px;
@@ -2071,6 +2364,10 @@ const html = `<!doctype html>
       align-items: start;
       padding: 10px 0;
       border-top: 1px solid #e0e7e2;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
     }
     .stay-reference-item:first-child { border-top: 0; padding-top: 4px; }
     .stay-reference-item img {
@@ -2129,13 +2426,34 @@ const html = `<!doctype html>
       border-radius: 0;
       box-shadow: none;
     }
-    .stay-reference--row .stay-reference-list { margin-top: 0; }
+    .stay-reference--row .stay-reference-list {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      margin: 0 calc(var(--row-pad-x) * -1);
+      padding: 0 var(--row-pad-x) 4px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    .stay-reference--row .stay-reference-list::-webkit-scrollbar { display: none; }
     .stay-reference--row .stay-reference-item {
+      flex: 0 0 min(84%, 350px);
       grid-template-columns: 64px minmax(0, 1fr);
       gap: 9px;
-      padding: 0;
-      border: 0;
+      min-height: 82px;
+      padding: 8px;
+      padding-left: 0;
+      border: 1px solid #d9e3dc;
+      border-radius: 7px;
+      background: var(--surface-strong);
+      scroll-snap-align: start;
+      transition: border-color .15s, background-color .15s, box-shadow .15s;
     }
+    .stay-reference--row .stay-reference-item:hover { border-color: #8fac98; background: #fcfefc; box-shadow: 0 3px 10px rgba(33, 50, 41, .08); }
+    .stay-reference--row .stay-reference-item:focus-visible { outline: 3px solid #89ad98; outline-offset: 1px; }
+    .stay-reference--row[data-stay-count="1"] .stay-reference-item { flex-basis: 100%; }
     .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
     .stay-reference--row .stay-reference-copy { gap: 2px; }
     .stay-reference--row .stay-reference-copy > strong { font-size: 15px; line-height: 1.32; }
@@ -2212,11 +2530,54 @@ const html = `<!doctype html>
       -webkit-overflow-scrolling: touch;
     }
 
-    .dialog-hero { position: relative; min-height: 190px; background: #cfd8d0; }
-    .dialog-hero > img { width: 100%; height: 190px; object-fit: cover; }
+    .dialog-hero { position: relative; height: 235px; overflow: hidden; background: #cfd8d0; }
+    .dialog-hero-gallery { position: absolute; inset: 0; overflow: hidden; }
+    .dialog-hero-slide {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s ease;
+    }
+    .dialog-hero-slide.is-active { opacity: 1; visibility: visible; }
+    .dialog-hero-slide > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .dialog-gallery-controls {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px;
+      border: 1px solid #ffffffa8;
+      border-radius: 999px;
+      background: #17231dcc;
+      color: white;
+      backdrop-filter: blur(8px);
+    }
+    .dialog-gallery-controls button {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: #ffffff20;
+      color: white;
+      font: inherit;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .dialog-gallery-controls button:hover { background: #ffffff38; }
+    .dialog-gallery-controls button:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+    .dialog-gallery-controls span { min-width: 34px; text-align: center; font-size: 12px; font-weight: 800; }
     .dialog-hero-copy {
       position: absolute;
       inset: auto 0 0;
+      z-index: 2;
       padding: 48px 13px 11px;
       background: linear-gradient(transparent, rgba(22, 31, 26, .92));
       color: white;
@@ -2224,6 +2585,7 @@ const html = `<!doctype html>
     .dialog-region { font-size: 13px; font-weight: 900; }
     .dialog-hero h2 { margin-top: 3px; font-size: 23px; font-weight: 900; }
     .dialog-travel { margin-top: 5px; color: #eef1ed; font-size: 13px; line-height: 1.45; }
+    .dialog-photo-caption { padding: 6px 12px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.4; }
 
     .score-panel {
       margin: 10px;
@@ -2253,34 +2615,10 @@ const html = `<!doctype html>
     .score-parts b { color: var(--green); font-size: 16px; line-height: 1.2; }
     .score-parts small { color: var(--muted); font-size: 10px; font-weight: 700; line-height: 1.3; }
     .score-reason { margin-top: 8px; font-size: 13px; line-height: 1.5; }
+    .score-concern { margin-top: 7px; padding: 7px 9px; border-left: 3px solid var(--rust); border-radius: 0 6px 6px 0; background: #fffaf5; color: #624c3e; font-size: 12px; line-height: 1.5; }
+    .score-concern strong { margin-right: 5px; color: var(--rust); font-size: 11px; }
 
-    .score-details {
-      margin-top: 8px;
-      border-top: 1px solid #bdd0c2;
-    }
-    .score-details summary {
-      display: flex;
-      align-items: center;
-      min-height: 36px;
-      color: var(--blue);
-      font-size: 14px;
-      font-weight: 900;
-      cursor: pointer;
-      list-style: none;
-    }
-    .score-details summary::-webkit-details-marker { display: none; }
-    .score-details summary::after { content: "＋"; margin-left: 7px; }
-    .score-details[open] summary::after { content: "－"; }
-    .score-detail-copy {
-      padding: 9px 10px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .72);
-    }
-    .score-detail-copy p { font-size: 14px; line-height: 1.55; }
-    .score-detail-copy p + p { margin-top: 8px; }
-    .score-detail-copy strong,
     .source-note strong { display: block; color: var(--green); font-size: 12px; }
-    .score-method { margin-top: 8px; color: var(--muted); font-size: 12px; }
 
     .dialog-stay-section {
       margin: 10px;
@@ -2297,7 +2635,10 @@ const html = `<!doctype html>
       border: 1px solid #d2d9d4;
       border-radius: 8px;
       background: var(--surface-strong);
+      scroll-margin: 22px;
+      transition: border-color .2s, box-shadow .2s;
     }
+    .dialog-stay-card.is-target { border-color: var(--green); box-shadow: 0 0 0 3px #78a48766; }
     .dialog-stay-card > img {
       display: block;
       width: 100%;
@@ -2355,15 +2696,40 @@ const html = `<!doctype html>
       font-weight: 800;
     }
 
-    .route-dialog > .route-dialog-body > .review-line,
-    .route-dialog > .route-dialog-body > .fee-line,
-    .route-dialog > .route-dialog-body > .activity-line { margin-left: 10px; margin-right: 10px; }
-    .route-dialog > .route-dialog-body > .activity-line { padding-top: 0; }
+    .dialog-place-info { margin: 0 10px 10px; padding: 0 10px 10px; border-bottom: 1px solid var(--line); }
+    .dialog-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .dialog-info-card { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-strong); }
+    .dialog-info-rating { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #f3f7f1; }
+    .dialog-info-rating .place-review-meta--dialog {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+    .dialog-info-rating .place-review-meta--dialog::-webkit-scrollbar { display: none; }
+    .dialog-info-rating .place-review-label,
+    .dialog-info-rating .place-review-chip { flex: 0 0 auto; white-space: nowrap; }
+    .dialog-place-source { flex: 0 0 auto; padding-left: 9px; border-left: 1px solid var(--line); }
+    .dialog-place-source .source-link { display: inline-flex; min-height: 34px; align-items: center; margin: 0; font-size: 13px; white-space: nowrap; }
+    .dialog-place-source .source-note { max-width: 260px; margin: 0; font-size: 12px; line-height: 1.45; }
+    .dialog-place-info .review-line,
+    .dialog-place-info .fee-line { height: 100%; margin: 0; padding: 0; border: 0; background: transparent; font-size: 13px; line-height: 1.55; }
+    .dialog-place-info .review-line strong,
+    .dialog-place-info .fee-line strong { display: block; margin: 0 0 5px; font-size: 12px; }
+    .dialog-info-review { border-color: #d4e1d6; background: #f2f7f1; }
+    .dialog-info-fee { border-color: #ead9bb; background: #fcf5e9; }
+    .dialog-place-info .fee-line strong { color: #79511a; }
+    .dialog-place-info > .activity-line { margin: 0; padding: 8px 0 0; }
     .route-dialog .route-detail {
       padding: 0 10px 12px;
       border-top: 0;
       background: transparent;
     }
+    .route-detail-heading { margin: 5px 0 10px; color: var(--ink); font-size: 20px; }
 
     .place-review-meta--dialog {
       margin: 0 10px;
@@ -2423,9 +2789,10 @@ const html = `<!doctype html>
 
     .region-heading h2 span {
       color: var(--muted);
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
     }
+    .region-distance { display: block; margin-top: 3px; color: var(--blue); font-size: 13px; font-weight: 800; }
 
     .region-intro {
       max-width: 760px;
@@ -2433,6 +2800,8 @@ const html = `<!doctype html>
       font-size: 18px;
       line-height: 1.65;
     }
+    .region-extension { margin-top: 16px; padding: 10px 12px; border-left: 3px solid var(--gold); background: var(--gold-soft); color: #715b38; font-size: 14px; line-height: 1.6; }
+    .region-extension strong { margin-right: 7px; color: #79511a; }
 
     .route-grid {
       display: grid;
@@ -2952,9 +3321,10 @@ const html = `<!doctype html>
       .place-review-meta--row .place-review-chip strong { font-size: 15px; }
       .place-review-meta--row .place-review-chip small { font-size: 13px; }
       .place-review-meta--dialog {
-        margin-left: 22px;
-        margin-right: 22px;
+        margin-left: 0;
+        margin-right: 0;
       }
+      .dialog-place-info { margin: 0 14px 14px; padding: 0 14px 14px; }
       .row-tags span { padding: 1px 7px; font-size: 13px; }
       .row-score { justify-content: flex-start; gap: 7px; }
       .row-score b { font-size: 23px; }
@@ -2969,8 +3339,7 @@ const html = `<!doctype html>
       .review-line,
       .fee-line { font-size: 19px; }
       .dialog-bar { padding-left: 16px; }
-      .dialog-hero,
-      .dialog-hero > img { height: 300px; }
+      .dialog-hero { height: 320px; }
       .dialog-hero-copy { padding: 72px 18px 18px; }
       .dialog-region { font-size: 14px; }
       .dialog-hero h2 { font-size: 30px; }
@@ -2978,7 +3347,6 @@ const html = `<!doctype html>
       .score-panel { margin: 14px; padding: 14px; }
       .score-parts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .score-reason { font-size: 15px; }
-      .score-detail-copy p { font-size: 14px; }
       .dialog-stay-section { margin: 14px; padding: 14px; }
       .dialog-stay-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .dialog-stay-heading h3 { font-size: 23px; }
@@ -2987,9 +3355,6 @@ const html = `<!doctype html>
       .dialog-stay-review,
       .dialog-stay-confirm,
       .dialog-stay-fit { font-size: 14px; }
-      .route-dialog > .route-dialog-body > .review-line,
-      .route-dialog > .route-dialog-body > .fee-line,
-      .route-dialog > .route-dialog-body > .activity-line { margin-left: 14px; margin-right: 14px; }
       .route-dialog .route-detail { padding: 0 14px 18px; }
       .stay-rating { font-size: 16px; }
       .stay-review,
@@ -2999,6 +3364,20 @@ const html = `<!doctype html>
     }
 
     @media (max-width: 719px) {
+      .nearby-map-details summary { min-height: 40px; font-size: 14px; }
+      .nearby-map-frame { height: 220px; }
+      .map-extra-stop { width: 27px; height: 27px; }
+      .map-index-group > p small { font-size: 11px; }
+      .region-distance { font-size: 12px; }
+      .region-extension { font-size: 13px; }
+      .dialog-hero { height: 235px; }
+      .dialog-gallery-controls { top: 9px; right: 9px; }
+      .dialog-place-info { margin: 0 10px 10px; padding: 0 10px 10px; }
+      .dialog-info-grid { grid-template-columns: 1fr; gap: 7px; }
+      .dialog-info-rating { grid-column: auto; align-items: center; flex-direction: row; gap: 8px; }
+      .dialog-place-source { width: auto; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid var(--line); }
+      .dialog-place-source .source-note { max-width: none; }
+      .route-detail-heading { font-size: 18px; }
       .intro { gap: 10px; padding: 22px 0 18px; }
       .intro-label { min-height: 30px; padding: 3px 9px; font-size: 13px; }
       .intro h1 { font-size: 22px; }
@@ -3014,11 +3393,12 @@ const html = `<!doctype html>
         --thumb-col: 96px;
         --head-gap: 9px;
         --row-pad-x: 12px;
-        gap: 7px;
+        gap: 5px;
         min-height: 0;
         padding: 12px var(--row-pad-x) 10px;
         align-items: start;
       }
+      .rank-row-open { gap: 5px; }
       .row-head { grid-template-columns: var(--thumb-col) minmax(0, 1fr) 16px; }
       .row-rank { padding: 1px 5px; font-size: 12px; }
       .row-photo { width: var(--thumb-col); height: var(--thumb-col); }
@@ -3041,11 +3421,15 @@ const html = `<!doctype html>
         margin-top: 0;
         margin-right: calc(var(--row-pad-x) * -1);
         margin-left: calc(var(--row-pad-x) * -1);
-        padding: 9px var(--row-pad-x) 10px;
+        padding: 5px var(--row-pad-x) 6px;
       }
       .stay-reference--row .stay-reference-item {
         grid-template-columns: 64px minmax(0, 1fr);
         gap: 9px;
+        padding-top: 6px;
+        padding-right: 8px;
+        padding-bottom: 6px;
+        padding-left: 11px;
       }
       .stay-reference--row .stay-reference-item img { width: 64px; height: 64px; }
       .stay-reference--row .stay-reference-copy > strong { font-size: 15px; }
@@ -3062,8 +3446,6 @@ const html = `<!doctype html>
       .row-arrow { align-self: center; font-size: 20px; }
       .row-tags { margin-top: 1px; }
       .route-title { font-size: 28px; }
-      .dialog-hero { min-height: 190px; }
-      .dialog-hero > img { height: 190px; }
       .dialog-hero h2 { font-size: 23px; }
       .score-parts > span { min-height: 46px; }
       .stay-heading h4 { font-size: 24px; }
@@ -3122,8 +3504,94 @@ const html = `<!doctype html>
   </footer>
   <script>
     (() => {
+      const galleryTimers = new WeakMap();
+
       const closeDialog = (dialog) => {
         if (dialog?.open) dialog.close();
+      };
+
+      const setGallerySlide = (gallery, nextIndex) => {
+        const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
+        if (slides.length < 2) return;
+        const index = (nextIndex + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === index;
+          slide.classList.toggle("is-active", active);
+          slide.setAttribute("aria-hidden", String(!active));
+        });
+        gallery.dataset.currentIndex = String(index);
+        const count = gallery.querySelector("[data-gallery-count]");
+        if (count) count.textContent = (index + 1) + " / " + slides.length;
+        const caption = gallery.closest(".route-dialog")?.querySelector("[data-gallery-caption]");
+        if (caption) caption.textContent = slides[index].dataset.caption || "";
+      };
+
+      const stopGallery = (dialog) => {
+        const gallery = dialog?.querySelector("[data-photo-carousel]");
+        const timer = gallery && galleryTimers.get(gallery);
+        if (timer) window.clearInterval(timer);
+        if (gallery) galleryTimers.delete(gallery);
+      };
+
+      const startGallery = (dialog) => {
+        const gallery = dialog?.querySelector("[data-photo-carousel]");
+        const slides = gallery?.querySelectorAll("[data-gallery-slide]");
+        if (!gallery) return;
+        gallery.querySelectorAll("img").forEach((image) => { image.loading = "eager"; });
+        if (slides.length < 2) return;
+        stopGallery(dialog);
+        const timer = window.setInterval(() => {
+          const current = Number(gallery.dataset.currentIndex) || 0;
+          setGallerySlide(gallery, current + 1);
+        }, 2000);
+        galleryTimers.set(gallery, timer);
+      };
+
+      const layoutMapMarkers = () => {
+        document.querySelectorAll("[data-amap-overlay]").forEach((overlay) => {
+          const frame = overlay.closest(".map-frame");
+          const image = frame?.querySelector("img.region-map-photo");
+          if (!frame || !image?.naturalWidth || !frame.clientWidth) return;
+          const worldSize = 256 * (2 ** Number(overlay.dataset.zoom || 8));
+          const project = (location) => {
+            const [longitude, latitude] = location.split(",").map(Number);
+            const sinLatitude = Math.sin(Math.max(-85, Math.min(85, latitude)) * Math.PI / 180);
+            return {
+              x: (longitude + 180) / 360 * worldSize,
+              y: (0.5 - Math.log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * Math.PI)) * worldSize
+            };
+          };
+          const center = project(overlay.dataset.center || "121.08,31.00");
+          const scale = Math.max(frame.clientWidth / image.naturalWidth, frame.clientHeight / image.naturalHeight);
+          const offsetX = (frame.clientWidth - image.naturalWidth * scale) / 2;
+          const offsetY = (frame.clientHeight - image.naturalHeight * scale) / 2;
+          overlay.querySelectorAll("[data-map-stop]").forEach((marker) => {
+            const point = project(marker.dataset.location);
+            const x = image.naturalWidth / 2 + point.x - center.x;
+            const y = image.naturalHeight / 2 + point.y - center.y;
+            marker.style.left = (offsetX + x * scale) + "px";
+            marker.style.top = (offsetY + y * scale) + "px";
+          });
+        });
+      };
+
+      const openRouteDialog = (routeId, stayId = "") => {
+        const dialog = document.getElementById("route-dialog-" + routeId);
+        if (!dialog) return;
+        if (!dialog.open) {
+          document.body.classList.add("dialog-open");
+          dialog.showModal();
+          startGallery(dialog);
+        }
+        if (!stayId) return;
+        window.requestAnimationFrame(() => {
+          const stayCard = [...dialog.querySelectorAll("[data-stay-id]")]
+            .find((card) => card.dataset.stayId === stayId);
+          if (!stayCard) return;
+          stayCard.scrollIntoView({ behavior: "smooth", block: "center" });
+          stayCard.classList.add("is-target");
+          window.setTimeout(() => stayCard.classList.remove("is-target"), 1800);
+        });
       };
 
       const tabs = [...document.querySelectorAll('[role="tab"]')];
@@ -3135,6 +3603,7 @@ const html = `<!doctype html>
         const finishLoading = () => {
           image.classList.add("image-loaded");
           frame.classList.remove("image-pending");
+          layoutMapMarkers();
         };
         const failLoading = () => {
           image.classList.add("image-error");
@@ -3151,6 +3620,7 @@ const html = `<!doctype html>
         image.addEventListener("load", finishLoading, { once: true });
         image.addEventListener("error", failLoading, { once: true });
       });
+      window.addEventListener("resize", layoutMapMarkers, { passive: true });
 
       const activateTab = (nextTab, shouldFocus = false) => {
         tabs.forEach((tab) => {
@@ -3161,6 +3631,7 @@ const html = `<!doctype html>
         panels.forEach((panel) => {
           panel.hidden = panel.id !== nextTab.getAttribute("aria-controls");
         });
+        if (nextTab.dataset.tab === "map") window.requestAnimationFrame(layoutMapMarkers);
         if (shouldFocus) nextTab.focus();
       };
 
@@ -3179,14 +3650,29 @@ const html = `<!doctype html>
       });
 
       document.addEventListener("click", (event) => {
+        const galleryButton = event.target.closest("[data-gallery-step]");
+        if (galleryButton) {
+          event.preventDefault();
+          const gallery = galleryButton.closest("[data-photo-carousel]");
+          if (gallery) {
+            const current = Number(gallery.dataset.currentIndex) || 0;
+            setGallerySlide(gallery, current + Number(galleryButton.dataset.galleryStep));
+            startGallery(gallery.closest("dialog.route-dialog"));
+          }
+          return;
+        }
+
+        const stayOpener = event.target.closest("[data-open-stay]");
+        if (stayOpener) {
+          event.preventDefault();
+          openRouteDialog(stayOpener.dataset.routeId, stayOpener.dataset.openStay);
+          return;
+        }
+
         const opener = event.target.closest("[data-route-id]");
         if (opener) {
           event.preventDefault();
-          const dialog = document.getElementById("route-dialog-" + opener.dataset.routeId);
-          if (dialog && !dialog.open) {
-            document.body.classList.add("dialog-open");
-            dialog.showModal();
-          }
+          openRouteDialog(opener.dataset.routeId);
           return;
         }
 
@@ -3202,6 +3688,7 @@ const html = `<!doctype html>
 
       document.querySelectorAll("dialog.route-dialog").forEach((dialog) => {
         dialog.addEventListener("close", () => {
+          stopGallery(dialog);
           if (!document.querySelector("dialog.route-dialog[open]")) {
             document.body.classList.remove("dialog-open");
           }
