@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T04:32:26.395Z",
+  "fetchedAt": "2026-10-28T05:43:10.660Z",
   "provider": "高德地图 POI / 距离测量 / 静态地图",
   "origin": {
     "id": "origin",
@@ -135,6 +135,22 @@
       "location": "121.210974,31.370895",
       "km": 42.5,
       "minutes": 60
+    },
+    {
+      "id": "s05",
+      "label": "Q",
+      "name": "天平山",
+      "location": "120.504155,31.287304",
+      "km": 120.3,
+      "minutes": 126
+    },
+    {
+      "id": "j01",
+      "label": "R",
+      "name": "南北湖",
+      "location": "120.847395,30.372508",
+      "km": 143.6,
+      "minutes": 141
     }
   ],
   "nearbyPlaces": [
@@ -157,10 +173,10 @@
   ],
   "map": {
     "path": "assets/amap-route-basemap-v6.png",
-    "bytes": 112854,
+    "bytes": 131620,
     "width": 1000,
-    "height": 500,
-    "center": "121.08,31.00",
+    "height": 600,
+    "center": "121.08,30.90",
     "zoom": 8,
     "scale": 1,
     "worldSize": 131072,

@@ -139,6 +139,12 @@ const groups = [
     intro: "锦溪、周庄和太湖东西山；车程更长，但住宿和湖景更像一次小度假。"
   },
   {
+    id: "jiaxing",
+    eyebrow: "山海湖 · 徒步 · 羊肉",
+    title: "嘉兴",
+    intro: "南北湖把山、海、湖放在一处，免大门票、人少；单程约 144 公里，适合愿意多开一段换一个完整白天。"
+  },
+  {
     id: "nearby",
     eyebrow: "古建 · 采摘 · 近郊过夜",
     title: "近郊体验",
@@ -161,6 +167,8 @@ const routeStayIds = {
   s02: ["miyi"],
   s03: ["sanjo", "xishan"],
   s04: ["shuyun"],
+  s05: ["sanjo", "xishan"],
+  j01: ["huguang", "muxinju"],
   r01: ["song_guangfulin", "song_guangfulin_grand", "song_guangfulin_hilton"],
   r02: ["jiading_atour", "jiading_yunju", "jiading_hilton"]
 };
@@ -201,7 +209,8 @@ const activeRouteIds = new Set([
   "04", "05",
   "f01", "12",
   "14",
-  "s01", "s02", "s03", "s04",
+  "s01", "s02", "s03", "s04", "s05",
+  "j01",
   "r01", "r02"
 ]);
 
@@ -666,6 +675,100 @@ const newRoutes = [
   }
 ];
 
+const natureRoutes = [
+  {
+    id: "s05",
+    group: "suzhou",
+    area: "苏州 · 天平山 / 太湖西山",
+    title: "天平山 · 红枫初染＋西山湖景院子",
+    blurb: "周六直奔天平山看古枫林五彩过渡，傍晚过太湖大桥住进西山湖景院子；周日缥缈峰或湖边短走。",
+    review: "四大赏枫地里离上海最近的一座山；11月初是初红期、比峰值周人少，但红枫节周末仍要早到。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7" },
+        { source: "携程", detail: "门票约30元" }
+      ],
+      note: "天平山为4A景区；红枫节开园时段以官方公告为准"
+    },
+    rating: {
+      name: "天平山 · 红枫初染＋西山湖景院子",
+      parts: [40, 20, 12, 7],
+      total: 79,
+      stars: 4,
+      confidence: "中偏低",
+      reason: "古枫林、怪石和太湖院子组合有季节辨识度，11月初五彩过渡、人少于峰值周。",
+      deductions: "本周末红枫未达峰值（峰值约11月中下旬）；红枫节周末停车紧张；单程约2小时属全线最远档之一。",
+      evidence: "高德POI评分与驾车实测（陆家嘴约120km）；携程问道门票与开放时间；10月中旬实拍显示红枫氛围已形成。"
+    },
+    tags: ["红枫初染", "太湖院子", "需早起避峰"],
+    fee: "天平山成人票约30元，08:00–17:00（16:30停止售检票）；缥缈峰门票含景区交通约65元；民宿泳池/烧烤规则先问房东。",
+    travel: "高德驾车 120.3 km · 约 126 分钟",
+    photo: "assets/routes/route-s05.jpg",
+    photoAlt: "天平山山顶观景台眺望群山",
+    photoCaption: "天平山观景台｜来源：高德 POI 相册",
+    activities: ["天平山古枫林赏枫短线", "白云池与怪石短走", "缥缈峰登山或湖边日落"],
+    day1: [
+      ["07:30–09:40", "陆家嘴出发，沪常高速到天平山"],
+      ["09:45–13:00", "天平山古枫林赏枫＋白云池短走，木渎午饭"],
+      ["14:00–15:30", "过太湖大桥去西山，湖边咖啡或短走"],
+      ["16:00以后", "入住湖景院子，晚饭、桌游或麻将"]
+    ],
+    day2: [
+      ["08:30–09:30", "民宿早餐"],
+      ["09:30–11:30", "缥缈峰登山看太湖，量力而行"],
+      ["11:30–12:00", "退房"],
+      ["12:00以后", "金庭镇午饭后返沪，预留堵车时间"]
+    ],
+    source: "https://www.amap.com/detail/B02000IC4W"
+  },
+  {
+    id: "j01",
+    group: "jiaxing",
+    area: "嘉兴 · 海盐南北湖",
+    title: "南北湖 · 山海湖全景＋澉浦羊肉",
+    blurb: "上午登鹰窠顶看山海湖同框，中午去澉浦吃红烧羊肉，下午环湖骑行；晚上就住景区湖边。",
+    review: "免大门票、人少、节奏自由，是六个人不赶路的省钱选项；但单程约2小时20分，全线最远。",
+    placeReview: {
+      items: [
+        { source: "高德", score: "4.7" },
+        { source: "携程", detail: "免大门票" }
+      ],
+      note: "内部小景点联票约50元；开放安排以景区公告为准"
+    },
+    rating: {
+      name: "南北湖 · 山海湖全景＋澉浦羊肉",
+      parts: [40, 21, 13, 7],
+      total: 81,
+      stars: 4.5,
+      confidence: "中偏低",
+      reason: "山、海、湖一次看全，登山环湖都不难；澉浦羊肉正当季，吃住成本全线最低。",
+      deductions: "单程约2小时20分为全线最远；环湖项目偏散，大风天骑行体验打折；住宿为报价口径，周六实价待核。",
+      evidence: "高德POI评分与驾车实测（陆家嘴约144km）；携程问道门票口径、澉浦羊肉店与三家住宿报价。"
+    },
+    tags: ["山海湖", "免大门票", "澉浦羊肉"],
+    fee: "景区免大门票；内部小景点联票约50元；环湖自行车约30元/天、电动车约40元/小时；停车约10元/天。",
+    travel: "高德驾车 143.6 km · 约 141 分钟",
+    photo: "assets/routes/route-j01.jpg",
+    photoAlt: "南北湖湖面与远山",
+    photoCaption: "南北湖风景名胜区｜来源：高德 POI 相册",
+    activities: ["鹰窠顶登山看山海湖", "澉浦红烧羊肉午饭", "环湖骑行 8–10 公里"],
+    day1: [
+      ["07:30–09:50", "陆家嘴出发，G60转G1522到海盐"],
+      ["10:00–11:30", "九曲径登鹰窠顶，约40分钟登顶看山海湖"],
+      ["12:00–13:30", "澉浦镇红烧羊肉午饭"],
+      ["14:00–16:30", "环湖骑行：鲍公堤、白鹭洲、蝴蝶岛"],
+      ["17:00以后", "湖边入住，晚饭、棋牌或桌游"]
+    ],
+    day2: [
+      ["08:30–09:30", "早餐"],
+      ["09:30–11:00", "湖边短走，或神仙湖矿坑湖二选一"],
+      ["11:00–11:30", "退房"],
+      ["12:00以后", "午饭后返沪"]
+    ],
+    source: "https://www.amap.com/detail/B023D02TDV"
+  }
+];
+
 const newStays = [
   {
     id: "chengyu",
@@ -921,6 +1024,36 @@ const newStays = [
     photoAlt: "上海嘉定希尔顿花园酒店",
     source: "https://hotels.ctrip.com/hotels/124425428.html",
     sourceLabel: "携程ID124425428；库存未返回"
+  },
+  {
+    id: "huguang",
+    name: "湖光山居度假酒店（南北湖景区内）",
+    group: "jiaxing",
+    rating: "待核",
+    ratingLabel: "问道报价约246元/间 · 2026-10-29",
+    amenities: ["景区内", "湖滨", "餐厅", "KTV", "棋牌"],
+    review: "住在景区湖边最省事，晚饭后直接回房；KTV、棋牌和餐厅都有，6人公区够用。",
+    confirm: "按246元/间报价估算4间约984元；10/31周六实价、床型和KTV/棋牌使用时段先问前台。",
+    fit: "酒店型独立客房，4间可按间订",
+    photo: "assets/stays/stay-huguang.jpg",
+    photoAlt: "湖光山居度假酒店外观",
+    source: "https://m.ctrip.com/webapp/hotels/detail?hotelid=1437325",
+    sourceLabel: "携程问道报价，评分待核"
+  },
+  {
+    id: "muxinju",
+    name: "海盐木心居客栈（南北湖弈仙城）",
+    group: "jiaxing",
+    rating: "待核",
+    ratingLabel: "问道报价约330元/间 · 2026-10-29",
+    amenities: ["桌球", "棋牌", "烧烤", "茶楼", "院子"],
+    review: "徽派院落，公共娱乐最丰富：桌球、棋牌、烧烤、茶楼都有；离湖步行约2公里。",
+    confirm: "按330元/间报价估算4间约1320元；周六实价、烧烤规则和停车位先电话确认。",
+    fit: "客栈房型可按间订，4间当晚库存待确认",
+    photo: "assets/stays/stay-muxinju.jpg",
+    photoAlt: "海盐木心居客栈外观",
+    source: "https://m.ctrip.com/webapp/hotels/detail?hotelid=21121706",
+    sourceLabel: "携程问道报价，评分待核"
   }
 ];
 
@@ -1137,7 +1270,8 @@ function amapTravel(routeId) {
 
 const allRoutes = [
   ...oldRoutes.map((route) => ({ ...route, ...(v5RouteOverrides[route.id] || {}) })),
-  ...newRoutes
+  ...newRoutes,
+  ...natureRoutes
 ]
   .filter((route) => activeRouteIds.has(route.id))
   .map((route) => ({

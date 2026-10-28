@@ -30,7 +30,9 @@ const places = [
   { id: "s03", label: "M", name: "太湖西山", location: "120.255924,31.116207", km: 140.4, minutes: 134 },
   { id: "s04", label: "N", name: "太湖东山陆巷古村", location: "120.363392,31.074631", km: 131.0, minutes: 126 },
   { id: "r01", label: "O", name: "广富林文化遗址", location: "121.196269,31.062675", km: 43.8, minutes: 70 },
-  { id: "r02", label: "P", name: "菊园百果园", location: "121.210974,31.370895", km: 42.5, minutes: 60 }
+  { id: "r02", label: "P", name: "菊园百果园", location: "121.210974,31.370895", km: 42.5, minutes: 60 },
+  { id: "s05", label: "Q", name: "天平山", location: "120.504155,31.287304", km: 120.3, minutes: 126 },
+  { id: "j01", label: "R", name: "南北湖", location: "120.847395,30.372508", km: 143.6, minutes: 141 }
 ];
 
 const nearbyPlaces = [
@@ -99,9 +101,9 @@ async function renderStaticMapOrReuse(key, options) {
 
 const key = readAmapKey();
 const map = await renderStaticMapOrReuse(key, {
-  center: "121.08,31.00",
+  center: "121.08,30.90",
   zoom: "8",
-  size: "1000*500",
+  size: "1000*600",
   places,
   output: "assets/amap-route-basemap-v6.png"
 });

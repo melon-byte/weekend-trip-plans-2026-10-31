@@ -106,6 +106,26 @@ const targets = [
   {
     output: "assets/stays/stay-shuyun.jpg",
     url: "https://hotels.ctrip.com/hotels/6007008.html"
+  },
+  {
+    output: "assets/routes/route-s05.jpg",
+    url: "https://www.amap.com/detail/B0HRRSRMUE",
+    imageUrl: "https://store.is.autonavi.com/showpic/fecd51f016afc4f13116c4765dfe6823"
+  },
+  {
+    output: "assets/routes/route-j01.jpg",
+    url: "https://www.amap.com/detail/B023D02TDV",
+    imageUrl: "http://store.is.autonavi.com/showpic/39d5f7236be7536e94057d4f5b6fc1c5"
+  },
+  {
+    output: "assets/stays/stay-huguang.jpg",
+    url: "https://www.amap.com/detail/B023D0T4NS",
+    imageUrl: "http://store.is.autonavi.com/showpic/db8aee95982700595ebfc75af6b73502"
+  },
+  {
+    output: "assets/stays/stay-muxinju.jpg",
+    url: "https://www.amap.com/detail/B0FFHHL65Z",
+    imageUrl: "https://store.is.autonavi.com/showpic/970641ddacf54259900fa0f125d243bb"
   }
 ];
 

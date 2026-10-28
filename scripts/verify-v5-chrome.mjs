@@ -386,11 +386,11 @@ async function inspectAt(send, width, height, mobile, prefix) {
 
   const expectedRouteIds = [
     "02", "03", "04", "05", "12", "14", "16", "f01",
-    "r01", "r02", "s01", "s02", "s03", "s04"
+    "r01", "r02", "s01", "s02", "s03", "s04", "s05", "j01"
   ].sort();
   const expectedRouteCount = expectedRouteIds.length;
   const expectedMapLabels = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "O", "P"
+    "A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "O", "P", "Q", "R"
   ];
 
   assert(initial.topbars === 0 && initial.tripFacts === 0, `${prefix}: unused top header still renders`);
@@ -431,7 +431,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.regionNavCount === 1, `${prefix}: region navigation must render exactly once`);
   assert(initial.regionNavInsideRegions, `${prefix}: region navigation must live only inside 分区域`);
   assert(
-    initial.regionNavLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州",
+    initial.regionNavLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州,嘉兴",
     `${prefix}: unexpected region navigation: ${initial.regionNavLabels.join(",")}`
   );
   assert(
@@ -458,9 +458,9 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.routeStayReferences === expectedRouteCount, `${prefix}: every route card needs a stay reference`);
   assert(initial.rankStayReferences === expectedRouteCount, `${prefix}: every ranking row needs a stay reference`);
   assert(initial.routeStayReferenceItems === expectedRouteCount, `${prefix}: route cards should show one primary stay each`);
-  assert(initial.rankStayReferenceItems === 27, `${prefix}: ranking rows should show all linked stay candidates`);
+  assert(initial.rankStayReferenceItems === 31, `${prefix}: ranking rows should show all linked stay candidates`);
   assert(!mobile || initial.overflowingStayCarousels > 0, `${prefix}: mobile stay cards should scroll horizontally`);
-  assert(initial.dialogStayCards === 27, `${prefix}: expected 27 full stay candidates, got ${initial.dialogStayCards}`);
+  assert(initial.dialogStayCards === 31, `${prefix}: expected 31 full stay candidates, got ${initial.dialogStayCards}`);
   assert(initial.dialogStaySections === expectedRouteCount, `${prefix}: each dialog needs a stay section`);
   assert(initial.routeAmenityTags >= expectedRouteCount, `${prefix}: route cards are missing amenity tags`);
   assert(initial.dialogAmenityTags >= 50, `${prefix}: dialog stay cards are missing amenity tags`);
@@ -481,7 +481,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.mapMarkerRouteIds.join(",") === expectedRouteIds.join(","),
     `${prefix}: clickable map markers do not cover the active routes`);
   assert(initial.mapImageNaturalWidth === 1000, `${prefix}: map should stay a high-density real image`);
-  assert(initial.mapImageNaturalHeight <= 520, `${prefix}: map image is not cropped tightly enough`);
+  assert(initial.mapImageNaturalHeight <= 620, `${prefix}: map image is not cropped tightly enough`);
   assert(
     initial.mapFrameHeight <= (mobile ? 320 : 430),
     `${prefix}: map frame is too tall: ${initial.mapFrameHeight}px`
@@ -494,7 +494,7 @@ async function inspectAt(send, width, height, mobile, prefix) {
   assert(initial.mapText.includes("地图字母对应下方路线；点击标记打开详情"), `${prefix}: map marker legend is missing`);
   assert(initial.mapText.includes("高德驾车"), `${prefix}: map index must show Amap drive times`);
   assert(
-    initial.activeRegionLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州",
+    initial.activeRegionLabels.join(",") === "浦东,近郊体验,奉贤,青浦,金山,苏州,嘉兴",
     `${prefix}: unexpected in-panel navigation: ${initial.activeRegionLabels.join(",")}`
   );
   assert(initial.introText.includes("玩优先"), `${prefix}: intro must keep the trip focused on activities`);

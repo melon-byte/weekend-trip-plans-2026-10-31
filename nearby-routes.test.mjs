@@ -88,7 +88,7 @@ test("region routes and map index are ordered by driving distance, nearest first
   const mapIndex = html.slice(indexStart, indexEnd);
   const distances = [...mapIndex.matchAll(/<a class="map-index-route"[^>]+>([\s\S]*?)<\/a>/g)]
     .map(([, item]) => Number(item.match(/高德驾车 ([\d.]+) km/)?.[1]));
-  assert.equal(distances.length, 14, "map index should contain every remaining route");
+  assert.equal(distances.length, 16, "map index should contain every remaining route");
   assert.ok(distances.every((distance, index) => index === 0 || distances[index - 1] <= distance),
     `map routes are not globally distance-sorted: ${distances.join(", ")}`);
 });
@@ -112,7 +112,7 @@ test("map coordinates match the real raster scale, including both Taihu islands"
   assert.equal(data.map.worldSize, 131072);
   const coordinates = [...html.matchAll(/<a class="map-extra-stop"[\s\S]*?data-route-id="([^"]+)"[\s\S]*?data-map-x="([\d.]+)" data-map-y="([\d.]+)"/g)];
   const points = new Map(coordinates.map(([, id, x, y]) => [id, [Number(x), Number(y)]]));
-  for (const [id, expected] of [["s03", [200, 201]], ["s04", [239, 218]]]) {
+  for (const [id, expected] of [["s03", [200, 208]], ["s04", [239, 226]]]) {
     assert.ok(points.has(id), `Taihu route ${id} is missing`);
     const actual = points.get(id);
     assert.ok(Math.hypot(actual[0] - expected[0], actual[1] - expected[1]) < 4,
